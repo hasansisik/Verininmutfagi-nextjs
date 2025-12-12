@@ -21,15 +21,10 @@ const HomeOne = () => {
             <Banner />
             <Categories />
             <BrandOne />
-            <About />
             <CourseArea />
-            <Newsletter />
-            <Instructor />
             <Counter />
             <FaqArea />
             <Features />
-            <InstructorTwo />
-            <Blog />
          </main>
          <FooterOne />
       </>

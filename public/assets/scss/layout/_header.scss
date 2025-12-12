@@ -760,7 +760,7 @@
                         align-items: center;
                         justify-content: center;
                         background: var(--tg-theme-secondary);
-                        color: var(--tg-heading-color);
+                        color: var(--tg-common-color-white);
                         @include border-radius(50%);
                         z-index: 1;
                     }
@@ -801,7 +801,7 @@
                         border: 1px solid rgba(6, 35, 91, 0.19);
                         background: var(--tg-theme-secondary);
                         font-size: 15px;
-                        color: var(--tg-heading-color);
+                        color: var(--tg-common-color-white);
                         font-weight: 600;
                         line-height: 18px;
                         &:hover {

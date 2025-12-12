@@ -22,7 +22,7 @@
         z-index: 1;
     }
     &__wrap {
-        background: var(--tg-common-color-gray);
+        background: transparent;
         @include border-radius(500px);
         padding: 52px 145px 45px;
         position: relative;
@@ -60,16 +60,10 @@
                 margin: 0 auto 12px;
             }
             &::before {
-                content: "";
-                position: absolute;
-                top: 26px;
-                right: 26px;
-                background-image: url(/assets/img/icons/cat_star.svg);
-                background-repeat: no-repeat;
-                background-size: contain;
-                width: 30px;
-                height: 26px;
-                pointer-events: none;
+                display: none !important;
+                content: none !important;
+                background: none !important;
+                background-image: none !important;
             }
         }
         & .name {

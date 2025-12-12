@@ -19,7 +19,7 @@
     }
     &__inner {
         &-wrap {
-            background: var(--tg-common-color-blue-2);
+            background: var(--tg-theme-primary);
             padding: 94px 70px 64px;
             @include border-radius(40px);
             @include box-shadow(0px 25px 70px 0px rgba(40, 37, 104, 0.40));

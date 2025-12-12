@@ -5,16 +5,16 @@
 ===============================*/
 .footer {
     &__area {
-        background: var(--tg-common-color-black);
+        background: transparent;
         &-two {
             margin-top: -160px;
-            background: var(--tg-common-color-black);
+            background: transparent;
             & .footer__top {
                 padding: 230px 0 60px;
             }
         }
         &-three {
-            background: var(--tg-common-color-black);
+            background: transparent;
         }
         &-five {
             padding-top: 100px;
@@ -41,6 +41,7 @@
         }
     }
     &__top {
+        background: transparent;
         padding: 100px 0 60px;
         @media #{$xs} {
             padding: 80px 0 40px;
@@ -74,7 +75,7 @@
         margin-bottom: 35px;
         &-title {
             margin-bottom: 0;
-            color: var(--tg-common-color-white);
+            color: var(--tg-common-color-black);
             font-size: 22px;
             font-weight: 600;
             position: relative;
@@ -95,7 +96,7 @@
     &__content {
         & p {
             margin-bottom: 12px;
-            color: var(--tg-common-color-gray-5);
+            color: var(--tg-common-color-black);
             width: 100%;
             @media #{$sm} {
                 width: 100%;
@@ -103,7 +104,7 @@
         }
         & .list-wrap {
             & li {
-                color: var(--tg-common-color-gray-5);
+                color: var(--tg-common-color-black);
                 font-weight: 500;
                 margin-bottom: 7px;
                 &:last-child {
@@ -117,7 +118,7 @@
                     & a {
                         font-size: 18px;
                         font-weight: 600;
-                        color: var(--tg-common-color-white);
+                        color: var(--tg-common-color-black);
                         &:hover {
                             color: var(--tg-theme-secondary);
                         }
@@ -146,7 +147,7 @@
                 & a {
                     font-size: 16px;
                     font-weight: 500;
-                    color: var(--tg-common-color-gray-5);
+                    color: var(--tg-common-color-black);
                     position: relative;
                     &::before {
                         content: "";
@@ -179,7 +180,7 @@
         &-content {
             & p {
                 margin-bottom: 10px;
-                color: var(--tg-common-color-gray-5);
+                color: var(--tg-common-color-black);
             }
         }
     }
@@ -243,7 +244,7 @@
         margin-bottom: 35px;
         & li {
             & a {
-                color: var(--tg-common-color-gray-5);
+                color: var(--tg-common-color-black);
                 &:hover {
                     color: var(--tg-theme-secondary);
                 }
@@ -262,7 +263,7 @@
             margin-bottom: 0;
             & li {
                 & a {
-                    color: var(--tg-common-color-white);
+                    color: var(--tg-common-color-black);
                     &:hover {
                         color: var(--tg-theme-secondary);
                     }
@@ -271,30 +272,30 @@
         }
     }
     &__bottom {
-        background: var(--tg-common-color-dark);
+        background: transparent;
         padding: 35px 0;
         @media #{$md} {
             padding: 25px 0;
         }
         &-two {
-            border-top: 1px solid #191838;
+            border-top: 1px solid transparent;
             padding: 35px 0;
             @media #{$md} {
                 padding: 25px 0;
             }
         }
         &-three {
-            background: #272260;
+            background: transparent;
             & .copy-right-text {
                 & p {
-                    color: #cfd9ea;
+                    color: var(--tg-common-color-black);
                 }
             }
             & .footer__bottom-menu {
                 & .list-wrap {
                     & li {
                         & a {
-                            color: #cfd9ea;
+                            color: var(--tg-common-color-black);
                         }
                     }
                 }
@@ -315,7 +316,7 @@
                 }
                 & li {
                     & a {
-                        color: #8C9AB4;
+                        color: var(--tg-common-color-black);
                         position: relative;
                         &::before {
                             content: "";
@@ -337,7 +338,7 @@
                             transform: translateY(-50%);
                             width: 2px;
                             height: 12px;
-                            background: #8C9AB4;
+                            background: var(--tg-common-color-black);
                         }
                         &:hover {
                             color: var(--tg-theme-secondary);
@@ -473,7 +474,7 @@
 .copy-right-text {
     & p {
         margin-bottom: 0;
-        color: #8C9AB4;
+        color: var(--tg-common-color-black);
         @media #{$xs} {
             margin-bottom: 5px;
             text-align: center;

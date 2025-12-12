@@ -13,8 +13,8 @@ interface StyleType {
 
 const FooterOne = ({ style, style_2 }: StyleType) => {
    return (
-      <footer className={`footer__area ${style_2 ? "footer__area-five" : style ? "footer__area-two" : ""}`}>
-         <div className={`footer__top ${style_2 ? "footer__top-three" : ""}`}>
+      <footer className={`footer__area ${style_2 ? "footer__area-five" : style ? "footer__area-two" : ""}`} style={{ background: 'transparent', backgroundColor: 'transparent' }}>
+         <div className={`footer__top ${style_2 ? "footer__top-three" : ""}`} style={{ background: 'transparent', backgroundColor: 'transparent' }}>
             <div className="container">
                <div className="row">
                   <FooterCommon />
@@ -27,10 +27,7 @@ const FooterOne = ({ style, style_2 }: StyleType) => {
                               <Social />
                            </ul>
                         </div>
-                        <div className="app-download">
-                           <Link href="#"><Image src={icon_1} alt="img" /></Link>
-                           <Link href="#"><Image src={icon_2} alt="img" /></Link>
-                        </div>
+                        
                      </div>
                   </div>
                </div>
@@ -38,7 +35,7 @@ const FooterOne = ({ style, style_2 }: StyleType) => {
             {style_2 && <div className="footer__shape" style={{ backgroundImage: `url(/assets/img/others/h8_footer_shape.svg)` }}></div>}
          </div>
 
-         <div className={`footer__bottom ${style_2 ? "footer__bottom-four" : ""}`}>
+         <div className={`footer__bottom ${style_2 ? "footer__bottom-four" : ""}`} style={{ background: 'transparent', backgroundColor: 'transparent' }}>
             <div className="container">
                <div className="row align-items-center">
                   <div className="col-md-7">

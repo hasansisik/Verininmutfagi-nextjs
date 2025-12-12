@@ -960,9 +960,21 @@
                 font-size: 14px;
                 line-height: 18px;
                 font-weight: var(--tg-fw-semi-bold);
-                color: var(--tg-heading-color);
+                color: var(--tg-common-color-white) !important;
+                & *,
+                & .text,
+                & i,
+                & .flaticon-arrow-right {
+                    color: var(--tg-common-color-white) !important;
+                }
                 &:hover {
                     box-shadow: none;
+                    & *,
+                    & .text,
+                    & i,
+                    & .flaticon-arrow-right {
+                        color: var(--tg-common-color-white) !important;
+                    }
                 }
             }
             & .price {

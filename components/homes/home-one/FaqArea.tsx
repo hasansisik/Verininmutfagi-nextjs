@@ -14,11 +14,11 @@ const FaqArea = () => {
    const svgIconRef = SvgAnimation('/assets/img/others/faq_shape02.svg');
 
    return (
-      <section className="faq__area">
+      <section className="faq__area" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
          <div className="container">
             <div className="row align-items-center">
                <div className="col-lg-6">
-                  <div className="faq__img-wrap tg-svg" ref={svgIconRef}>
+                  <div className="faq__img-wrap tg-svg" >
                      <div className="faq__round-text">
                         <CurvedCircle />
                      </div>

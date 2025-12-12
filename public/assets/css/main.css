@@ -49,18 +49,18 @@
   --tg-heading-line-height: 1.3;
   --tg-body-color: #6D6C80;
   --tg-heading-color: #161439;
-  --tg-theme-primary: #5751E1;
-  --tg-theme-secondary: #FFC224;
+  --tg-theme-primary: #2563EB;
+  --tg-theme-secondary: #2563EB;
   --tg-common-color-blue: #050071;
   --tg-common-color-blue-2: #282568;
-  --tg-common-color-indigo: #9B51E0;
-  --tg-common-color-purple: #8121FB;
+  --tg-common-color-indigo: #2563EB;
+  --tg-common-color-purple: #2563EB;
   --tg-common-color-pink: #FF429D;
   --tg-common-color-red: #E11B24;
   --tg-common-color-orange: #fd7e14;
-  --tg-common-color-yellow: #F8BC24;
-  --tg-common-color-yellow-2: #FBE67B;
-  --tg-common-color-yellow-3: #FCB428;
+  --tg-common-color-yellow: #2563EB;
+  --tg-common-color-yellow-2: #2563EB;
+  --tg-common-color-yellow-3: #2563EB;
   --tg-common-color-green: #12BB6A;
   --tg-common-color-teal: #219653;
   --tg-common-color-cyan: #00AEE5;
@@ -432,7 +432,7 @@ textarea {
 }
 .btn:hover, .btn:focus-visible {
   background: var(--tg-theme-secondary);
-  color: var(--tg-heading-color);
+  color: var(--tg-common-color-white);
   box-shadow: 0 0 0 0 var(--tg-common-color-blue);
 }
 .btn .text {
@@ -483,10 +483,10 @@ textarea {
   -ms-box-shadow: 4px 4px 0px 0px #3D3D3D;
   -o-box-shadow: 4px 4px 0px 0px #3D3D3D;
   box-shadow: 4px 4px 0px 0px #3D3D3D;
-  color: var(--tg-common-color-black-3);
+  color: var(--tg-common-color-white);
 }
 .btn-two svg {
-  color: var(--tg-common-color-black-3) !important;
+  color: var(--tg-common-color-white) !important;
 }
 .btn-two:hover, .btn-two:focus-visible {
   background: var(--tg-theme-primary);
@@ -500,10 +500,10 @@ textarea {
 .btn-three {
   background: var(--tg-theme-secondary);
   box-shadow: none;
-  color: var(--tg-common-color-black-3) !important;
+  color: var(--tg-common-color-white) !important;
 }
 .btn-three svg {
-  color: var(--tg-common-color-black-3) !important;
+  color: var(--tg-common-color-white) !important;
 }
 .btn-four {
   box-shadow: none;
@@ -2227,7 +2227,7 @@ textarea {
   align-items: center;
   justify-content: center;
   background: var(--tg-theme-secondary);
-  color: var(--tg-heading-color);
+  color: var(--tg-common-color-white);
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -o-border-radius: 50%;
@@ -2272,7 +2272,7 @@ textarea {
   border: 1px solid rgba(6, 35, 91, 0.19);
   background: var(--tg-theme-secondary);
   font-size: 15px;
-  color: var(--tg-heading-color);
+  color: var(--tg-common-color-white);
   font-weight: 600;
   line-height: 18px;
 }
@@ -7530,7 +7530,13 @@ textarea {
   font-size: 14px;
   line-height: 18px;
   font-weight: var(--tg-fw-semi-bold);
-  color: var(--tg-heading-color);
+  color: var(--tg-common-color-white) !important;
+}
+.courses__item-bottom .button a *,
+.courses__item-bottom .button a .text,
+.courses__item-bottom .button a i,
+.courses__item-bottom .button a .flaticon-arrow-right {
+  color: var(--tg-common-color-white) !important;
 }
 .courses__item-bottom .button a:hover {
   box-shadow: none;
@@ -8046,7 +8052,7 @@ textarea {
   display: flex;
   align-items: center;
   line-height: 1;
-  color: #F8BC24;
+  color: #2563EB;
   gap: 4px;
 }
 .courses-widget .form-check .rating ul li {
@@ -9145,7 +9151,7 @@ textarea {
 }
 .course-rate__summary-stars {
   font-size: 15px;
-  color: #F8BC24;
+  color: #2563EB;
 }
 .course-rate__summary-text {
   color: #5A7093;
@@ -9177,7 +9183,7 @@ textarea {
 }
 .course-rate__details-row-star i {
   font-size: 17px;
-  color: #F8BC24;
+  color: #2563EB;
   margin-left: 3px;
 }
 .course-rate__details-row-value {
@@ -10090,7 +10096,7 @@ textarea {
   z-index: 1;
 }
 .categories__wrap {
-  background: var(--tg-common-color-gray);
+  background: transparent;
   -webkit-border-radius: 500px;
   -moz-border-radius: 500px;
   -o-border-radius: 500px;
@@ -10123,8 +10129,8 @@ textarea {
   text-align: center;
 }
 .categories__item .icon {
-  width: 150px;
-  height: 150px;
+  width: 75px;
+  height: 75px;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -10133,10 +10139,9 @@ textarea {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--tg-border-1);
-  border-radius: 150px;
+  border-radius: 75px;
   background: linear-gradient(180deg, var(--tg-common-color-white) 0%, #F1F1FA 100%);
-  font-size: 55px;
-  color: #7F7E97;
+  font-size: 14px;
   -webkit-transition: all 0.3s ease-out 0s;
   -moz-transition: all 0.3s ease-out 0s;
   -ms-transition: all 0.3s ease-out 0s;
@@ -10147,23 +10152,26 @@ textarea {
 }
 @media (max-width: 767.98px) {
   .categories__item .icon {
-    width: 130px;
-    height: 130px;
-    font-size: 45px;
+    width: 45px;
+    height: 45px;
+    font-size: 11.5px;
     margin: 0 auto 12px;
   }
 }
-.categories__item .icon::before {
-  content: "";
-  position: absolute;
-  top: 26px;
-  right: 26px;
-  background-image: url(/assets/img/icons/cat_star.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 30px;
-  height: 26px;
-  pointer-events: none;
+.categories__item .icon::before,
+.categories__item .icon::after,
+.categories__wrap .categories__item .icon::before,
+.categories__wrap .categories__item .icon::after,
+.categories-active .categories__item .icon::before,
+.categories-active .categories__item .icon::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  background-image: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 .categories__item .name {
   display: block;
@@ -13711,10 +13719,10 @@ textarea {
   box-shadow: 8px 8px 0px 0px #D9D5F1;
 }
 .features__item-wrap .row [class*=col-]:nth-child(2) .features__item-two .features__icon-two {
-  background: #5751E1;
+  background: #2563EB;
 }
 .features__item-wrap .row [class*=col-]:nth-child(2) .features__item-two:hover .features__item-shape {
-  color: #5751E1;
+  color: #2563EB;
 }
 .features__item-wrap .row [class*=col-]:nth-child(3) .features__item-two {
   border: 1px solid #EBE0C4;
@@ -13722,10 +13730,10 @@ textarea {
   box-shadow: 8px 8px 0px 0px #E5DECB;
 }
 .features__item-wrap .row [class*=col-]:nth-child(3) .features__item-two .features__icon-two {
-  background: #FFC224;
+  background: #2563EB;
 }
 .features__item-wrap .row [class*=col-]:nth-child(3) .features__item-two:hover .features__item-shape {
-  color: #FFC224;
+  color: #2563EB;
 }
 .features__item-wrap-two .row [class*=col-]:nth-child(2) .features__icon-three {
   color: var(--tg-theme-primary);
@@ -14954,7 +14962,7 @@ textarea {
     18. FAQ
 ===============================*/
 .faq__area {
-  background: var(--tg-common-color-gray);
+  background: var(--tg-common-color-white);
   padding: 260px 0 120px;
   margin-top: -140px;
   position: relative;
@@ -14973,7 +14981,7 @@ textarea {
   bottom: 20%;
   width: 500px;
   height: 500px;
-  background: #E9E2F9;
+  background: var(--tg-common-color-white);
   filter: blur(200px);
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -14989,7 +14997,7 @@ textarea {
   top: 110px;
   width: 500px;
   height: 500px;
-  background: #E9E2F9;
+  background: #ffffff;
   filter: blur(200px);
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -15074,7 +15082,7 @@ textarea {
   stroke: var(--tg-common-color-black);
 }
 .faq__img-two {
-  background: #F3F3F3;
+  background: #ffffff;
   box-shadow: 9px 8px 0px #B8B8B8;
 }
 .faq__img-three {
@@ -15739,7 +15747,7 @@ textarea {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  color: #F8BC24;
+  color: #2563EB;
   gap: 3px;
   line-height: 1;
   margin: 0 0 10px;
@@ -15820,7 +15828,7 @@ textarea {
   display: flex;
   align-items: center;
   line-height: 1;
-  color: #F8BC24;
+  color: #2563EB;
   gap: 4px;
 }
 .shop-widget .form-check .rating ul li {
@@ -15928,7 +15936,7 @@ textarea {
 .shop-details-content .product-review .rating {
   display: flex;
   align-items: center;
-  color: #F8BC24;
+  color: #2563EB;
   gap: 3px;
 }
 .shop-details-content .product-review span {
@@ -20004,7 +20012,7 @@ blockquote > p {
   padding: 230px 0 60px;
 }
 .footer__area-three {
-  background: var(--tg-common-color-black);
+  background: transparent;
 }
 .footer__area-five {
   padding-top: 100px;
@@ -20630,6 +20638,277 @@ blockquote > p {
   animation-duration: 0.5s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
+}
+
+/* Remove star icons from categories */
+.categories__item .icon.remove-stars::before,
+.categories__item .icon.remove-stars::after,
+.categories__wrap .categories__item .icon.remove-stars::before,
+.categories__wrap .categories__item .icon.remove-stars::after,
+.categories-active .swiper-slide .categories__item .icon::before,
+.categories-active .swiper-slide .categories__item .icon::after,
+section.categories-area .categories__item .icon::before,
+section.categories-area .categories__item .icon::after {
+  display: none !important;
+  content: "" !important;
+  background: transparent !important;
+  background-image: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Force all purple/mor colors to blue */
+* {
+  --tg-theme-primary: #2563EB !important;
+}
+
+[style*="#5751E1"],
+[style*="#9B51E0"],
+[style*="#8121FB"] {
+  color: #2563EB !important;
+  background-color: #2563EB !important;
+  background: #2563EB !important;
+  border-color: #2563EB !important;
+}
+
+/* Force header buttons to blue */
+.tgmenu__action > ul li.login-btn a,
+.tgmenu__action > ul li.header-btn a,
+.tgmenu__action > ul li.header-btn .btn,
+.mobile-login-btn a,
+.tgmenu__action-three > ul li.header-btn .btn,
+.tgmenu__action-four > ul li.header-btn .btn,
+.tgmenu__action-six .list-wrap li.header-btn .btn,
+.tgmenu__action-seven .list-wrap li.header-btn .btn {
+  background: #2563EB !important;
+  background-color: #2563EB !important;
+  color: #ffffff !important;
+}
+
+.tgmenu__action > ul li.login-btn a:hover,
+.tgmenu__action > ul li.header-btn a:hover,
+.mobile-login-btn a:hover {
+  background: #1e40af !important;
+  background-color: #1e40af !important;
+  color: #ffffff !important;
+}
+
+/* Force all primary and secondary buttons to have white text */
+.btn:not(.btn-border):not(.white-btn),
+.btn:hover:not(.btn-border):not(.white-btn),
+.btn:focus-visible:not(.btn-border):not(.white-btn),
+.btn-two:not(.btn-border):not(.white-btn),
+.btn-two:hover:not(.btn-border):not(.white-btn),
+.btn-two:focus-visible:not(.btn-border):not(.white-btn),
+.btn-three:not(.btn-border):not(.white-btn),
+.btn-three:hover:not(.btn-border):not(.white-btn),
+.btn-three:focus-visible:not(.btn-border):not(.white-btn),
+.tgmenu__action .btn:not(.btn-border):not(.white-btn),
+.tgmenu__action .btn:hover:not(.btn-border):not(.white-btn),
+.tgmenu__action .btn:focus-visible:not(.btn-border):not(.white-btn) {
+  color: #ffffff !important;
+}
+
+/* Force buttons with primary/secondary background colors */
+[style*="background"][style*="primary"]:not(.btn-border):not(.white-btn),
+[style*="background"][style*="secondary"]:not(.btn-border):not(.white-btn),
+[style*="background-color"][style*="primary"]:not(.btn-border):not(.white-btn),
+[style*="background-color"][style*="secondary"]:not(.btn-border):not(.white-btn) {
+  color: #ffffff !important;
+}
+
+/* Force course area buttons and cart count to white text */
+.courses__item-bottom .button a,
+.courses__item-bottom .button a:hover,
+.courses__item-bottom .button a:focus,
+.courses__item-bottom .button a *,
+.courses__item-bottom .button a .text,
+.courses__item-bottom .button a:hover .text,
+.courses__item-bottom .button a:focus .text,
+.courses__item-bottom .button a i,
+.courses__item-bottom .button a:hover i,
+.courses__item-bottom .button a:focus i,
+.courses__item-bottom .button a .flaticon-arrow-right,
+.courses__item-bottom .button a:hover .flaticon-arrow-right,
+.courses__item-bottom .button a:focus .flaticon-arrow-right,
+.courses__item .courses__item-bottom .button a,
+.courses__item .courses__item-bottom .button a *,
+.courses__item .courses__item-bottom .button a .text,
+.courses__item .courses__item-bottom .button a i,
+.tgmenu__action > ul li .cart-count span,
+.tgmenu__action > ul li .cart-count .mini-cart-count,
+.tgmenu__action > ul li .wishlist-icon .cart-count span,
+.tgmenu__action > ul li .wishlist-icon .cart-count .mini-cart-count,
+.tgmenu__action > ul li .mini-cart-icon .cart-count span,
+.tgmenu__action > ul li .mini-cart-icon .cart-count .mini-cart-count,
+.tgmenu__action-two .mini-cart-icon .cart-count-two .mini-cart-count,
+.tgmenu__action-eight .list-wrap li .mini-cart-count,
+.mini-cart-count {
+  color: #ffffff !important;
+}
+
+/* Force all course area button text and icons to white - strongest override */
+.courses__item .courses__item-bottom .button a,
+.courses__item .courses__item-bottom .button a *,
+.courses__item .courses__item-bottom .button a span,
+.courses__item .courses__item-bottom .button a .text,
+.courses__item .courses__item-bottom .button a i,
+.courses__item .courses__item-bottom .button a .flaticon-arrow-right,
+.courses__item .courses__item-bottom .button a:hover,
+.courses__item .courses__item-bottom .button a:hover *,
+.courses__item .courses__item-bottom .button a:hover span,
+.courses__item .courses__item-bottom .button a:hover .text,
+.courses__item .courses__item-bottom .button a:hover i,
+.courses__item .courses__item-bottom .button a:hover .flaticon-arrow-right,
+.courses-area .courses__item-bottom .button a,
+.courses-area .courses__item-bottom .button a *,
+.courses-area .courses__item-bottom .button a span,
+.courses-area .courses__item-bottom .button a .text,
+.courses-area .courses__item-bottom .button a i,
+.courses-area .courses__item-bottom .button a .flaticon-arrow-right {
+  color: #ffffff !important;
+}
+
+/* Remove background from categories area - strongest override */
+.categories-area,
+section.categories-area,
+.categories-area.section-py-120,
+section.categories-area.section-py-120 {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.categories__wrap,
+.categories-area .categories__wrap,
+section.categories-area .categories__wrap,
+.categories-area .container .categories__wrap,
+.categories-area .row .categories__wrap,
+.categories-area .col-12 .categories__wrap,
+.swiper.categories-active,
+.categories-active {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Remove background from FAQ area - strongest override */
+.faq__area,
+section.faq__area {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.faq__area::before,
+.faq__area::after,
+section.faq__area::before,
+section.faq__area::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Counter area - use primary color */
+.fact__area .fact__inner-wrap,
+section.fact__area .fact__inner-wrap {
+  background: var(--tg-theme-primary) !important;
+  background-color: var(--tg-theme-primary) !important;
+}
+
+/* Footer area - transparent background and black text - strongest override */
+.footer__area,
+footer.footer__area,
+footer .footer__area,
+.footer__area-two,
+.footer__area-three,
+.footer__area-five,
+section.footer__area {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.footer__top,
+.footer__area .footer__top,
+.footer__top-three,
+.footer__area-two .footer__top {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.footer__bottom,
+.footer__bottom-two,
+.footer__bottom-three,
+.footer__bottom-four,
+.footer__area .footer__bottom {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.footer__widget-title,
+.footer__area .footer__widget-title,
+.footer__top .footer__widget-title,
+.footer__widget .footer__widget-title {
+  color: var(--tg-common-color-black) !important;
+}
+
+.footer__content p,
+.footer__area .footer__content p,
+.footer__widget .footer__content p {
+  color: var(--tg-common-color-black) !important;
+}
+
+.footer__content .list-wrap li,
+.footer__area .footer__content .list-wrap li,
+.footer__widget .footer__content .list-wrap li {
+  color: var(--tg-common-color-black) !important;
+}
+
+.footer__link .list-wrap li a,
+.footer__area .footer__link .list-wrap li a,
+.footer__widget .footer__link .list-wrap li a {
+  color: var(--tg-common-color-black) !important;
+}
+
+.footer__content-two .list-wrap li a,
+.footer__social-two li a,
+.footer__area .footer__social li a {
+  color: var(--tg-common-color-black) !important;
+}
+
+.footer__contact-content p,
+.footer__area .footer__contact-content p {
+  color: var(--tg-common-color-black) !important;
+}
+
+.copy-right-text p,
+.footer__bottom .copy-right-text p,
+.footer__area .copy-right-text p {
+  color: var(--tg-common-color-black) !important;
+}
+
+.footer__bottom-menu .list-wrap li a,
+.footer__bottom .footer__bottom-menu .list-wrap li a,
+.footer__area .footer__bottom-menu .list-wrap li a {
+  color: var(--tg-common-color-black) !important;
+}
+
+.footer__bottom-menu .list-wrap li a::after,
+.footer__bottom .footer__bottom-menu .list-wrap li a::after {
+  background: var(--tg-common-color-black) !important;
 }
 
 /*# sourceMappingURL=main.css.map */

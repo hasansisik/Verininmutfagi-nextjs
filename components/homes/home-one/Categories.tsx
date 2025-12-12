@@ -2,6 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import Link from "next/link";
+import { useEffect } from 'react';
 
 interface DatatYpe {
    id: number;
@@ -14,43 +15,43 @@ const category_data: DatatYpe[] = [
    {
       id: 1,
       icon: "flaticon-graphic-design",
-      title: "Graphic Design",
+      title: "Grafik Tasarım",
       total: "(22)"
    },
    {
       id: 2,
       icon: "flaticon-investment",
-      title: "Finance",
+      title: "Finans",
       total: "(41)"
    },
    {
       id: 3,
       icon: "flaticon-coding",
-      title: "Development",
+      title: "Geliştirme",
       total: "(29)"
    },
    {
       id: 4,
       icon: "flaticon-email",
-      title: "Marketing",
+      title: "Pazarlama",
       total: "(31)"
    },
    {
       id: 5,
       icon: "flaticon-fashion",
-      title: "Life Style",
+      title: "Yaşam Tarzı",
       total: "(23)"
    },
    {
       id: 6,
       icon: "flaticon-interaction",
-      title: "Management",
+      title: "Yönetim",
       total: "(19)"
    },
    {
       id: 7,
       icon: "flaticon-web-design",
-      title: "App Design",
+      title: "Uygulama Tasarımı",
       total: "(18)"
    },
 ];
@@ -91,28 +92,50 @@ const setting = {
 };
 
 const Categories = () => {
+   useEffect(() => {
+      // Remove star icons
+      const style = document.createElement('style');
+      style.textContent = `
+         .categories__item .icon::before,
+         .categories__item .icon::after {
+            display: none !important;
+            content: none !important;
+            background: none !important;
+            background-image: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+         }
+      `;
+      document.head.appendChild(style);
+      return () => {
+         document.head.removeChild(style);
+      };
+   }, []);
+
    return (
-      <section className="categories-area section-py-120">
+      <section className="categories-area section-py-120" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
          <div className="container">
             <div className="row justify-content-center">
                <div className="col-xl-5 col-lg-7">
                   <div className="section__title text-center mb-40">
-                     <span className="sub-title">Trending Categories</span>
-                     <h2 className="title">Top Category We Have</h2>
-                     <p className="desc">when known printer took a galley of type scrambl edmake</p>
+                     <span className="sub-title">Kurs Kategorileri</span>
+                     <h2 className="title">İlginizi Çeken Kategorileri Keşfedin</h2>
+                     <p className="desc">Size uygun kursu bulmak için kategorilerimizi inceleyin</p>
                   </div>
                </div>
             </div>
 
             <div className="row">
                <div className="col-12">
-                  <div className="categories__wrap">
+                  <div className="categories__wrap" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
                      <Swiper {...setting} modules={[Navigation]} className="swiper categories-active">
                         {category_data.map((item) => (
                            <SwiperSlide key={item.id} className="swiper-slide">
                               <div className="categories__item">
                                  <Link href="/courses">
-                                    <div className="icon">
+                                    <div className="icon remove-stars">
                                        <i className={item.icon}></i>
                                     </div>
                                     <span className="name">{item.title}</span>
@@ -126,12 +149,12 @@ const Categories = () => {
                      <div className="categories__nav">
                         <button className="categories-button-prev">
                            <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M15 7L1 7M1 7L7 1M1 7L7 13" stroke="#161439" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M15 7L1 7M1 7L7 1M1 7L7 13" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                            </svg>
                         </button>
                         <button className="categories-button-next">
                            <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M1 7L15 7M15 7L9 1M15 7L9 13" stroke="#161439" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M1 7L15 7M15 7L9 1M15 7L9 13" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                            </svg>
                         </button>
                      </div>

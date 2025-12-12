@@ -28,7 +28,7 @@ const NavMenu = () => {
 
             // Filter out undefined values and create a combined array of links
             const allLinks = [...subMenuLinks, ...megaMenuLinks, ...homeSubMenuLinks].filter(Boolean) as string[];
-            
+
             // Check if menu has children (sub_menus or home_sub_menu)
             const hasChildren = (menu.sub_menus && menu.sub_menus.length > 0) || (menu.home_sub_menu && menu.home_sub_menu.length > 0);
 

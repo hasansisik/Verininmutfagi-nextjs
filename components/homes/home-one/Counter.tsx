@@ -38,7 +38,7 @@ const Counter = () => {
    return (
       <section className="fact__area">
          <div className="container">
-            <div className="fact__inner-wrap">
+            <div className="fact__inner-wrap" style={{ background: 'var(--tg-theme-primary)', backgroundColor: 'var(--tg-theme-primary)' }}>
                <div className="row">
                   {count_data.map((item) => (
                      <div key={item.id} className="col-lg-3 col-6">

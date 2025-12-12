@@ -33,7 +33,7 @@
     &:hover,
     &:focus-visible {
         background: var(--tg-theme-secondary);
-        color: var(--tg-heading-color);
+        color: var(--tg-common-color-white);
         box-shadow: 0 0 0 0 var(--tg-common-color-blue);
     }
     & .text {
@@ -77,9 +77,9 @@
         background: var(--tg-theme-secondary);
         border: 2px solid var(--tg-common-color-black-3);
         @include box-shadow(4px 4px 0px 0px #3D3D3D);
-        color: var(--tg-common-color-black-3);
+        color: var(--tg-common-color-white);
         & svg {
-            color: var(--tg-common-color-black-3) !important;
+            color: var(--tg-common-color-white) !important;
         }
         &:hover,
         &:focus-visible {
@@ -95,9 +95,9 @@
     &-three {
         background: var(--tg-theme-secondary);
         box-shadow: none;
-        color: var(--tg-common-color-black-3) !important;
+        color: var(--tg-common-color-white) !important;
         & svg {
-            color: var(--tg-common-color-black-3) !important;
+            color: var(--tg-common-color-white) !important;
         }
     }
     &-four {
