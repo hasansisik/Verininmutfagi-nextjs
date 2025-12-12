@@ -1,5 +1,5 @@
 'use client'
-import { handleContactFormAction } from '@/app/actions/sendContactEmail'
+import { handleContactFormAction } from '@/app/(logged-out)/actions/sendContactEmail'
 import BtnArrow from '@/svg/BtnArrow'
 import React, { useActionState } from 'react'
 
