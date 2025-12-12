@@ -28,7 +28,6 @@ const HeaderOne = () => {
    return (
       <>
          <header>
-            <HeaderTopOne />
             <div id="header-fixed-height"></div>
             <div id="sticky-header" className={`tg-header__area ${sticky ? "sticky-menu" : ""}`}>
                <div className="container custom-container">
@@ -60,7 +59,7 @@ const HeaderOne = () => {
                                        </Link>
                                     </li>
                                     <li className="header-btn login-btn">
-                                       <Link href="/login">Log in</Link>
+                                       <Link href="/login">Giriş Yap</Link>
                                     </li>
                                  </ul>
                               </div>

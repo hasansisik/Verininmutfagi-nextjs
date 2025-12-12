@@ -28,10 +28,14 @@ const NavMenu = () => {
 
             // Filter out undefined values and create a combined array of links
             const allLinks = [...subMenuLinks, ...megaMenuLinks, ...homeSubMenuLinks].filter(Boolean) as string[];
+            
+            // Check if menu has children (sub_menus or home_sub_menu)
+            const hasChildren = (menu.sub_menus && menu.sub_menus.length > 0) || (menu.home_sub_menu && menu.home_sub_menu.length > 0);
 
             return (
-               <li key={menu.id} className={`menu-item-has-children ${isAnyChildActive(allLinks) ? "active" : ""}`}>
+               <li key={menu.id} className={`${hasChildren ? "menu-item-has-children" : ""} ${isAnyChildActive(allLinks) ? "active" : ""}`}>
                   <Link href={menu.link}>{menu.title}</Link>
+                  {hasChildren && (
                   <ul className={`sub-menu ${menu.menu_class}`}>
                      {menu.home_sub_menu ? (
                         <>
@@ -83,6 +87,7 @@ const NavMenu = () => {
                         })
                      )}
                   </ul>
+                  )}
                </li>
             );
          })}
