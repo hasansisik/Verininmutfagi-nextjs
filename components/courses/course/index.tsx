@@ -8,7 +8,7 @@ const Course = () => {
       <>
          <HeaderOne />
          <main className="main-area fix">
-            <BreadcrumbOne title="All Courses" sub_title="Courses" />
+            <BreadcrumbOne title="Tüm Kurslar" sub_title="Kurslar" />
             <CourseArea />
          </main>
          <FooterOne />

@@ -1,97 +1,71 @@
 import { selectCourses } from "@/redux/features/courseSlice";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Rating } from 'react-simple-star-rating';
 
 const CourseSidebar = ({ setCourses }: any) => {
 
    const [showMoreCategory, setShowMoreCategory] = useState(false);
-   const [showMoreLanguage, setShowMoreLanguage] = useState(false);
    const [showMoreInstructor, setShowMoreInstructor] = useState(false);
 
    const [categorySelected, setCategorySelected] = useState('');
-   const [languageSelected, setLanguageSelected] = useState('');
    const [priceSelected, setPriceSelected] = useState('');
    const [skillSelected, setSkillSelected] = useState('');
    const [instructorSelected, setInstructorSelected] = useState('');
-   const [ratingSelected, setRatingSelected] = useState<number | null>(null);
 
    const categoryFilter = useSelector(selectCourses).map(course => course.category);
-   const languageFilter = useSelector(selectCourses).map(course => course.language);
    const priceFilter = useSelector(selectCourses).map(course => course.price_type);
    const skillFilter = useSelector(selectCourses).map(course => course.skill_level);
    const instructorFilter = useSelector(selectCourses).map(course => course.instructors);
 
-   const allCategory = ['All Category', ...new Set(categoryFilter)];
-   const allLanguage = ['All Language', ...new Set(languageFilter)];
-   const allPrice = ['All Price', ...new Set(priceFilter)];
-   const allSkill = ['All Skill', ...new Set(skillFilter)];
-   const allInstructor = ['All Instructors', ...new Set(instructorFilter)];
+   const allCategory = ['Tüm Kategoriler', ...new Set(categoryFilter)];
+   const allPrice = ['Tüm Fiyatlar', ...new Set(priceFilter)];
+   const allSkill = ['Tüm Seviyeler', ...new Set(skillFilter)];
+   const allInstructor = ['Tüm Eğitmenler', ...new Set(instructorFilter)];
 
    const allCourses = useSelector(selectCourses);
 
    // Handle category selection
    const handleCategory = (category: string) => {
       setCategorySelected(prevCategory => prevCategory === category ? '' : category);
-      filterCourses({ category: category === categorySelected ? '' : category, language: languageSelected, price: priceSelected, rating: ratingSelected, skill: skillSelected, instructor: instructorSelected });
-   };
-
-   // Handle language selection
-   const handleLanguage = (language: string) => {
-      setLanguageSelected(prevLanguage => prevLanguage === language ? '' : language);
-      filterCourses({ category: categorySelected, language: language === languageSelected ? '' : language, price: priceSelected, rating: ratingSelected, skill: skillSelected, instructor: instructorSelected });
+      filterCourses({ category: category === categorySelected ? '' : category, price: priceSelected, skill: skillSelected, instructor: instructorSelected });
    };
 
    // Handle price selection
    const handlePrice = (price: string) => {
       setPriceSelected(prevPrice => prevPrice === price ? '' : price);
-      filterCourses({ category: categorySelected, language: languageSelected, price: price === priceSelected ? '' : price, rating: ratingSelected, skill: skillSelected, instructor: instructorSelected });
+      filterCourses({ category: categorySelected, price: price === priceSelected ? '' : price, skill: skillSelected, instructor: instructorSelected });
    };
 
    // Handle skill selection
    const handleSkill = (skill: string) => {
       setSkillSelected(prevSkill => prevSkill === skill ? '' : skill);
-      filterCourses({ category: categorySelected, language: languageSelected, price: priceSelected, skill: skill === skillSelected ? '' : skill, rating: ratingSelected, instructor: instructorSelected });
+      filterCourses({ category: categorySelected, price: priceSelected, skill: skill === skillSelected ? '' : skill, instructor: instructorSelected });
    };
 
    // Handle Instructor selection
    const handleInstructor = (instructor: string) => {
       setInstructorSelected(instructor);
-      filterCourses({ category: categorySelected, language: languageSelected, price: priceSelected, rating: ratingSelected, skill: skillSelected, instructor });
-   };
-
-   // Handle rating selection
-   const handleRating = (rating: number) => {
-      setRatingSelected(prevRating => prevRating === rating ? null : rating);
-      filterCourses({ category: categorySelected, language: languageSelected, price: priceSelected, rating: rating === ratingSelected ? null : rating, skill: skillSelected, instructor: instructorSelected });
+      filterCourses({ category: categorySelected, price: priceSelected, skill: skillSelected, instructor });
    };
 
    // Filter courses based on selected criteria
-   const filterCourses = ({ category, language, price, rating, skill, instructor }: any) => {
+   const filterCourses = ({ category, price, skill, instructor }: any) => {
       let filteredCourses = allCourses;
 
-      if (category && category !== 'All Category') {
+      if (category && category !== 'Tüm Kategoriler') {
          filteredCourses = filteredCourses.filter(course => course.category === category);
       }
 
-      if (language && language !== 'All Language') {
-         filteredCourses = filteredCourses.filter(course => course.language === language);
-      }
-
-      if (price && price !== 'All Price') {
+      if (price && price !== 'Tüm Fiyatlar') {
          filteredCourses = filteredCourses.filter(course => course.price_type === price);
       }
 
-      if (skill && skill !== 'All Skill') {
+      if (skill && skill !== 'Tüm Seviyeler') {
          filteredCourses = filteredCourses.filter(course => course.skill_level === skill);
       }
 
-      if (instructor && instructor !== 'All Instructors') {
+      if (instructor && instructor !== 'Tüm Eğitmenler') {
          filteredCourses = filteredCourses.filter(course => course.instructors === instructor);
-      }
-
-      if (rating) {
-         filteredCourses = filteredCourses.filter(course => course.rating >= rating);
       }
 
       setCourses(filteredCourses);
@@ -99,14 +73,13 @@ const CourseSidebar = ({ setCourses }: any) => {
 
    // Determine categories to display based on "Show More" toggle
    const categoriesToShow = showMoreCategory ? allCategory : allCategory.slice(0, 8);
-   const languageToShow = showMoreLanguage ? allLanguage : allLanguage.slice(0, 4);
    const instructorToShow = showMoreInstructor ? allInstructor : allInstructor.slice(0, 4);
 
    return (
       <div className="col-xl-3 col-lg-4">
          <aside className="courses__sidebar">
             <div className="courses-widget">
-               <h4 className="widget-title">Categories</h4>
+               <h4 className="widget-title">Kategoriler</h4>
                <div className="courses-cat-list">
                   <ul className="list-wrap">
                      {categoriesToShow.map((category: any, i: any) => (
@@ -120,29 +93,7 @@ const CourseSidebar = ({ setCourses }: any) => {
                   </ul>
                   <div className="show-more">
                      <a className={`show-more-btn ${showMoreCategory ? 'active' : ''}`} style={{ cursor: "pointer" }} onClick={() => setShowMoreCategory(!showMoreCategory)}>
-                        {showMoreCategory ? "Show Less -" : "Show More +"}
-                     </a>
-                  </div>
-               </div>
-            </div>
-
-            {/* Language Filter */}
-            <div className="courses-widget">
-               <h4 className="widget-title">Languages</h4>
-               <div className="courses-cat-list">
-                  <ul className="list-wrap">
-                     {languageToShow.map((language: any, i: any) => (
-                        <li key={i}>
-                           <div onClick={() => handleLanguage(language)} className="form-check">
-                              <input className="form-check-input" type="checkbox" checked={language === languageSelected} readOnly id={`lang_${i}`} />
-                              <label className="form-check-label" htmlFor={`lang_${i}`} onClick={() => handleLanguage(language)}>{language}</label>
-                           </div>
-                        </li>
-                     ))}
-                  </ul>
-                  <div className="show-more">
-                     <a className={`show-more-btn ${showMoreLanguage ? 'active' : ''}`} style={{ cursor: "pointer" }} onClick={() => setShowMoreLanguage(!showMoreLanguage)}>
-                        {showMoreLanguage ? "Show Less -" : "Show More +"}
+                        {showMoreCategory ? "Daha Az Göster -" : "Daha Fazla Göster +"}
                      </a>
                   </div>
                </div>
@@ -150,7 +101,7 @@ const CourseSidebar = ({ setCourses }: any) => {
 
             {/* Price Filter */}
             <div className="courses-widget">
-               <h4 className="widget-title">Price</h4>
+               <h4 className="widget-title">Fiyat</h4>
                <div className="courses-cat-list">
                   <ul className="list-wrap">
                      {allPrice.map((price: any, i: any) => (
@@ -167,7 +118,7 @@ const CourseSidebar = ({ setCourses }: any) => {
 
             {/* Skill Filter */}
             <div className="courses-widget">
-               <h4 className="widget-title">Skill level</h4>
+               <h4 className="widget-title">Seviye</h4>
                <div className="courses-cat-list">
                   <ul className="list-wrap">
                      {allSkill.map((skill: any, i: any) => (
@@ -184,7 +135,7 @@ const CourseSidebar = ({ setCourses }: any) => {
 
             {/* Instructors Filter */}
             <div className="courses-widget">
-               <h4 className="widget-title">Instructors</h4>
+               <h4 className="widget-title">Eğitmenler</h4>
                <div className="courses-cat-list">
                   <ul className="list-wrap">
                      {instructorToShow.map((instructor: any, i: any) => (
@@ -198,30 +149,9 @@ const CourseSidebar = ({ setCourses }: any) => {
                   </ul>
                   <div className="show-more">
                      <a className={`show-more-btn ${showMoreInstructor ? 'active' : ''}`} style={{ cursor: "pointer" }} onClick={() => setShowMoreInstructor(!showMoreInstructor)}>
-                        {showMoreInstructor ? "Show Less -" : "Show More +"}
+                        {showMoreInstructor ? "Daha Az Göster -" : "Daha Fazla Göster +"}
                      </a>
                   </div>
-               </div>
-            </div>
-
-            {/* Rating Filter */}
-            <div className="courses-widget">
-               <h4 className="widget-title">Ratings</h4>
-               <div className="courses-rating-list">
-                  <ul className="list-wrap">
-                     {[5, 4, 3, 2, 1].map((rating, i) => (
-                        <li key={i}>
-                           <div onClick={() => handleRating(rating)} className="form-check">
-                              <input className="form-check-input" type="checkbox" checked={rating === ratingSelected} readOnly id={`rating_${i}`} />
-                              <label className="form-check-label" htmlFor={`rating_${i}`} onClick={() => handleRating(rating)}>
-                                 <div className="rating">
-                                    <Rating initialValue={rating} size={20} readonly />
-                                 </div>
-                              </label>
-                           </div>
-                        </li>
-                     ))}
-                  </ul>
                </div>
             </div>
          </aside>

@@ -64,14 +64,14 @@ const CourseArea = () => {
                                           <li className="courses__item-tag">
                                              <Link href="/course">{item.category}</Link>
                                           </li>
-                                          <li className="avg-rating"><i className="fas fa-star"></i> ({item.rating} Reviews)</li>
+                                          <li className="avg-rating"><i className="fas fa-star"></i> ({item.rating} Değerlendirme)</li>
                                        </ul>
                                        <h5 className="title"><Link href={`/course-details/${item.id}`}>{item.title}</Link></h5>
-                                       <p className="author">By <Link href="#">{item.instructors}</Link></p>
+                                       <p className="author">Eğitmen: <Link href="#">{item.instructors}</Link></p>
                                        <div className="courses__item-bottom">
                                           <div className="button">
                                              <Link href={`/course-details/${item.id}`}>
-                                                <span className="text">Enroll Now</span>
+                                                <span className="text">Hemen Kaydol</span>
                                                 <i className="flaticon-arrow-right"></i>
                                              </Link>
                                           </div>
@@ -109,18 +109,18 @@ const CourseArea = () => {
                                           <li className="courses__item-tag">
                                              <a href="course.html">{item.category}</a>
                                              <div className="avg-rating">
-                                                <i className="fas fa-star"></i>  ({item.rating} Reviews)
+                                                <i className="fas fa-star"></i>  ({item.rating} Değerlendirme)
                                              </div>
                                           </li>
                                           <li className="price">${item.price}.00</li>
                                        </ul>
                                        <h5 className="title"><a href="course-details.html">{item.title}</a></h5>
-                                       <p className="author">By <a href="#">{item.instructors}</a></p>
+                                       <p className="author">Eğitmen: <a href="#">{item.instructors}</a></p>
                                        <p className="info">{item.desc}</p>
                                        <div className="courses__item-bottom">
                                           <div className="button">
                                              <a href="course-details.html">
-                                                <span className="text">Enroll Now</span>
+                                                <span className="text">Hemen Kaydol</span>
                                                 <i className="flaticon-arrow-right"></i>
                                              </a>
                                           </div>
