@@ -17,7 +17,7 @@ const WishlistArea = () => {
                <div className="mb-30">
                   <div className="empty_bag text-center">
                      <p className="py-3">Wishlist'iniz Boş</p>
-                     <Link href={"/courses"}>
+                     <Link href={"/kurslar"}>
                         <button className="btn">Kurslara Git</button>
                      </Link>
                   </div>
@@ -39,10 +39,10 @@ const WishlistArea = () => {
                            {wishlistItems.map((item: any) => (
                               <tr key={item.id}>
                                  <td className="product__thumb">
-                                    <Link href={`/course-details/${item.id}`}><Image src={item.thumb} alt="cart" /></Link>
+                                    <Link href={`/kurs-detaylari/${item.id}`}><Image src={item.thumb} alt="cart" /></Link>
                                  </td>
                                  <td className="product__name">
-                                    <Link href={`/course-details/${item.id}`}>{item.title}</Link>
+                                    <Link href={`/kurs-detaylari/${item.id}`}>{item.title}</Link>
                                  </td>
                                  <td className="product__price">₺{item.price}.00</td>
                                  <td className="product__cart-btn">

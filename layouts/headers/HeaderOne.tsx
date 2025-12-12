@@ -47,24 +47,24 @@ const HeaderOne = () => {
                               <div className="tgmenu__action">
                                  <ul className="list-wrap">
                                     <li className="wishlist-icon">
-                                       <Link href="/wishlist" className="cart-count">
+                                       <Link href="/istek-listesi" className="cart-count">
                                           <InjectableSvg src="/assets/img/icons/heart.svg" className="injectable" alt="img" />
                                           <TotalWishlist />
                                        </Link>
                                     </li>
                                     <li className="mini-cart-icon">
-                                       <Link href="/cart" className="cart-count">
+                                       <Link href="/sepet" className="cart-count">
                                           <InjectableSvg src="/assets/img/icons/cart.svg" className="injectable" alt="img" />
                                           <TotalCart />
                                        </Link>
                                     </li>
                                     <li className="header-btn login-btn">
-                                       <Link href="/login">Giriş Yap</Link>
+                                       <Link href="/giris">Giriş Yap</Link>
                                     </li>
                                  </ul>
                               </div>
                               <div className="mobile-login-btn">
-                                 <Link href="/login"><InjectableSvg src="/assets/img/icons/user.svg" alt="" className="injectable" /></Link>
+                                 <Link href="/giris"><InjectableSvg src="/assets/img/icons/user.svg" alt="" className="injectable" /></Link>
                               </div>
                               <div onClick={() => setIsActive(true)} className="mobile-nav-toggler"><i className="tg-flaticon-menu-1"></i></div>
                            </nav>

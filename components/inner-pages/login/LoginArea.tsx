@@ -12,7 +12,7 @@ const LoginArea = () => {
                      <p>Merhaba! Giriş yapmaya hazır mısınız? Aşağıya kullanıcı adınızı ve şifrenizi girin, hemen devam edelim!</p>
                      <LoginForm />
                      <div className="account__switch">
-                        <p>Hesabınız yok mu?<Link href="/registration">Kayıt Ol</Link></p>
+                        <p>Hesabınız yok mu?<Link href="/kayit">Kayıt Ol</Link></p>
                      </div>
                   </div>
                </div>

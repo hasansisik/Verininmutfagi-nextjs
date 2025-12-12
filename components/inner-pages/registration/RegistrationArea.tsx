@@ -12,7 +12,7 @@ const RegistrationArea = () => {
                      <p>Merhaba! Bize katılmaya hazır mısınız? Başlamak için sizden birkaç bilgi almamız gerekiyor. </p>
                      <RegistrationForm />
                      <div className="account__switch">
-                        <p>Zaten hesabınız var mı?<Link href="/login">Giriş Yap</Link></p>
+                        <p>Zaten hesabınız var mı?<Link href="/giris">Giriş Yap</Link></p>
                      </div>
                   </div>
                </div>

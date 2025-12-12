@@ -69,7 +69,7 @@ const InstructorEnrolledCourseContent = ({ style }: StyleType) => {
                            <SwiperSlide key={item.id} className="swiper-slide">
                               <div className="courses__item courses__item-two shine__animate-item">
                                  <div className="courses__item-thumb courses__item-thumb-two">
-                                    <Link href="/course-details" className="shine__animate-link">
+                                    <Link href="/kurs-detaylari" className="shine__animate-link">
                                        <Image src={item.thumb} alt="img" />
                                     </Link>
                                  </div>
@@ -80,7 +80,7 @@ const InstructorEnrolledCourseContent = ({ style }: StyleType) => {
                                        </li>
                                        {item.price && <li className="price"><del>₺{item.old_price}.00</del>₺{item.price}.00</li>}
                                     </ul>
-                                    <h5 className="title"><Link href="/course-details">{item.title}</Link></h5>
+                                    <h5 className="title"><Link href="/kurs-detaylari">{item.title}</Link></h5>
                                     <div className="courses__item-content-bottom">
                                        <div className="author-two">
                                           <Link href="/instructor-details"><Image src={item.avatar_thumb} alt="img" />{item.avatar_name}</Link>

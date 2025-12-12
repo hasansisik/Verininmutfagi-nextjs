@@ -58,7 +58,7 @@ const InstructorSlider = () => {
             <SwiperSlide key={item.id} className="swiper-slide">
                <div className="courses__item shine__animate-item">
                   <div className="courses__item-thumb">
-                     <Link href="/course-details" className="shine__animate-link">
+                     <Link href="/kurs-detaylari" className="shine__animate-link">
                         <Image src={item.thumb} alt="img" />
                      </Link>
                   </div>
@@ -69,11 +69,11 @@ const InstructorSlider = () => {
                         </li>
                         <li className="avg-rating"><i className="fas fa-star"></i>{item.review}</li>
                      </ul>
-                     <h5 className="title"><Link href="/course-details">{item.title}</Link></h5>
+                     <h5 className="title"><Link href="/kurs-detaylari">{item.title}</Link></h5>
                      <p className="author">By <Link href="#">{item.author}</Link></p>
                      <div className="courses__item-bottom">
                         <div className="button">
-                           <Link href="/course-details">
+                           <Link href="/kurs-detaylari">
                               <span className="text">Enroll Now</span>
                               <i className="flaticon-arrow-right"></i>
                            </Link>

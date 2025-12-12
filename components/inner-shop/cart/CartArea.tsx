@@ -85,7 +85,7 @@ const CartArea = () => {
                            <li>Ara Toplam <span>₺{total.toFixed(2)}</span></li>
                            <li>Toplam <span className="amount">₺{total.toFixed(2)}</span></li>
                         </ul>
-                        <Link href="/check-out" className="btn">Ödemeye Geç</Link>
+                        <Link href="/odeme" className="btn">Ödemeye Geç</Link>
                      </div>
                   </div>
                </div>

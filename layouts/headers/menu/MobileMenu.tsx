@@ -75,7 +75,7 @@ const MobileMenu = () => {
 
                            <li>
                               <div className="mega-menu-img">
-                                 <Link href="/courses"><Image src={icon_1} alt="img" /></Link>
+                                 <Link href="/kurslar"><Image src={icon_1} alt="img" /></Link>
                               </div>
                            </li>
                         </>

@@ -20,7 +20,7 @@ const LoginForm = () => {
                <label htmlFor="terms-check" className="form-check-label">Beni Hatırla</label>
             </div>
             <div className="account__check-forgot">
-               <Link href="/registration">Şifremi Unuttum?</Link>
+               <Link href="/kayit">Şifremi Unuttum?</Link>
             </div>
          </div>
          <button type="submit" className="btn btn-two arrow-btn">Giriş Yap<BtnArrow /></button>

@@ -13,7 +13,7 @@ const DashboardCourse = () => {
                <div key={item.id} className="col-xl-4 col-md-6">
                   <div className="courses__item courses__item-two shine__animate-item">
                      <div className="courses__item-thumb courses__item-thumb-two">
-                        <Link href="/course-details" className="shine__animate-link">
+                        <Link href="/kurs-detaylari" className="shine__animate-link">
                            <Image src={item.thumb} alt="img" />
                         </Link>
                      </div>
@@ -23,7 +23,7 @@ const DashboardCourse = () => {
                               <Link href="course">{item.tag}</Link>
                            </li>
                         </ul>
-                        <h5 className="title"><Link href="/course-details">{item.title}</Link></h5>
+                        <h5 className="title"><Link href="/kurs-detaylari">{item.title}</Link></h5>
                         <div className="courses__item-content-bottom">
                            <div className="author-two">
                               <Link href="/instructor-details"><Image src={item.avatar_thumb} alt="img" />{item.avatar_name}</Link>

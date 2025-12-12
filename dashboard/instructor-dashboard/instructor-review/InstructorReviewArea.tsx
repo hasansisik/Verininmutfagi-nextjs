@@ -66,7 +66,7 @@ const InstructorReviewArea = () => {
                                   <td>
                                     <span className="course-feedback">
                                       Course:
-                                      <Link href="/course-details">{item.course}</Link>
+                                      <Link href="/kurs-detaylari">{item.course}</Link>
                                     </span>
                                     <div className="review__wrap">
                                       <div className="rating">
@@ -100,7 +100,7 @@ const InstructorReviewArea = () => {
                               {instructor_review_2.map((item, i) => (
                                 <tr key={i}>
                                   <td>
-                                    <Link href="/course-details">{item}</Link>
+                                    <Link href="/kurs-detaylari">{item}</Link>
                                   </td>
                                   <td>
                                     <div className="review__wrap">

@@ -134,7 +134,7 @@ const Categories = () => {
                         {category_data.map((item) => (
                            <SwiperSlide key={item.id} className="swiper-slide">
                               <div className="categories__item">
-                                 <Link href="/courses">
+                                 <Link href="/kurslar">
                                     <div className="icon remove-stars">
                                        <i className={item.icon}></i>
                                     </div>

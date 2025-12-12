@@ -43,7 +43,7 @@ const DashboardReviewTable = () => {
             {table_data.map((list) => (
                <tr key={list.id}>
                   <td>
-                     <Link href="/course-details">{list.name}</Link>
+                     <Link href="/kurs-detaylari">{list.name}</Link>
                   </td>
                   <td>
                      <p className="color-black">{list.enroll}</p>

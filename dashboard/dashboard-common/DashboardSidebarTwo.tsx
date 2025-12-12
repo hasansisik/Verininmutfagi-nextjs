@@ -22,25 +22,25 @@ const sidebar_data: DataType[] = [
       sidebar_details: [
          {
             id: 1,
-            link: "/student-dashboard",
+            link: "/ogrenci-paneli",
             icon: "fas fa-home",
             title: "Kontrol Paneli",
          },
          {
             id: 2,
-            link: "/student-enrolled-courses",
+            link: "/ogrenci-kayitli-kurslar",
             icon: "skillgro-book",
             title: "Kayıtlı Kurslar",
          },
          {
             id: 3,
-            link: "/student-wishlist",
+            link: "/ogrenci-istek-listesi",
             icon: "skillgro-label",
             title: "İstek Listesi",
          },
          {
             id: 4,
-            link: "/student-history",
+            link: "/ogrenci-siparis-gecmisi",
             icon: "skillgro-satchel",
             title: "Sipariş Geçmişi",
          },
@@ -53,7 +53,7 @@ const sidebar_data: DataType[] = [
       sidebar_details: [
          {
             id: 1,
-            link: "/student-setting",
+            link: "/ogrenci-ayarlar",
             icon: "skillgro-settings",
             title: "Ayarlar",
          },

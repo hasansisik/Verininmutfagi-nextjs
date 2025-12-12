@@ -23,7 +23,7 @@ const FooterCommon = () => {
                <div className="footer__link">
                   <ul className="list-wrap">
                      <li><Link href="/contact">İletişim</Link></li>
-                     <li><Link href="/courses">Kurslar</Link></li>
+                     <li><Link href="/kurslar">Kurslar</Link></li>
                   </ul>
                </div>
             </div>
@@ -33,9 +33,9 @@ const FooterCommon = () => {
                <h4 className="footer__widget-title">Kategoriler</h4>
                <div className="footer__link">
                   <ul className="list-wrap">
-                     <li><Link href="/courses">Geliştirme</Link></li>
-                     <li><Link href="/courses">Tasarım</Link></li>
-                     <li><Link href="/courses">İşletme</Link></li>
+                     <li><Link href="/kurslar">Geliştirme</Link></li>
+                     <li><Link href="/kurslar">Tasarım</Link></li>
+                     <li><Link href="/kurslar">İşletme</Link></li>
 
                   </ul>
                </div>

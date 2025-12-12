@@ -34,12 +34,12 @@ const menu_data: MenuItem[] = [
         title: "Kategoriler",
         link: "#",
         sub_menus: [
-            { link: "/courses?category=business", title: "İşletme" },
-            { link: "/courses?category=data-science", title: "Veri Bilimi" },
-            { link: "/courses?category=art-design", title: "Sanat & Tasarım" },
-            { link: "/courses?category=marketing", title: "Pazarlama" },
-            { link: "/courses?category=finance", title: "Finans" },
-            { link: "/courses?category=development", title: "Geliştirme" },
+            { link: "/kurslar?category=business", title: "İşletme" },
+            { link: "/kurslar?category=data-science", title: "Veri Bilimi" },
+            { link: "/kurslar?category=art-design", title: "Sanat & Tasarım" },
+            { link: "/kurslar?category=marketing", title: "Pazarlama" },
+            { link: "/kurslar?category=finance", title: "Finans" },
+            { link: "/kurslar?category=development", title: "Geliştirme" },
         ],
     }
 ];

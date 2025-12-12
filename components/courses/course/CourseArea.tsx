@@ -55,22 +55,22 @@ const CourseArea = () => {
                               <div key={item.id} className="col">
                                  <div className="courses__item shine__animate-item">
                                     <div className="courses__item-thumb">
-                                       <Link href={`/course-details/${item.id}`} className="shine__animate-link">
+                                       <Link href={`/kurs-detaylari/${item.id}`} className="shine__animate-link">
                                           <Image src={item.thumb} alt="img" />
                                        </Link>
                                     </div>
                                     <div className="courses__item-content">
                                        <ul className="courses__item-meta list-wrap">
                                           <li className="courses__item-tag">
-                                             <Link href="/course">{item.category}</Link>
+                                             <Link href="/kurslar">{item.category}</Link>
                                           </li>
                                           <li className="avg-rating"><i className="fas fa-star"></i> ({item.rating} Değerlendirme)</li>
                                        </ul>
-                                       <h5 className="title"><Link href={`/course-details/${item.id}`}>{item.title}</Link></h5>
+                                       <h5 className="title"><Link href={`/kurs-detaylari/${item.id}`}>{item.title}</Link></h5>
                                        <p className="author">Eğitmen: <Link href="#">{item.instructors}</Link></p>
                                        <div className="courses__item-bottom">
                                           <div className="button">
-                                             <Link href={`/course-details/${item.id}`}>
+                                             <Link href={`/kurs-detaylari/${item.id}`}>
                                                 <span className="text">Hemen Kaydol</span>
                                                 <i className="flaticon-arrow-right"></i>
                                              </Link>
