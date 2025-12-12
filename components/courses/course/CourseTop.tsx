@@ -71,19 +71,19 @@ const CourseTop = ({ startOffset, endOffset, totalItems, setCourses, handleTabCl
          <div className="row align-items-center">
             <div className="col-md-5">
                <div className="courses-top-left">
-                  <p>Showing {startOffset}-{endOffset} of {totalItems} Results</p>
+                  <p>{startOffset}-{endOffset} arası, toplam {totalItems} sonuç gösteriliyor</p>
                </div>
             </div>
             <div className="col-md-7">
                <div className="d-flex justify-content-center justify-content-md-end align-items-center flex-wrap">
                   <div className="courses-top-right m-0 ms-md-auto">
-                     <span className="sort-by">Sort By:</span>
+                     <span className="sort-by">Sırala:</span>
                      <div className="courses-top-right-select">
                         <select onChange={selectHandler} value={selected} name="orderby" className="orderby">
-                           <option value="">Default sorting</option>
-                           <option value="popular">Sort by popularity</option>
-                           <option value="price">Sort by price</option>
-                           <option value="rating">Sort by rating</option>
+                           <option value="">Varsayılan sıralama</option>
+                           <option value="popular">Popülerliğe göre sırala</option>
+                           <option value="price">Fiyata göre sırala</option>
+                           <option value="rating">Puana göre sırala</option>
                         </select>
                      </div>
                   </div>
