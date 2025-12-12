@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const CheckOutArea = () => {
 
-  const notify = () => toast("Order Submit");
+  const notify = () => toast("Sipariş Gönderildi");
   const productItem = useSelector((state: any) => state.cart.cart);
   const { total } = UseCartInfo();
 
@@ -15,40 +15,26 @@ const CheckOutArea = () => {
     <div className="checkout__area section-py-120">
       <div className="container">
         <div className="row">
-          <div className="col-12">
-            <div className="coupon__code-wrap">
-              <div className="coupon__code-info">
-                <span><i className="far fa-bookmark"></i> Have a coupon?</span>
-                <Link href="#" id="coupon-element">Click here to enter your code</Link>
-              </div>
-              <form onSubmit={(e) => e.preventDefault()} className="coupon__code-form">
-                <p>If you have a coupon code, please apply it below.</p>
-                <input type="text" placeholder="Coupon code" />
-                <button type="submit" className="btn">Apply coupon</button>
-              </form>
-            </div>
-          </div>
-
           <CheckOutForm />
 
           <div className="col-lg-5">
             <div className="order__info-wrap">
-              <h2 className="title">YOUR ORDER</h2>
+              <h2 className="title">SİPARİŞİNİZ</h2>
               <ul className="list-wrap">
-                <li className="title">Product <span>Subtotal</span></li>
+                <li className="title">Ürün <span>Ara Toplam</span></li>
                 {/* <!-- item list --> */}
                 {productItem.map((add_item: any, add_index: any) =>
                   <li key={add_index}>
-                    {add_item.title} <strong>{add_item.price.toFixed(2)} x {add_item.quantity}</strong>
-                    <span>${add_item.quantity * add_item.price}</span>
+                    {add_item.title} <strong>{(add_item.price || 0).toFixed(2)} x {add_item.quantity}</strong>
+                    <span>₺{((add_item.price || 0) * add_item.quantity).toFixed(2)}</span>
                   </li>
                 )}
-                <li>Subtotal <span>${total.toFixed(2)}</span></li>
-                <li>Total <span>${total.toFixed(2)}</span></li>
+                <li>Ara Toplam <span>₺{total.toFixed(2)}</span></li>
+                <li>Toplam <span>₺{total.toFixed(2)}</span></li>
               </ul>
-              <p>Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.</p>
-              <p>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <Link href="#">privacy policy.</Link></p>
-              <button onClick={notify} className="btn">Place order</button>
+              <p>Üzgünüz, eyaletiniz için mevcut ödeme yöntemi bulunmuyor. Yardıma ihtiyacınız varsa veya alternatif düzenlemeler yapmak istiyorsanız lütfen bizimle iletişime geçin.</p>
+              <p>Kişisel verileriniz siparişinizi işlemek, bu web sitesindeki deneyiminizi desteklemek ve <Link href="#">gizlilik politikamızda</Link> açıklanan diğer amaçlar için kullanılacaktır.</p>
+              <button onClick={notify} className="btn">Sipariş Ver</button>
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@ const Cart = () => {
       <>
          <HeaderOne />
          <main className="main-area fix">
-            <BreadcrumbOne title="Cart" sub_title="Cart" />
+            <BreadcrumbOne title="Sepet" sub_title="Sepet" />
             <CartArea />
          </main>
          <FooterOne />

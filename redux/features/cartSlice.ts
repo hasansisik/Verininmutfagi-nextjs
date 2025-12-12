@@ -7,6 +7,7 @@ interface Product {
    id: string;
    title: string;
    quantity: number;
+   price?: number;
 }
 
 interface CartState {
@@ -33,7 +34,7 @@ const cartSlice = createSlice({
          } else {
             const tempProduct = { ...payload, quantity: 1 };
             state.cart.push(tempProduct);
-            toast.success(`${payload.title} added to cart`, {
+            toast.success(`${payload.title} sepete eklendi`, {
                position: "top-right",
             });
          }

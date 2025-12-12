@@ -3,14 +3,29 @@ import VideoPopup from "@/modals/VideoPopup"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/features/cartSlice";
 import InjectableSvg from "@/hooks/InjectableSvg";
 import BtnArrow from "@/svg/BtnArrow";
 
 import img_1 from "@/assets/img/courses/course_thumb02.jpg"
 
-const Sidebar = () => {
+const Sidebar = ({ single_course }: any) => {
 
    const [isVideoOpen, setIsVideoOpen] = useState(false);
+   const dispatch = useDispatch();
+
+   const handleAddToCart = () => {
+      if (single_course) {
+         const cartItem = {
+            id: String(single_course.id),
+            title: single_course.title || "Kurs",
+            quantity: 1,
+            price: single_course.price || 0,
+         };
+         dispatch(addToCart(cartItem));
+      }
+   };
 
    return (
       <>
@@ -56,9 +71,9 @@ const Sidebar = () => {
                </div>
                <div className="courses__details-enroll">
                   <div className="tg-button-wrap">
-                     <Link href="/courses" className="btn btn-two arrow-btn">
+                     <button onClick={handleAddToCart} className="btn btn-two arrow-btn">
                        Kursa Başla<BtnArrow />
-                     </Link>
+                     </button>
                   </div>
                </div>
             </div>

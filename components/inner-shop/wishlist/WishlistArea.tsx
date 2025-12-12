@@ -16,9 +16,9 @@ const WishlistArea = () => {
             {wishlistItems.length === 0 ? (
                <div className="mb-30">
                   <div className="empty_bag text-center">
-                     <p className="py-3">Your Wishlist is Empty</p>
-                     <Link href={"/shop"}>
-                        <button className="btn">Go To Shop</button>
+                     <p className="py-3">Wishlist'iniz Boş</p>
+                     <Link href={"/courses"}>
+                        <button className="btn">Kurslara Git</button>
                      </Link>
                   </div>
                </div>
@@ -28,25 +28,25 @@ const WishlistArea = () => {
                      <table className="table cart__table">
                         <thead>
                            <tr>
-                              <th className="product__thumb">Images</th>
-                              <th className="product__name">Product</th>
-                              <th className="product__price">Price</th>
-                              <th className="product__quantity">Add To Cart</th>
-                              <th className="product__remove">Remove</th>
+                              <th className="product__thumb">Görseller</th>
+                              <th className="product__name">Kurs</th>
+                              <th className="product__price">Fiyat</th>
+                              <th className="product__quantity">Sepete Ekle</th>
+                              <th className="product__remove">Kaldır</th>
                            </tr>
                         </thead>
                         <tbody>
                            {wishlistItems.map((item: any) => (
                               <tr key={item.id}>
                                  <td className="product__thumb">
-                                    <Link href={`/shop-details/${item.id}`}><Image src={item.thumb} alt="cart" /></Link>
+                                    <Link href={`/course-details/${item.id}`}><Image src={item.thumb} alt="cart" /></Link>
                                  </td>
                                  <td className="product__name">
-                                    <Link href={`/shop-details/${item.id}`}>{item.title}</Link>
+                                    <Link href={`/course-details/${item.id}`}>{item.title}</Link>
                                  </td>
-                                 <td className="product__price">${item.price}.00</td>
+                                 <td className="product__price">₺{item.price}.00</td>
                                  <td className="product__cart-btn">
-                                    <button onClick={() => dispatch(addToCart(item))} className="btn">Add To Cart</button>
+                                    <button onClick={() => dispatch(addToCart(item))} className="btn">Sepete Ekle</button>
                                  </td>
                                  <td className="product__remove">
                                     <a onClick={() => dispatch(removeFromWishlist(item))} style={{ cursor: "pointer" }}>×</a>

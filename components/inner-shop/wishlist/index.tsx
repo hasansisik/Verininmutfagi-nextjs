@@ -8,7 +8,7 @@ const Wishlist = () => {
       <>
          <HeaderOne />
          <main className="main-area fix">
-            <BreadcrumbOne title="Wishlist" sub_title="Wishlist" />
+            <BreadcrumbOne title="Favori" sub_title="Favori" />
             <WishlistArea />
          </main>
          <FooterOne />

@@ -8,7 +8,7 @@ const CheckOut = () => {
       <>
          <HeaderOne />
          <main className="main-area fix">
-            <BreadcrumbOne title="check-out" sub_title="check-out" />
+            <BreadcrumbOne title="Ödeme" sub_title="Ödeme" />
             <CheckOutArea />
          </main>
          <FooterOne />

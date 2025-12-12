@@ -21,9 +21,9 @@ const CartArea = () => {
             {productItem.length === 0 ? (
                <div className="mb-30">
                   <div className="empty_bag text-center">
-                     <p className="py-3">Your Bag is Empty</p>
+                     <p className="py-3">Sepetiniz Boş</p>
                      <Link href={"/shop"}>
-                        <button className="btn">Go To Shop</button>
+                        <button className="btn">Mağazaya Git</button>
                      </Link>
                   </div>
                </div>
@@ -34,10 +34,10 @@ const CartArea = () => {
                         <thead>
                            <tr>
                               <th className="product__thumb">&nbsp;</th>
-                              <th className="product__name">Product</th>
-                              <th className="product__price">Price</th>
-                              <th className="product__quantity">Quantity</th>
-                              <th className="product__subtotal">Subtotal</th>
+                              <th className="product__name">Ürün</th>
+                              <th className="product__price">Fiyat</th>
+                              <th className="product__quantity">Miktar</th>
+                              <th className="product__subtotal">Ara Toplam</th>
                               <th className="product__remove">&nbsp;</th>
                            </tr>
                         </thead>
@@ -52,7 +52,7 @@ const CartArea = () => {
                                  <td className="product__name">
                                     <Link href={`/shop-details/${item.id}`}>{item.title}</Link>
                                  </td>
-                                 <td className="product__price">${item.price}.00</td>
+                                 <td className="product__price">₺{item.price}.00</td>
                                  <td className="product__quantity">
                                     <div className="cart-plus-minus">
                                        <input type="text" onChange={handleSubmit} value={item.quantity} readOnly />
@@ -60,7 +60,7 @@ const CartArea = () => {
                                        <div onClick={() => dispatch(addToCart(item))} className="inc qtybutton">+</div>
                                     </div>
                                  </td>
-                                 <td className="product__subtotal">${item.price * item.quantity}.00</td>
+                                 <td className="product__subtotal">₺{item.price * item.quantity}.00</td>
                                  <td className="product__remove">
                                     <a style={{ cursor: "pointer" }} onClick={() => dispatch(remove_cart_product(item))}>×</a>
                                  </td>
@@ -68,12 +68,8 @@ const CartArea = () => {
                            ))}
                            <tr>
                               <td colSpan={6} className="cart__actions">
-                                 <form onSubmit={(e) => e.preventDefault()} className="cart__actions-form">
-                                    <input type="text" placeholder="Coupon code" />
-                                    <button type="submit" className="btn">Apply coupon</button>
-                                 </form>
                                  <div className="update__cart-btn text-end f-right">
-                                    <button onClick={() => dispatch(clear_cart())} type="submit" className="btn">Clear cart</button>
+                                    <button onClick={() => dispatch(clear_cart())} type="submit" className="btn">Sepeti Temizle</button>
                                  </div>
                               </td>
                            </tr>
@@ -84,12 +80,12 @@ const CartArea = () => {
 
                   <div className="col-lg-4">
                      <div className="cart__collaterals-wrap">
-                        <h2 className="title">Cart totals</h2>
+                        <h2 className="title">Sepet Toplamı</h2>
                         <ul className="list-wrap">
-                           <li>Subtotal <span>${total.toFixed(2)}</span></li>
-                           <li>Total <span className="amount">${total.toFixed(2)}</span></li>
+                           <li>Ara Toplam <span>₺{total.toFixed(2)}</span></li>
+                           <li>Toplam <span className="amount">₺{total.toFixed(2)}</span></li>
                         </ul>
-                        <Link href="/check-out" className="btn">Proceed to checkout</Link>
+                        <Link href="/check-out" className="btn">Ödemeye Geç</Link>
                      </div>
                   </div>
                </div>

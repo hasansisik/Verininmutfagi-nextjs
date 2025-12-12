@@ -29,7 +29,7 @@ const wishlistSlice = createSlice({
             });
          } else {
             state.wishlist.push(payload);
-            toast.success(`${payload.title} added to wishlist`, {
+            toast.success(`${payload.title} listenize eklendi`, {
                position: "top-right",
             });
             setLocalStorage("wishlist", state.wishlist); // Save wishlist to localStorage

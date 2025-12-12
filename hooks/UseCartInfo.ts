@@ -22,7 +22,7 @@ const UseCartInfo = () => {
    useEffect(() => {
       const cart: CartSummary = cartItems.reduce(
          (cartTotal: CartSummary, cartItem: CartItem) => {
-            const { price, quantity } = cartItem;
+            const { price = 0, quantity } = cartItem;
             const itemTotal = price * quantity;
 
             cartTotal.total += itemTotal;

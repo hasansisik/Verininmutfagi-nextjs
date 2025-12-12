@@ -1,80 +1,83 @@
-
 const CheckOutForm = () => {
+   const turkiyeSehirleri = [
+      "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
+      "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa",
+      "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Edirne", "Elazığ", "Erzincan",
+      "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Isparta",
+      "İçel (Mersin)", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
+      "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla",
+      "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt",
+      "Sinop", "Sivas", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Şanlıurfa", "Uşak",
+      "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman",
+      "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
+   ];
+
    return (
       <div className="col-lg-7">
          <form onSubmit={(e) => e.preventDefault()} className="customer__form-wrap">
-            <span className="title">Billing Details</span>
+            <span className="title">Fatura Detayları</span>
             <div className="row">
                <div className="col-md-6">
                   <div className="form-grp">
-                     <label htmlFor="first-name">First name *</label>
+                     <label htmlFor="first-name">Ad *</label>
                      <input type="text" id="first-name" />
                   </div>
                </div>
                <div className="col-md-6">
                   <div className="form-grp">
-                     <label htmlFor="last-name">Last name *</label>
+                     <label htmlFor="last-name">Soyad *</label>
                      <input type="text" id="last-name" />
                   </div>
                </div>
             </div>
             <div className="form-grp">
-               <label htmlFor="company-name">Company name (optional)</label>
+               <label htmlFor="company-name">Şirket Adı (opsiyonel)</label>
                <input type="text" id="company-name" />
             </div>
             <div className="form-grp select-grp">
-               <label htmlFor="country-name">Country / Region *</label>
-               <select id="country-name" name="country-name" className="country-name">
-                  <option value="United Kingdom (UK)">United Kingdom (UK)</option>
-                  <option value="United States (US)">United States (US)</option>
-                  <option value="Turkey">Turkey</option>
-                  <option value="Saudi Arabia">Saudi Arabia</option>
-                  <option value="Portugal">Portugal</option>
+               <label htmlFor="country-name">Ülke / Bölge *</label>
+               <select id="country-name" name="country-name" className="country-name" defaultValue="Türkiye">
+                  <option value="Türkiye">Türkiye</option>
                </select>
             </div>
             <div className="form-grp">
-               <label htmlFor="street-address">Street address *</label>
-               <input type="text" id="street-address" placeholder="House number and street name" />
+               <label htmlFor="street-address">Sokak Adresi *</label>
+               <input type="text" id="street-address" placeholder="Bina numarası ve sokak adı" />
             </div>
             <div className="form-grp">
-               <input type="text" id="street-address-two" placeholder="Apartment, suite, unit, etc. (optional)" />
-            </div>
-            <div className="form-grp">
-               <label htmlFor="town-name">Town / City *</label>
-               <input type="text" id="town-name" />
+               <input type="text" id="street-address-two" placeholder="Daire, kat, blok vb. (opsiyonel)" />
             </div>
             <div className="form-grp select-grp">
-               <label htmlFor="district-name">District *</label>
-               <select id="district-name" name="district-name" className="district-name">
-                  <option value="Alabama">Alabama</option>
-                  <option value="Alaska">Alaska</option>
-                  <option value="Arizona">Arizona</option>
-                  <option value="California">California</option>
-                  <option value="New York">New York</option>
+               <label htmlFor="city-name">Şehir *</label>
+               <select id="city-name" name="city-name" className="city-name">
+                  <option value="">Şehir Seçiniz</option>
+                  {turkiyeSehirleri.map((sehir) => (
+                     <option key={sehir} value={sehir}>{sehir}</option>
+                  ))}
                </select>
             </div>
             <div className="form-grp">
-               <label htmlFor="zip-code">ZIP Code *</label>
+               <label htmlFor="zip-code">Posta Kodu *</label>
                <input type="text" id="zip-code" />
             </div>
             <div className="row">
                <div className="col-md-6">
                   <div className="form-grp">
-                     <label htmlFor="phone">Phone *</label>
+                     <label htmlFor="phone">Telefon *</label>
                      <input type="number" id="phone" />
                   </div>
                </div>
                <div className="col-md-6">
                   <div className="form-grp">
-                     <label htmlFor="email">Email address *</label>
+                     <label htmlFor="email">E-posta Adresi *</label>
                      <input type="email" id="email" />
                   </div>
                </div>
             </div>
-            <span className="title title-two">Additional Information</span>
+            <span className="title title-two">Ek Bilgiler</span>
             <div className="form-grp">
-               <label htmlFor="note">Order notes (optional)</label>
-               <textarea id="note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+               <label htmlFor="note">Sipariş Notları (opsiyonel)</label>
+               <textarea id="note" placeholder="Siparişiniz hakkında notlar, örn. teslimat için özel notlar."></textarea>
             </div>
          </form>
       </div>
