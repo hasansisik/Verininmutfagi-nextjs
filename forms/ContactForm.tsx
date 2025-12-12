@@ -8,30 +8,25 @@ export default function ContactForm() {
    const [state, formAction] = useActionState(handleContactFormAction, { success: false })
 
    return (
-      <form action={formAction} id="contact-form">
-         <div className="form-grp">
-            <textarea name="message" placeholder="Comment" required></textarea>
-         </div>
+      <form action={formAction} id="contact-form" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
          <div className="row">
-            <div className="col-md-4">
+            <div className="col-md-6">
                <div className="form-grp">
-                  <input name="user_name" type="text" placeholder="Name *" required />
+                  <input name="user_name" type="text" placeholder="Ad Soyad *" required />
                </div>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
                <div className="form-grp">
-                  <input name="user_email" type="email" placeholder="E-mail *" required />
-               </div>
-            </div>
-            <div className="col-md-4">
-               <div className="form-grp">
-                  <input type="url" placeholder="Website *" />
+                  <input name="user_email" type="email" placeholder="E-posta *" required />
                </div>
             </div>
          </div>
-         <button type="submit" className="btn btn-two arrow-btn">Submit Now <BtnArrow /></button>
-         {state.success && <p className="text-success mt-2">✅ Message sent successfully!</p>}
-         {state.error && <p className="text-danger mt-2">❌ Error: {state.error}</p>}
+         <div className="form-grp">
+            <textarea name="message" placeholder="Mesajınız *" required></textarea>
+         </div>
+         <button type="submit" className="btn btn-two arrow-btn">Gönder <BtnArrow /></button>
+         {state.success && <p className="text-success mt-2">✅ Mesajınız başarıyla gönderildi!</p>}
+         {state.error && <p className="text-danger mt-2">❌ Hata: {state.error}</p>}
       </form>
    )
 }

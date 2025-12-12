@@ -8,7 +8,7 @@ const Contact = () => {
       <>
          <HeaderOne />
          <main className="main-area fix">
-            <BreadcrumbOne title="Contact With Us" sub_title="Contact" />
+            <BreadcrumbOne title="İletişim" sub_title="İletişim" />
             <ContactArea />
          </main>
          <FooterOne />
