@@ -19,9 +19,6 @@ const FaqArea = () => {
             <div className="row align-items-center">
                <div className="col-lg-6">
                   <div className="faq__img-wrap tg-svg" >
-                     <div className="faq__round-text">
-                        <CurvedCircle />
-                     </div>
                      <div className="faq__img">
                         <Image src={faq_img1} alt="img" />
                         <div className="shape-one">
@@ -37,10 +34,10 @@ const FaqArea = () => {
                <div className="col-lg-6">
                   <div className="faq__content">
                      <div className="section__title pb-10">
-                        <span className="sub-title">Faq’s</span>
-                        <h2 className="title">Start Learning From <br /> World’s Pro Instructors</h2>
+                        <span className="sub-title">Sık Sorulan Sorular</span>
+                        <h2 className="title">Dünyanın En İyi <br /> Eğitmenlerinden Öğrenin</h2>
                      </div>
-                     <p>Groove’s intuitive shared inbox makes it easy for team members to organize, prioritize and.In this episode.</p>
+                     <p>Uzman eğitmenlerimizle birlikte en kaliteli eğitimi alın ve kariyerinizde yeni bir sayfa açın. Size uygun kursları keşfedin.</p>
                      <div className="faq__wrap">
                         <div className="accordion" id="accordionExample">
                            {faq_data.filter((items) => items.page === "home_1").map((item) => (

@@ -3,14 +3,14 @@ import Image from "next/image";
 
 const Features = () => {
    return (
-      <section className="features__area">
+      <section className="features__area" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
          <div className="container">
             <div className="row justify-content-center">
                <div className="col-xl-6">
                   <div className="section__title white-title text-center mb-50">
-                     <span className="sub-title">How We Start Journey</span>
-                     <h2 className="title">Start your Learning Journey Today!</h2>
-                     <p>Groove’s intuitive shared inbox makesteam members together <br /> organize, prioritize and.In this episode.</p>
+                     <span className="sub-title" >Yolculuğumuza Nasıl Başladık</span>
+                     <h2 className="title" style={{ color: '#000000' }}>Öğrenme Yolculuğunuza Bugün Başlayın!</h2>
+                     <p style={{ color: '#000000' }}>Size uygun kursları keşfedin ve kariyerinizde yeni bir sayfa açın. <br /> Uzman eğitmenlerimizle birlikte başarıya ulaşın.</p>
                   </div>
                </div>
             </div>

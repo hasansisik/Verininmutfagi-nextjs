@@ -15,7 +15,6 @@ const CurvedCircle: React.FC = () => {
 
   return (
     <div className="curved-circle" ref={curvedCircleRef}>
-      * Education * System * can * Make * Change *
     </div>
   );
 };

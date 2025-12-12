@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import course_data from "@/data/home-data/CourseData";
 
-const tab_title: string[] = ["All Courses", "Design", "Business", "Development"];
+const tab_title: string[] = ["Tüm Kurslar", "Tasarım", "İşletme", "Geliştirme"];
 
 // slider setting
 const setting = {
@@ -64,9 +64,9 @@ const CourseArea = ({ style }: StyleType) => {
           <div className="row justify-content-center">
             <div className="col-lg-6">
               <div className="section__title text-center mb-40">
-                <span className="sub-title">Top Class Courses</span>
-                <h2 className="title">Explore Our World&apos;s Best Courses</h2>
-                <p className="desc">When known printer took a galley of type scrambl edmake</p>
+                <span className="sub-title">En İyi Kurslar</span>
+                <h2 className="title">Dünyanın En İyi Kurslarını Keşfedin</h2>
+                <p className="desc">Size uygun kursları bulun ve kariyerinizde yeni bir sayfa açın</p>
               </div>
               <div className="courses__nav">
                 <ul className="nav nav-tabs" id="courseTab" role="tablist">
@@ -101,11 +101,11 @@ const CourseArea = ({ style }: StyleType) => {
                           <li className="avg-rating"><i className="fas fa-star"></i> {item.review}</li>
                         </ul>
                         <h5 className="title"><Link href="/course-details">{item.title}</Link></h5>
-                        <p className="author">By <Link href="#">{item.author}</Link></p>
+                        <p className="author">Eğitmen: <Link href="#">{item.author}</Link></p>
                         <div className="courses__item-bottom">
                           <div className="button">
                             <Link href="/course-details">
-                              <span className="text">Enroll Now</span>
+                              <span className="text">Hemen Kaydol</span>
                               <i className="flaticon-arrow-right"></i>
                             </Link>
                           </div>

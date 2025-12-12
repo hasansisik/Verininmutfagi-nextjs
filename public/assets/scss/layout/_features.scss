@@ -5,7 +5,7 @@
 ===============================*/
 .features {
     &__area {
-        background: var(--tg-common-color-blue-2);
+        background: transparent;
         padding: 120px 0 90px;
         @media #{$xs} {
             padding: 100px 0 70px;
@@ -379,14 +379,14 @@
     }
     &__content {
         & .title {
-            color: var(--tg-common-color-white);
+            color: var(--tg-common-color-black);
             margin-bottom: 8px;
             font-size: 20px;
             font-weight: var(--tg-fw-semi-bold);
         }
         & p {
             margin-bottom: 0;
-            color: var(--tg-common-color-gray-4);
+            color: var(--tg-common-color-black);
         }
         &-two {
             & .content-top {

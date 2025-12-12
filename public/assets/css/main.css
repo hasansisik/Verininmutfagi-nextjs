@@ -1119,6 +1119,36 @@ textarea {
 .section__title.white-title p {
   color: #ACAACC;
 }
+/* Override for features area - make white text black - strongest override */
+.features__area .section__title.white-title .sub-title,
+section.features__area .section__title.white-title .sub-title {
+  color: #000000 !important;
+  color: var(--tg-common-color-black) !important;
+}
+.features__area .section__title.white-title .title,
+.features__area .section__title.white-title h2.title,
+.features__area .section__title.white-title h2,
+section.features__area .section__title.white-title .title,
+section.features__area .section__title.white-title h2.title,
+section.features__area .section__title.white-title h2 {
+  color: #000000 !important;
+  color: var(--tg-common-color-black) !important;
+}
+.features__area .section__title.white-title .title span:not(.svg-icon),
+section.features__area .section__title.white-title .title span:not(.svg-icon) {
+  color: #000000 !important;
+  color: var(--tg-common-color-black) !important;
+}
+.features__area .section__title.white-title p,
+section.features__area .section__title.white-title p {
+  color: #000000 !important;
+  color: var(--tg-common-color-black) !important;
+}
+.features__area .section__title.white-title .desc,
+section.features__area .section__title.white-title .desc {
+  color: #000000 !important;
+  color: var(--tg-common-color-black) !important;
+}
 .section__title .desc {
   margin: 10px 0 0;
 }
@@ -13506,7 +13536,7 @@ textarea {
     15. Features
 ===============================*/
 .features__area {
-  background: var(--tg-common-color-blue-2);
+  background: transparent;
   padding: 120px 0 90px;
 }
 @media (max-width: 767.98px) {
@@ -20909,6 +20939,74 @@ section.footer__area {
 .footer__bottom-menu .list-wrap li a::after,
 .footer__bottom .footer__bottom-menu .list-wrap li a::after {
   background: var(--tg-common-color-black) !important;
+}
+
+/* Features area - transparent background and black text */
+.features__area,
+section.features__area {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.features__area .section__title.white-title .sub-title,
+.features__area .section__title.white-title .title,
+.features__area .section__title.white-title .title span:not(.svg-icon),
+.features__area .section__title.white-title p,
+.features__area .section__title.white-title .desc,
+section.features__area .section__title.white-title .sub-title,
+section.features__area .section__title.white-title .title,
+section.features__area .section__title.white-title .title span:not(.svg-icon),
+section.features__area .section__title.white-title p,
+section.features__area .section__title.white-title .desc,
+.features__area .section__title.white-title h2.title,
+.features__area .section__title.white-title h2,
+section.features__area .section__title.white-title h2.title,
+section.features__area .section__title.white-title h2 {
+  color: #000000 !important;
+  color: var(--tg-common-color-black) !important;
+}
+
+.features__content .title,
+.features__area .features__content .title {
+  color: var(--tg-common-color-black) !important;
+}
+
+.features__content p,
+.features__area .features__content p {
+  color: var(--tg-common-color-black) !important;
+}
+
+/* Features icons - ensure they are visible on transparent background */
+.features__area .features__icon svg,
+.features__area .features__icon .injectable svg,
+.features__area .features__icon img {
+  filter: brightness(0) !important;
+}
+
+.features__area .features__icon svg path,
+.features__area .features__icon .injectable svg path {
+  fill: var(--tg-common-color-black) !important;
+  stroke: var(--tg-common-color-black) !important;
+}
+
+/* Additional strong override for white-title in features area */
+.features__area .white-title *,
+section.features__area .white-title *,
+.features__area .section__title.white-title *,
+section.features__area .section__title.white-title * {
+  color: #000000 !important;
+}
+
+.features__area .white-title h2,
+.features__area .white-title .title,
+.features__area .section__title.white-title h2,
+.features__area .section__title.white-title .title,
+section.features__area .white-title h2,
+section.features__area .white-title .title,
+section.features__area .section__title.white-title h2,
+section.features__area .section__title.white-title .title {
+  color: #000000 !important;
 }
 
 /*# sourceMappingURL=main.css.map */
