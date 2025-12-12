@@ -28,15 +28,7 @@ const MobileSidebar = ({ isActive, setIsActive }: MobileMenuProps) => {
                <div className="tgmobile__menu-outer">
                   <MobileMenu />
                </div>
-               <div className="social-links">
-                  <ul className="list-wrap">
-                     <li><Link href="#"><i className="fab fa-facebook-f"></i></Link></li>
-                     <li><Link href="#"><i className="fab fa-twitter"></i></Link></li>
-                     <li><Link href="#"><i className="fab fa-instagram"></i></Link></li>
-                     <li><Link href="#"><i className="fab fa-linkedin-in"></i></Link></li>
-                     <li><Link href="#"><i className="fab fa-youtube"></i></Link></li>
-                  </ul>
-               </div>
+              
             </nav>
          </div>
          <div className="tgmobile__menu-backdrop"></div>

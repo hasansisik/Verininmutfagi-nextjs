@@ -1,10 +1,9 @@
 "use client"
 import { useState } from "react";
 import Overview from "../course-details/Overview";
-import Reviews from "../course-details/Reviews";
 import Instructors from "../course-details/Instructors";
 
-const tab_title: string[] = ["Overview", "Instructors", "reviews"];
+const tab_title: string[] = ["Genel Bakış", "Eğitmenler"];
 
 const LessonNavTav = () => {
 
@@ -29,9 +28,6 @@ const LessonNavTav = () => {
             </div>
             <div className={`tab-pane fade ${activeTab === 1 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
                <Instructors />
-            </div>
-            <div className={`tab-pane fade ${activeTab === 2 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
-               <Reviews />
             </div>
          </div>
       </div>

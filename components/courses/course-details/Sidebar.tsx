@@ -57,11 +57,7 @@ const Sidebar = ({ single_course }: any) => {
                         Dersler
                         <span>12</span>
                      </li>
-                     <li>
-                        <InjectableSvg src="/assets/img/icons/course_icon05.svg" alt="img" className="injectable" />
-                        Sertifikalar
-                        <span>Var</span>
-                     </li>
+                    
                      <li>
                         <InjectableSvg src="/assets/img/icons/course_icon06.svg" alt="img" className="injectable" />
                         Mezun Sayısı

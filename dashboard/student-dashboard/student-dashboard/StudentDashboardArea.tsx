@@ -3,13 +3,10 @@ import DashboardBannerTwo from "@/dashboard/dashboard-common/DashboardBannerTwo"
 import DashboardCourse from "@/dashboard/dashboard-common/DashboardCourse"
 import DashboardSidebarTwo from "@/dashboard/dashboard-common/DashboardSidebarTwo"
 import dashboard_count_data from "@/data/dashboard-data/DashboardCounterData"
-import Image from "next/image"
-import bg_img from "@/assets/img/bg/dashboard_bg.jpg"
 
 const StudentDashboardArea = () => {
    return (
-      <section className="dashboard__area section-pb-120">
-         <div className="dashboard__bg"><Image src={bg_img} alt=""/></div>
+      <section className="dashboard__area section-pb-120" style={{ background: "#ffffff" }}>
          <div className="container">
             <DashboardBannerTwo />
             <div className="dashboard__inner-wrap">
@@ -18,7 +15,7 @@ const StudentDashboardArea = () => {
                   <div className="col-lg-9">
                      <div className="dashboard__count-wrap">
                         <div className="dashboard__content-title">
-                           <h4 className="title">Dashboard</h4>
+                           <h4 className="title">Kontrol Paneli</h4>
                         </div>
                         <div className="row">
                            {dashboard_count_data.slice(0, 3).map((item) => (

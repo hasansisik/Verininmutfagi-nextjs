@@ -25,14 +25,7 @@ const HeaderTopOne = ({ style }: StyleType) => {
                      <div className="tg-header__phone">
                         <Image src={icon_3} alt="Icon" />Call us: <Link href="tel:0123456789">+123 599 8989</Link>
                      </div>
-                     <ul className="tg-header__top-social list-wrap">
-                        <li>Follow Us On :</li>
-                        <li><Link href="#"><i className="fab fa-facebook-f"></i></Link></li>
-                        <li><Link href="#"><i className="fab fa-twitter"></i></Link></li>
-                        <li><Link href="#"><i className="fab fa-whatsapp"></i></Link></li>
-                        <li><Link href="#"><i className="fab fa-linkedin-in"></i></Link></li>
-                        <li><Link href="#"><i className="fab fa-youtube"></i></Link></li>
-                     </ul>
+                   
                   </div>
                </div>
             </div>

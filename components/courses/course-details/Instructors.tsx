@@ -14,14 +14,7 @@ const Instructors = () => {
             <span className="designation">Yazılım Geliştirme Uzmanı</span>
             <p className="avg-rating"><i className="fas fa-star"></i>4.8 (Değerlendirme)</p>
             <p>10 yılı aşkın deneyime sahip yazılım geliştirme uzmanı. Web teknolojileri, mobil uygulama geliştirme ve modern programlama dilleri konularında uzmanlaşmıştır. Binlerce öğrenciye eğitim vermiş ve birçok başarılı projeye imza atmıştır.</p>
-            <div className="instructor__social">
-               <ul className="list-wrap justify-content-start">
-                  <li><Link href="#"><i className="fab fa-facebook-f"></i></Link></li>
-                  <li><Link href="#"><i className="fab fa-twitter"></i></Link></li>
-                  <li><Link href="#"><i className="fab fa-whatsapp"></i></Link></li>
-                  <li><Link href="#"><i className="fab fa-instagram"></i></Link></li>
-               </ul>
-            </div>
+           
          </div>
       </div>
    )

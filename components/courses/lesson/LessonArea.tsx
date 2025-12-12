@@ -14,7 +14,7 @@ const LessonArea = () => {
             <div className="row gx-0">
                <div className="col-xl-3 col-lg-4">
                   <div className="lesson__content">
-                     <h2 className="title">Course Content</h2>
+                     <h2 className="title">Kurs İçeriği</h2>
                      <LessonFaq />
                   </div>
                </div>
@@ -23,7 +23,7 @@ const LessonArea = () => {
                      <div className="lesson__video-wrap-top">
                         <div className="lesson__video-wrap-top-left">
                            <Link href="#"><i className="flaticon-arrow-right"></i></Link>
-                           <span>The Complete Design Course: From Zero to Expert!</span>
+                           <span>Eksiksiz Tasarım Kursu: Sıfırdan Uzmanlığa!</span>
                         </div>
                         <div className="lesson__video-wrap-top-right">
                            <Link href="#"><i className="fas fa-times"></i></Link>
@@ -31,8 +31,8 @@ const LessonArea = () => {
                      </div>
                      <LessonVideo />
                      <div className="lesson__next-prev-button">
-                        <button className="prev-button" title="Create a Simple React App"><i className="flaticon-arrow-right"></i></button>
-                        <button className="next-button" title="React for the Rest of us"><i className="flaticon-arrow-right"></i></button>
+                        <button className="prev-button" title="Basit Bir React Uygulaması Oluştur"><i className="flaticon-arrow-right"></i></button>
+                        <button className="next-button" title="Herkes İçin React"><i className="flaticon-arrow-right"></i></button>
                      </div>
                   </div>
                   <LessonNavTav />

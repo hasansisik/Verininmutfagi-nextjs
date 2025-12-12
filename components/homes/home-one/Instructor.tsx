@@ -79,14 +79,7 @@ const Instructor = () => {
                                     <p className="avg-rating">
                                        <i className="fas fa-star"></i>{item.rating}
                                     </p>
-                                    <div className="instructor__social">
-                                       <ul className="list-wrap">
-                                          <li><Link href="#"><i className="fab fa-facebook-f"></i></Link></li>
-                                          <li><Link href="#"><i className="fab fa-twitter"></i></Link></li>
-                                          <li><Link href="#"><i className="fab fa-whatsapp"></i></Link></li>
-                                          <li><Link href="#"><i className="fab fa-instagram"></i></Link></li>
-                                       </ul>
-                                    </div>
+                                  
                                  </div>
                               </div>
                            </div>

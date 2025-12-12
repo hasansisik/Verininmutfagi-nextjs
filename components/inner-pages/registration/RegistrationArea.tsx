@@ -1,8 +1,5 @@
 import RegistrationForm from "@/forms/RegistrationForm"
 import Link from "next/link"
-import Image from "next/image"
-
-import icon from "@/assets/img/icons/google.svg"
 
 const RegistrationArea = () => {
    return (
@@ -10,21 +7,12 @@ const RegistrationArea = () => {
          <div className="container">
             <div className="row justify-content-center">
                <div className="col-xl-6 col-lg-8">
-                  <div className="singUp-wrap">
-                     <h2 className="title">Create Your Account</h2>
-                     <p>Hey there! Ready to join the party? We just need a few details from you to get <br /> started. Let&apos;s do this!</p>
-                     <div className="account__social">
-                        <Link href="#" className="account__social-btn">
-                           <Image src={icon} alt="img" />
-                           Continue with google
-                        </Link>
-                     </div>
-                     <div className="account__divider">
-                        <span>or</span>
-                     </div>
+                  <div className="singUp-wrap" style={{ background: "#ffffff" }}>
+                     <h2 className="title">Hesabınızı Oluşturun</h2>
+                     <p>Merhaba! Bize katılmaya hazır mısınız? Başlamak için sizden birkaç bilgi almamız gerekiyor. </p>
                      <RegistrationForm />
                      <div className="account__switch">
-                        <p>Already have an account?<Link href="/login">Login</Link></p>
+                        <p>Zaten hesabınız var mı?<Link href="/login">Giriş Yap</Link></p>
                      </div>
                   </div>
                </div>

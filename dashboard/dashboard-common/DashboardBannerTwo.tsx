@@ -19,18 +19,13 @@ const DashboardBannerTwo = () => {
                   <ul className="list-wrap">
                      <li>
                         <InjectableSvg src="/assets/img/icons/course_icon03.svg" alt="img" className="injectable" />
-                        5 Courses Enrolled
+                        5 Kursa Kayıtlı
                      </li>
-                     <li>
-                        <InjectableSvg src="/assets/img/icons/course_icon05.svg" alt="img" className="injectable" />
-                        4 Certificate
-                     </li>
+                    
                   </ul>
                </div>
             </div>
-            <div className="dashboard__instructor-info-right">
-               <Link href="#" className="btn btn-two arrow-btn">Become an Instructor <BtnArrow /></Link>
-            </div>
+           
          </div>
       </div>
    )

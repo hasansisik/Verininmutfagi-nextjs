@@ -8,7 +8,6 @@ const Registration = () => {
       <>
          <HeaderOne />
          <main className="main-area fix">
-            <BreadcrumbOne title="Student SingUp" sub_title="SingUp" />
             <RegistrationArea />
          </main>
          <FooterOne />

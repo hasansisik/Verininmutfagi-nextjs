@@ -55,25 +55,7 @@ const InstructorDetailsArea = () => {
                     <li><i className="fas fa-phone-alt"></i><Link href="tel:0123456789">+123 9500 600</Link></li>
                   </ul>
                   <p>Grursus mal suada faci lisis Lorem ipsum dolarorit more ametion consectetur Vesity bulum a nec odio aea the dumm ipsumm ipsum that dolocons sus suada and farit consectetur elit.</p>
-                  <div className="instructor__details-social">
-                    <ul className="list-wrap">
-                      <li>
-                        <Link href="#"><i className="fab fa-facebook-f"></i></Link>
-                      </li>
-                      <li>
-                        <Link href="#"><i className="fab fa-twitter"></i></Link>
-                      </li>
-                      <li>
-                        <Link href="#"><i className="fab fa-instagram"></i></Link>
-                      </li>
-                      <li>
-                        <Link href="#"><i className="fab fa-whatsapp"></i></Link>
-                      </li>
-                      <li>
-                        <Link href="#"><i className="fab fa-youtube"></i></Link>
-                      </li>
-                    </ul>
-                  </div>
+                  
                 </div>
               </div>
 

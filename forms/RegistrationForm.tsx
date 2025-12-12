@@ -8,30 +8,30 @@ const RegistrationForm = () => {
          <div className="row gutter-20">
             <div className="col-md-6">
                <div className="form-grp">
-                  <label htmlFor="fast-name">First Name</label>
-                  <input type="text" id="fast-name" placeholder="First Name" />
+                  <label htmlFor="fast-name">Ad</label>
+                  <input type="text" id="fast-name" placeholder="Ad" style={{ borderRadius: "50px" }} />
                </div>
             </div>
             <div className="col-md-6">
                <div className="form-grp">
-                  <label htmlFor="last-name">Last name</label>
-                  <input type="text" id="last-name" placeholder="Last name" />
+                  <label htmlFor="last-name">Soyad</label>
+                  <input type="text" id="last-name" placeholder="Soyad" style={{ borderRadius: "50px" }} />
                </div>
             </div>
          </div>
          <div className="form-grp">
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" placeholder="email" />
+            <label htmlFor="email">E-posta</label>
+            <input type="email" id="email" placeholder="E-posta" style={{ borderRadius: "50px" }} />
          </div>
          <div className="form-grp">
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" placeholder="password" />
+            <label htmlFor="password">Şifre</label>
+            <input type="password" id="password" placeholder="Şifre" style={{ borderRadius: "50px" }} />
          </div>
          <div className="form-grp">
-            <label htmlFor="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" placeholder="Confirm Password" />
+            <label htmlFor="confirm-password">Şifre Onayı</label>
+            <input type="password" id="confirm-password" placeholder="Şifre Onayı" style={{ borderRadius: "50px" }} />
          </div>
-         <button type="submit" className="btn btn-two arrow-btn">Sign Up<BtnArrow /></button>
+         <button type="submit" className="btn btn-two arrow-btn">Kayıt Ol<BtnArrow /></button>
       </form>
    )
 }

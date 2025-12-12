@@ -6,7 +6,7 @@ const DashboardCourse = () => {
    return (
       <div className="progress__courses-wrap">
          <div className="dashboard__content-title">
-            <h4 className="title">In progress Courses</h4>
+            <h4 className="title">Devam Eden Kurslar</h4>
          </div>
          <div className="row">
             {student_dashboard_data.map((item) => (
@@ -33,7 +33,7 @@ const DashboardCourse = () => {
                            </div>
                         </div>
                         <div className="progress-item progress-item-two">
-                           <h6 className="title">COMPLETE <span>{item.progress}%</span></h6>
+                           <h6 className="title">TAMAMLANDI <span>{item.progress}%</span></h6>
                            <div className="progress">
                               <div className="progress-bar" style={{ width: `${item.progress}%` }}></div>
                            </div>
