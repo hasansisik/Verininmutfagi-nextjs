@@ -41,6 +41,11 @@ const menu_data: MenuItem[] = [
             { link: "/courses?category=finance", title: "Finans" },
             { link: "/courses?category=development", title: "Geliştirme" },
         ],
-    }
+    },
+    {
+        id: 3,
+        title: "İletişim",
+        link: "/contact",
+    },
 ];
 export default menu_data;

@@ -5,13 +5,12 @@ import { useState } from "react";
 import Overview from "./Overview";
 import Sidebar from "./Sidebar";
 import Curriculum from "./Curriculum"
-import Reviews from "./Reviews"
 import Instructors from "./Instructors"
 
 import course_details_img1 from "@/assets/img/courses/courses_details.jpg"
 import course_details_img2 from "@/assets/img/courses/course_author001.png"
 
-const tab_title: string[] = ["Overview", "Curriculum", "Instructors", "reviews"];
+const tab_title: string[] = ["Genel Bakış", "Müfredat", "Eğitmenler"];
 
 const CourseDetailsArea = ({ single_course }: any) => {
 
@@ -32,19 +31,19 @@ const CourseDetailsArea = ({ single_course }: any) => {
             <div className="courses__details-content">
               <ul className="courses__item-meta list-wrap">
                 <li className="courses__item-tag">
-                  <Link href="/course">{single_course?.category ? single_course.category : "Development"}</Link>
+                  <Link href="/course">{single_course?.category ? single_course.category : "Geliştirme"}</Link>
                 </li>
-                <li className="avg-rating"><i className="fas fa-star"></i>{single_course?.rating ? single_course.rating : "(4.5 Reviews)"}</li>
+                <li className="avg-rating"><i className="fas fa-star"></i>{single_course?.rating ? single_course.rating : "4.5 (Değerlendirme)"}</li>
               </ul>
-              <h2 className="title">{single_course?.title ? single_course.title : "Resolving Conflicts Between Designers And Engineers"}</h2>
+              <h2 className="title">{single_course?.title ? single_course.title : "Tasarımcılar ve Mühendisler Arasındaki Çatışmaları Çözme"}</h2>
               <div className="courses__details-meta">
                 <ul className="list-wrap">
                   <li className="author-two">
                     <Image src={course_details_img2} alt="img" />
-                    By <Link href="#">{single_course?.instructors ? single_course.instructors : "David Millar"}</Link>
+                    Yazar: <Link href="#">{single_course?.instructors ? single_course.instructors : "Ahmet Yılmaz"}</Link>
                   </li>
                   <li className="date"><i className="flaticon-calendar"></i>24/07/2024</li>
-                  <li><i className="flaticon-mortarboard"></i>2,250 Students</li>
+                  <li><i className="flaticon-mortarboard"></i>2.250 Öğrenci</li>
                 </ul>
               </div>
               <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -58,14 +57,11 @@ const CourseDetailsArea = ({ single_course }: any) => {
                 <div className={`tab-pane fade ${activeTab === 0 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
                   <Overview />
                 </div>
-                <div className={`tab-pane fade ${activeTab === 1 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
+                <div className={`tab-pane fade ${activeTab === 1 ? 'show active' : ''}`} id="curriculum-tab-pane" role="tabpanel" aria-labelledby="curriculum-tab">
                   <Curriculum />
                 </div>
-                <div className={`tab-pane fade ${activeTab === 2 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
+                <div className={`tab-pane fade ${activeTab === 2 ? 'show active' : ''}`} id="instructors-tab-pane" role="tabpanel" aria-labelledby="instructors-tab">
                   <Instructors />
-                </div>
-                <div className={`tab-pane fade ${activeTab === 3 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
-                  <Reviews />
                 </div>
               </div>
             </div>

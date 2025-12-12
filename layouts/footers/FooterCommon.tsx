@@ -12,43 +12,36 @@ const FooterCommon = () => {
                   <Link href="/"><Image src={logo} alt="img" /></Link>
                </div>
                <div className="footer__content">
-                  <p>when an unknown printer took galley of type and scrambled it to make pspecimen bookt has.</p>
+                  <p>Online eğitim platformumuz ile kendinizi geliştirin ve yeni beceriler kazanın. Uzman eğitmenlerimizle kaliteli içerikler sunuyoruz.</p>
+                  
+               </div>
+            </div>
+         </div>
+         <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+            <div className="footer__widget">
+               <h4 className="footer__widget-title">Kurumsal</h4>
+               <div className="footer__link">
                   <ul className="list-wrap">
-                     <li>463 7th Ave, NY 10018, USA</li>
-                     <li>+123 88 9900 456</li>
+                     <li><Link href="/contact">İletişim</Link></li>
+                     <li><Link href="/courses">Kurslar</Link></li>
                   </ul>
                </div>
             </div>
          </div>
          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
             <div className="footer__widget">
-               <h4 className="footer__widget-title">Useful Links</h4>
+               <h4 className="footer__widget-title">Kategoriler</h4>
                <div className="footer__link">
                   <ul className="list-wrap">
-                     <li><Link href="/events-details">Our values</Link></li>
-                     <li><Link href="/events-details">Our advisory board</Link></li>
-                     <li><Link href="/events-details">Our partners</Link></li>
-                     <li><Link href="/events-details">Become a partner</Link></li>
-                     <li><Link href="/events-details">Work at Future Learn</Link></li>
-                     <li><Link href="/events-details">Quizlet Plus</Link></li>
+                     <li><Link href="/courses">Geliştirme</Link></li>
+                     <li><Link href="/courses">Tasarım</Link></li>
+                     <li><Link href="/courses">İşletme</Link></li>
+
                   </ul>
                </div>
             </div>
          </div>
-         <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-            <div className="footer__widget">
-               <h4 className="footer__widget-title">Our Company</h4>
-               <div className="footer__link">
-                  <ul className="list-wrap">
-                     <li><Link href="/contact">Contact Us</Link></li>
-                     <li><Link href="/instructor-details">Become Teacher</Link></li>
-                     <li><Link href="/blog">Blog</Link></li>
-                     <li><Link href="/instructor-details">Instructor</Link></li>
-                     <li><Link href="/events-details">Events</Link></li>
-                  </ul>
-               </div>
-            </div>
-         </div>
+
       </>
    )
 }

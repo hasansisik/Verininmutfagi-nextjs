@@ -21,67 +21,67 @@ interface DataType {
 const faq_data: DataType[] = [
    {
       id: 1,
-      title: "Introduction",
+      title: "Giriş",
       show: "show",
       faq_details: [
          {
             class_name: "open-item",
             lock: false,
-            title: "Course Installation",
+            title: "Kurs Kurulumu",
             duration: "03:03"
          },
          {
             lock: true,
-            title: "Create a Simple React App",
+            title: "Basit Bir React Uygulaması Oluşturma",
             duration: "07:48"
          },
          {
             lock: true,
-            title: "React for the Rest of us",
+            title: "Hepimiz İçin React",
             duration: "10:48"
          },
       ]
    },
    {
       id: 2,
-      title: "Capacitance and Inductance",
+      title: "Temel Kavramlar",
       collapsed: "collapsed",
       faq_details: [
          {
             lock: true,
-            title: "Course Installation",
+            title: "Kurs Kurulumu",
             duration: "03:03"
          },
          {
             lock: true,
-            title: "Create a Simple React App",
+            title: "Basit Bir React Uygulaması Oluşturma",
             duration: "07:48"
          },
          {
             lock: true,
-            title: "React for the Rest of us",
+            title: "Hepimiz İçin React",
             duration: "10:48"
          },
       ]
    },
    {
       id: 3,
-      title: "Final Audit",
+      title: "Final Değerlendirmesi",
       collapsed: "collapsed",
       faq_details: [
          {
             lock: true,
-            title: "Course Installation",
+            title: "Kurs Kurulumu",
             duration: "03:03"
          },
          {
             lock: true,
-            title: "Create a Simple React App",
+            title: "Basit Bir React Uygulaması Oluşturma",
             duration: "07:48"
          },
          {
             lock: true,
-            title: "React for the Rest of us",
+            title: "Hepimiz İçin React",
             duration: "10:48"
          },
       ]
@@ -95,8 +95,8 @@ const Curriculum = () => {
    return (
       <>
          <div className="courses__curriculum-wrap">
-            <h3 className="title">Course Curriculum</h3>
-            <p>Dorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan.</p>
+            <h3 className="title">Kurs Müfredatı</h3>
+            <p>Kurs müfredatı, temel kavramlardan başlayarak ileri seviye konulara kadar kapsamlı bir öğrenme yolculuğu sunmaktadır. Her bölüm, önceki konuları pekiştirerek ilerlemekte ve pratik uygulamalarla desteklenmektedir.</p>
             <div className="accordion" id="accordionExample">
                {faq_data.map((item) => (
                   <div key={item.id} className="accordion-item">
@@ -124,7 +124,7 @@ const Curriculum = () => {
                                        </li>) : (
                                        <li className="course-item open-item">
                                           <a onClick={() => setIsVideoOpen(true)} style={{ cursor: "pointer" }} className="course-item-link popup-video">
-                                             <span className="item-name">Course Installation</span>
+                                             <span className="item-name">Kurs Kurulumu</span>
                                              <div className="course-item-meta">
                                                 <span className="item-meta duration">03:03</span>
                                              </div>
