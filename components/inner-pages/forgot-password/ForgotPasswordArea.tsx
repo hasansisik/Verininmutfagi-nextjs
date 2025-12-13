@@ -43,3 +43,4 @@ const ForgotPasswordArea = () => {
 
 export default ForgotPasswordArea
 
+

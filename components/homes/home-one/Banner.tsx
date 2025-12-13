@@ -6,7 +6,7 @@ const Banner: React.FC = () => {
    return (
       <section className="banner-area" style={{ width: '100%', display: 'block' }}>
          <Image 
-            src="/assets/img/banner/banners.png" 
+            src="/assets/img/banner/banner.png" 
             alt="Banner" 
             width={1920}
             height={1080}
