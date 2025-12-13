@@ -24,7 +24,7 @@ const BrandOne = ({ style }: StyleType) => {
    const [isPaused, setIsPaused] = useState(false);
 
    return (
-      <div className={`brand-area ${style ? "brand-area-two" : ""}`}>
+      <div className={`brand-area ${style ? "brand-area-two" : ""}`} style={{ backgroundColor: 'blue' }}>
          <div className="container-fluid">
             <Marquee className="marquee_mode" pauseOnHover={false} play={!isPaused}>
                {brand_data.map((item, i) => (
