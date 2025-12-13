@@ -70,3 +70,4 @@ const VerificationArea = () => {
 export default VerificationArea
 
 
+
