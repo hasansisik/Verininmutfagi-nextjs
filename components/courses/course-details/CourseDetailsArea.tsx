@@ -31,7 +31,7 @@ const CourseDetailsArea = ({ single_course }: any) => {
             <div className="courses__details-content">
               <ul className="courses__item-meta list-wrap">
                 <li className="courses__item-tag">
-                  <Link href="/course">{single_course?.category ? single_course.category : "Geliştirme"}</Link>
+                  <Link href="/kurslar">{single_course?.category ? single_course.category : "Geliştirme"}</Link>
                 </li>
                 <li className="avg-rating"><i className="fas fa-star"></i>{single_course?.rating ? single_course.rating : "4.5 (Değerlendirme)"}</li>
               </ul>

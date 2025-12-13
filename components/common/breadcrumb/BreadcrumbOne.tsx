@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link";
 
 interface StyleType {
@@ -20,23 +19,23 @@ const BreadcrumbOne = ({ title, sub_title, sub_title_2, style }: StyleType) => {
                         {
                            style ? (
                               <>
-                                 <span property="itemListElement" typeof="ListItem">
+                                 <span>
                                     <Link href="/">Anasayfa</Link>
                                  </span>
                                  <span className="breadcrumb-separator"><i className="fas fa-angle-right"></i></span>
-                                 <span property="itemListElement" typeof="ListItem">
+                                 <span>
                                     <Link href="/events">{sub_title}</Link>
                                  </span>
                                  <span className="breadcrumb-separator"><i className="fas fa-angle-right"></i></span>
-                                 <span property="itemListElement" typeof="ListItem">{sub_title_2}</span>
+                                 <span>{sub_title_2}</span>
                               </>
                            ) : (
                               <>
-                                 <span property="itemListElement" typeof="ListItem">
+                                 <span>
                                     <Link href="/">Anasayfa</Link>
                                  </span>
                                  <span className="breadcrumb-separator"><i className="fas fa-angle-right"></i></span>
-                                 <span property="itemListElement" typeof="ListItem">{sub_title}</span>
+                                 <span>{sub_title}</span>
                               </>
                            )
                         }

@@ -1,9 +1,9 @@
 import { StaticImageData } from "next/image";
 
-import icon_1 from "@/assets/img/icons/features_icon01.svg";
-import icon_2 from "@/assets/img/icons/features_icon02.svg";
-import icon_3 from "@/assets/img/icons/features_icon03.svg";
-import icon_4 from "@/assets/img/icons/features_icon04.svg";
+import icon_1 from "@/assets/img/icons/h2_features_icon01.svg";
+import icon_2 from "@/assets/img/icons/h3_features_icon02.svg";
+import icon_3 from "@/assets/img/icons/h2_features_icon02.svg";
+import icon_4 from "@/assets/img/icons/h3_features_icon03.svg";
 import homefFeature_1 from "@/assets/img/icons/h4_features_icon01.svg"
 import homefFeature_2 from "@/assets/img/icons/h4_features_icon02.svg"
 import homefFeature_3 from "@/assets/img/icons/h4_features_icon03.svg"
@@ -23,29 +23,29 @@ const feature_data: DataType[] = [
       id: 1,
       page: "home_1",
       icon: icon_1,
-      title: "Uzmanlarla Öğrenin",
-      desc: "Alanında uzman eğitmenlerimizle birlikte en kaliteli eğitimi alın",
+      title: "Geniş Kurs Kataloğu",
+      desc: "Binlerce farklı kategoride kurs seçeneği ile istediğiniz alanda kendinizi geliştirin",
    },
    {
       id: 2,
       page: "home_1",
       icon: icon_2,
-      title: "Her Şeyi Öğrenin",
-      desc: "İstediğiniz konuda, istediğiniz zaman binlerce kurs arasından seçim yapın",
+      title: "Uzman Eğitmenler",
+      desc: "Alanında deneyimli ve sertifikalı eğitmenlerden kaliteli eğitim alın",
    },
    {
       id: 3,
       page: "home_1",
       icon: icon_3,
-      title: "Online Sertifika Alın",
-      desc: "Tamamladığınız kurslar için geçerli sertifikalar kazanın",
+      title: "7/24 Erişim",
+      desc: "Kurslarınıza istediğiniz zaman, istediğiniz cihazdan kolayca erişebilirsiniz",
    },
    {
       id: 4,
       page: "home_1",
       icon: icon_4,
-      title: "E-posta Pazarlama",
-      desc: "Pazarlama alanında uzmanlaşın ve kariyerinizde ilerleyin",
+      title: "Uygun Fiyatlar",
+      desc: "Kaliteli eğitimi herkes için erişilebilir fiyatlarla sunuyoruz",
    },
 
    // home_2

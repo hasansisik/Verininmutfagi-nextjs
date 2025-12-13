@@ -23,17 +23,9 @@ const FooterOne = ({ style, style_2 }: StyleType) => {
          <div className={`footer__bottom ${style_2 ? "footer__bottom-four" : ""}`} style={{ background: 'transparent', backgroundColor: 'transparent' }}>
             <div className="container">
                <div className="row align-items-center">
-                  <div className="col-md-7">
-                     <div className="copy-right-text">
-                        <p>© 2010-2024 skillgro.com. Tüm hakları saklıdır.</p>
-                     </div>
-                  </div>
-                  <div className="col-md-5">
-                     <div className="footer__bottom-menu">
-                        <ul className="list-wrap">
-                           <li><Link href="/contact">Kullanım Koşulları</Link></li>
-                           <li><Link href="/contact">Gizlilik Politikası</Link></li>
-                        </ul>
+                  <div className="col-md-12">
+                     <div className="copy-right-text text-center">
+                        <p className="text-center">© 2010-2024 skillgro.com. Tüm hakları saklıdır.</p>
                      </div>
                   </div>
                </div>
