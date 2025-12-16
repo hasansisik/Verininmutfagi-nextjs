@@ -7,9 +7,6 @@ import Sidebar from "./Sidebar";
 import Curriculum from "./Curriculum"
 import Instructors from "./Instructors"
 
-import course_details_img1 from "@/assets/img/courses/courses_details.jpg"
-import course_details_img2 from "@/assets/img/courses/course_author001.png"
-
 const tab_title: string[] = ["Genel Bakış", "Müfredat", "Eğitmenler"];
 
 const CourseDetailsArea = ({ single_course }: any) => {
@@ -26,24 +23,23 @@ const CourseDetailsArea = ({ single_course }: any) => {
         <div className="row">
           <div className="col-xl-9 col-lg-8">
             <div className="courses__details-thumb">
-              <Image src={course_details_img1} alt="img" />
+              <Image src={single_course.thumb} alt={single_course.title} />
             </div>
             <div className="courses__details-content">
               <ul className="courses__item-meta list-wrap">
                 <li className="courses__item-tag">
-                  <Link href="/kurslar">{single_course?.category ? single_course.category : "Geliştirme"}</Link>
+                  <Link href="/kurslar">{single_course.category}</Link>
                 </li>
-                <li className="avg-rating"><i className="fas fa-star"></i>{single_course?.rating ? single_course.rating : "4.5 (Değerlendirme)"}</li>
+                <li className="avg-rating"><i className="fas fa-star"></i>{single_course.rating} ({single_course.ratingCount} Değerlendirme)</li>
               </ul>
-              <h2 className="title">{single_course?.title ? single_course.title : "Tasarımcılar ve Mühendisler Arasındaki Çatışmaları Çözme"}</h2>
+              <h2 className="title">{single_course.title}</h2>
               <div className="courses__details-meta">
                 <ul className="list-wrap">
                   <li className="author-two">
-                    <Image src={course_details_img2} alt="img" />
-                    Yazar: <Link href="#">{single_course?.instructors ? single_course.instructors : "Ahmet Yılmaz"}</Link>
+                    Yazar: <Link href="#">{single_course.instructors}</Link>
                   </li>
-                  <li className="date"><i className="flaticon-calendar"></i>24/07/2024</li>
-                  <li><i className="flaticon-mortarboard"></i>2.250 Öğrenci</li>
+                  <li className="date"><i className="flaticon-calendar"></i>{single_course.publishDate}</li>
+                  <li><i className="flaticon-mortarboard"></i>{single_course.totalStudents.toLocaleString('tr-TR')} Öğrenci</li>
                 </ul>
               </div>
               <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -55,18 +51,18 @@ const CourseDetailsArea = ({ single_course }: any) => {
               </ul>
               <div className="tab-content" id="myTabContent">
                 <div className={`tab-pane fade ${activeTab === 0 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
-                  <Overview />
+                  <Overview overview={single_course.overview} />
                 </div>
                 <div className={`tab-pane fade ${activeTab === 1 ? 'show active' : ''}`} id="curriculum-tab-pane" role="tabpanel" aria-labelledby="curriculum-tab">
-                  <Curriculum />
+                  <Curriculum curriculum={single_course.curriculum} videoId={single_course.videoId} />
                 </div>
                 <div className={`tab-pane fade ${activeTab === 2 ? 'show active' : ''}`} id="instructors-tab-pane" role="tabpanel" aria-labelledby="instructors-tab">
-                  <Instructors />
+                  <Instructors instructorDetails={single_course.instructorDetails} />
                 </div>
               </div>
             </div>
           </div>
-          <Sidebar />
+          <Sidebar single_course={single_course} />
         </div>
       </div>
     </section>

@@ -37,7 +37,13 @@ const Sidebar = ({ single_course }: any) => {
                </div>
                <div className="courses__cost-wrap">
                   <span>Bu Kurs Ücreti:</span>
-                  <h2 className="title">₺18.00 <del>₺32.00</del></h2>
+                  <h2 className="title">
+                     {single_course.price === 0 ? (
+                        <>Ücretsiz {single_course.originalPrice > 0 && <del>₺{single_course.originalPrice.toFixed(2)}</del>}</>
+                     ) : (
+                        <>₺{single_course.price.toFixed(2)} {single_course.originalPrice > single_course.price && <del>₺{single_course.originalPrice.toFixed(2)}</del>}</>
+                     )}
+                  </h2>
                </div>
                <div className="courses__information-wrap">
                   <h5 className="title">Kurs içeriği:</h5>
@@ -45,30 +51,30 @@ const Sidebar = ({ single_course }: any) => {
                      <li>
                         <InjectableSvg src="/assets/img/icons/course_icon01.svg" alt="img" className="injectable" />
                         Seviye
-                        <span>İleri</span>
+                        <span>{single_course.skill_level}</span>
                      </li>
                      <li>
                         <InjectableSvg src="/assets/img/icons/course_icon02.svg" alt="img" className="injectable" />
                         Süre
-                        <span>11sa 20dk</span>
+                        <span>{single_course.duration}</span>
                      </li>
                      <li>
                         <InjectableSvg src="/assets/img/icons/course_icon03.svg" alt="img" className="injectable" />
                         Dersler
-                        <span>12</span>
+                        <span>{single_course.totalLessons}</span>
                      </li>
-                    
+
                      <li>
                         <InjectableSvg src="/assets/img/icons/course_icon06.svg" alt="img" className="injectable" />
                         Mezun Sayısı
-                        <span>25K</span>
+                        <span>{single_course.graduates}</span>
                      </li>
                   </ul>
                </div>
                <div className="courses__details-enroll">
                   <div className="tg-button-wrap">
                      <button onClick={handleAddToCart} className="btn btn-two arrow-btn">
-                       Kursa Başla<BtnArrow />
+                        Kursa Başla<BtnArrow />
                      </button>
                   </div>
                </div>
@@ -77,7 +83,7 @@ const Sidebar = ({ single_course }: any) => {
          <VideoPopup
             isOpen={isVideoOpen}
             onClose={() => setIsVideoOpen(false)}
-            videoId="b2Az7_lLh3g"
+            videoId={single_course.videoId}
          />
       </>
    )
