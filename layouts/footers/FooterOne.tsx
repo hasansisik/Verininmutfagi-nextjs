@@ -1,6 +1,4 @@
-import Social from "@/components/common/Social"
 import FooterCommon from "./FooterCommon"
-import Link from "next/link"
 
 interface StyleType {
    style?: boolean;
@@ -25,7 +23,7 @@ const FooterOne = ({ style, style_2 }: StyleType) => {
                <div className="row align-items-center">
                   <div className="col-md-12">
                      <div className="copy-right-text text-center">
-                        <p className="text-center">© 2010-2024 skillgro.com. Tüm hakları saklıdır.</p>
+                        <p className="text-center">© 2010-2024 Verinin Mutfağı. Tüm hakları saklıdır.</p>
                      </div>
                   </div>
                </div>

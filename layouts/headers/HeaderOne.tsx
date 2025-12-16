@@ -12,7 +12,7 @@ const TotalCart = dynamic(() => import("@/components/common/TotalCart"), { ssr: 
 const TotalWishlist = dynamic(() => import("@/components/common/TotalWishlist"), { ssr: false });
 const CustomSelect = dynamic(() => import("@/ui/CustomSelect"), { ssr: false });
 
-import logo from "@/assets/img/logo/logo.svg"
+import logo from "@/public/logo.png"
 
 const HeaderOne = () => {
 
@@ -36,7 +36,7 @@ const HeaderOne = () => {
                         <div className="tgmenu__wrap">
                            <nav className="tgmenu__nav">
                               <div className="logo">
-                                 <Link href="/"><Image src={logo} alt="Logo" /></Link>
+                                 <Link href="/"><Image src={logo} alt="Logo" width={150} height={50} /></Link>
                               </div>
                               <div className="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                                  <NavMenu />

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 
-import logo from "@/assets/img/logo/secondary_logo.svg"
+import logo from "@/public/icon.png"
 
 const FooterCommon = () => {
    return (
@@ -9,11 +9,11 @@ const FooterCommon = () => {
          <div className="col-xl-3 col-lg-4 col-md-6">
             <div className="footer__widget">
                <div className="logo mb-35">
-                  <Link href="/"><Image src={logo} alt="img" /></Link>
+                  <Link href="/"><Image src={logo} alt="Verinin Mutfağı" width={60} height={60} /></Link>
                </div>
                <div className="footer__content">
                   <p>Online eğitim platformumuz ile kendinizi geliştirin ve yeni beceriler kazanın. Uzman eğitmenlerimizle kaliteli içerikler sunuyoruz.</p>
-                  
+
                </div>
             </div>
          </div>
