@@ -1,3 +1,6 @@
+"use client"
+import Link from "next/link"
+
 const KullaniciSozlesmesi = () => {
     return (
         <section className="user-agreement-area pt-120 pb-120">
@@ -109,7 +112,7 @@ const KullaniciSozlesmesi = () => {
 
                             <div className="agreement-section mb-40">
                                 <h3>11. Gizlilik</h3>
-                                <p>Kişisel verilerinizin işlenmesi <a href="/gizlilik-politikasi">Gizlilik Politikamız</a> kapsamında düzenlenir. Platform'u kullanarak Gizlilik Politikamızı kabul etmiş olursunuz.</p>
+                                <p>Kişisel verilerinizin işlenmesi <Link href="/gizlilik-politikasi">Gizlilik Politikamız</Link> kapsamında düzenlenir. Platform&apos;u kullanarak Gizlilik Politikamızı kabul etmiş olursunuz.</p>
                             </div>
 
                             <div className="agreement-section mb-40">

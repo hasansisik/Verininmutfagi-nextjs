@@ -1,3 +1,6 @@
+"use client"
+import Link from "next/link"
+
 const GizlilikPolitikasi = () => {
     return (
         <section className="privacy-policy-area pt-120 pb-120">
@@ -88,7 +91,7 @@ const GizlilikPolitikasi = () => {
 
                             <div className="policy-section mb-40">
                                 <h3>7. Çerezler</h3>
-                                <p>Platformumuz, kullanıcı deneyimini iyileştirmek için çerezler kullanmaktadır. Çerez kullanımı hakkında detaylı bilgi için <a href="/cerez-politikasi">Çerez Politikamızı</a> inceleyebilirsiniz.</p>
+                                <p>Platformumuz, kullanıcı deneyimini iyileştirmek için çerezler kullanmaktadır. Çerez kullanımı hakkında detaylı bilgi için <Link href="/cerez-politikasi">Çerez Politikamızı</Link> inceleyebilirsiniz.</p>
                             </div>
 
                             <div className="policy-section mb-40">

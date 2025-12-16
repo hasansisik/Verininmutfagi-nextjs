@@ -1,3 +1,6 @@
+"use client"
+import Link from "next/link"
+
 const CerezPolitikasi = () => {
     return (
         <section className="cookie-policy-area pt-120 pb-120">
@@ -154,7 +157,7 @@ const CerezPolitikasi = () => {
                                     <strong>E-posta:</strong> info@verininmutfagi.com<br />
                                     <strong>Adres:</strong> 589 5th Ave, NY 10024, USA
                                 </p>
-                                <p className="mt-20">Ayrıca, <a href="/gizlilik-politikasi">Gizlilik Politikamızı</a> ve <a href="/kullanici-sozlesmesi">Kullanıcı Sözleşmemizi</a> de incelemenizi öneririz.</p>
+                                <p className="mt-20">Ayrıca, <Link href="/gizlilik-politikasi">Gizlilik Politikamızı</Link> ve <Link href="/kullanici-sozlesmesi">Kullanıcı Sözleşmemizi</Link> de incelemenizi öneririz.</p>
                             </div>
                         </div>
                     </div>
