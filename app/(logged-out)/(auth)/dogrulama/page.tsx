@@ -2,7 +2,7 @@ import Verification from "@/components/inner-pages/verification";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Doğrulama - SkillGro",
+   title: "Doğrulama - Verinin Mutfağı",
 };
 const index = () => {
    return (

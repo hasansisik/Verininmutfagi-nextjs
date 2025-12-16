@@ -41,6 +41,18 @@ const FooterCommon = () => {
                </div>
             </div>
          </div>
+         <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+            <div className="footer__widget">
+               <h4 className="footer__widget-title">Politikalar</h4>
+               <div className="footer__link">
+                  <ul className="list-wrap">
+                     <li><Link href="/gizlilik-politikasi">Gizlilik Politikası</Link></li>
+                     <li><Link href="/kullanici-sozlesmesi">Kullanıcı Sözleşmesi</Link></li>
+                     <li><Link href="/cerez-politikasi">Çerez Politikası</Link></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
 
       </>
    )

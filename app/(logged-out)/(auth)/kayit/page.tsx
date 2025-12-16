@@ -2,7 +2,7 @@ import Registration from "@/components/inner-pages/registration";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Registration SkillGro - Online Courses & Education React Next js Template",
+   title: "Registration Verinin Mutfağı - Online Courses & Education React Next js Template",
 };
 const index = () => {
    return (

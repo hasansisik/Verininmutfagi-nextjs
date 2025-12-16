@@ -9,7 +9,7 @@ import HeaderOne from "@/layouts/headers/HeaderOne";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata: Metadata = {
-   title: "Course Details SkillGro - Online Courses & Education React Next js Template",
+   title: "Course Details Verinin Mutfağı - Online Courses & Education React Next js Template",
 };
 
 type Props = {
