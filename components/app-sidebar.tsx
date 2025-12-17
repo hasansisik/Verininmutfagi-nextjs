@@ -12,6 +12,7 @@ import {
   Send,
   Settings2,
   SquareTerminal,
+  Users,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -36,87 +37,67 @@ const data = {
   },
   navMain: [
     {
-      title: "Playground",
-      url: "#",
+      title: "Dashboard",
+      url: "/dashboard",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Genel Bakış",
+          url: "/dashboard",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: "İstatistikler",
+          url: "/dashboard/stats",
         },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "Kullanıcılar",
+      url: "/dashboard/kullanicilar",
+      icon: Users,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Tüm Kullanıcılar",
+          url: "/dashboard/kullanicilar",
         },
         {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
+          title: "Admin Yönetimi",
+          url: "/dashboard/kullanicilar/admin",
         },
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
+      title: "Kurslar",
+      url: "/dashboard/kurslar",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Tüm Kurslar",
+          url: "/dashboard/kurslar",
         },
         {
-          title: "Get Started",
-          url: "#",
+          title: "Yeni Kurs Ekle",
+          url: "/dashboard/kurslar/yeni",
         },
         {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Kategoriler",
+          url: "/dashboard/kategoriler",
         },
       ],
     },
     {
-      title: "Settings",
-      url: "#",
+      title: "Ayarlar",
+      url: "/dashboard/ayarlar",
       icon: Settings2,
       items: [
         {
-          title: "General",
-          url: "#",
+          title: "Genel",
+          url: "/dashboard/ayarlar",
         },
         {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
+          title: "Profil",
+          url: "/dashboard/ayarlar/profil",
         },
       ],
     },
