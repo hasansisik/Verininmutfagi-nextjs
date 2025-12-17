@@ -50,8 +50,14 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Plus, Pencil, Trash2, GripVertical, Link as LinkIcon } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Plus, Pencil, Trash2, GripVertical, X } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+
+interface SubMenu {
+    title: string
+    link: string
+}
 
 interface MenuItem {
     _id: string
@@ -59,13 +65,21 @@ interface MenuItem {
     link: string
     hasDropdown: boolean
     megaMenu: boolean
-    subMenus: Array<{ title: string; link: string }>
+    subMenus: SubMenu[]
     order: number
     isActive: boolean
     createdAt: string
 }
 
-function SortableRow({ item, onEdit, onDelete }: { item: MenuItem; onEdit: (item: MenuItem) => void; onDelete: (item: MenuItem) => void }) {
+function SortableRow({
+    item,
+    onEdit,
+    onDelete
+}: {
+    item: MenuItem
+    onEdit: (item: MenuItem) => void
+    onDelete: (item: MenuItem) => void
+}) {
     const {
         attributes,
         listeners,
@@ -141,7 +155,7 @@ export default function MenuPage() {
         link: "",
         hasDropdown: false,
         megaMenu: false,
-        subMenus: [] as Array<{ title: string; link: string }>,
+        subMenus: [] as SubMenu[],
     })
 
     const sensors = useSensors(
@@ -178,7 +192,6 @@ export default function MenuPage() {
             const newItems = arrayMove(menuItems, oldIndex, newIndex)
             setMenuItems(newItems)
 
-            // Update order in backend
             try {
                 const token = localStorage.getItem("accessToken")
                 await Promise.all(
@@ -193,7 +206,7 @@ export default function MenuPage() {
                 toast.success("Sıralama güncellendi")
             } catch (error) {
                 toast.error("Sıralama güncellenirken hata oluştu")
-                fetchMenuItems() // Revert on error
+                fetchMenuItems()
             }
         }
     }
@@ -279,6 +292,26 @@ export default function MenuPage() {
         setSelectedItem(null)
     }
 
+    const addSubMenu = () => {
+        setFormData({
+            ...formData,
+            subMenus: [...formData.subMenus, { title: "", link: "" }],
+        })
+    }
+
+    const removeSubMenu = (index: number) => {
+        setFormData({
+            ...formData,
+            subMenus: formData.subMenus.filter((_, i) => i !== index),
+        })
+    }
+
+    const updateSubMenu = (index: number, field: "title" | "link", value: string) => {
+        const newSubMenus = [...formData.subMenus]
+        newSubMenus[index][field] = value
+        setFormData({ ...formData, subMenus: newSubMenus })
+    }
+
     return (
         <div className="flex-1 space-y-4 p-8 pt-6">
             <div className="flex items-center justify-between">
@@ -300,39 +333,39 @@ export default function MenuPage() {
                     <CardDescription>Toplam {menuItems.length} menü öğesi</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="rounded-md border">
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead className="w-[50px]"></TableHead>
-                                    <TableHead>Başlık</TableHead>
-                                    <TableHead>Link</TableHead>
-                                    <TableHead>Tip</TableHead>
-                                    <TableHead>Alt Menü</TableHead>
-                                    <TableHead>Sıra</TableHead>
-                                    <TableHead>Durum</TableHead>
-                                    <TableHead className="text-right">İşlemler</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {loading ? (
+                    <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleDragEnd}
+                    >
+                        <div className="rounded-md border">
+                            <Table>
+                                <TableHeader>
                                     <TableRow>
-                                        <TableCell colSpan={8} className="text-center">
-                                            Yükleniyor...
-                                        </TableCell>
+                                        <TableHead className="w-[50px]"></TableHead>
+                                        <TableHead>Başlık</TableHead>
+                                        <TableHead>Link</TableHead>
+                                        <TableHead>Tip</TableHead>
+                                        <TableHead>Alt Menü</TableHead>
+                                        <TableHead>Sıra</TableHead>
+                                        <TableHead>Durum</TableHead>
+                                        <TableHead className="text-right">İşlemler</TableHead>
                                     </TableRow>
-                                ) : menuItems.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={8} className="text-center">
-                                            Menü öğesi bulunamadı
-                                        </TableCell>
-                                    </TableRow>
-                                ) : (
-                                    <DndContext
-                                        sensors={sensors}
-                                        collisionDetection={closestCenter}
-                                        onDragEnd={handleDragEnd}
-                                    >
+                                </TableHeader>
+                                <TableBody>
+                                    {loading ? (
+                                        <TableRow>
+                                            <TableCell colSpan={8} className="text-center">
+                                                Yükleniyor...
+                                            </TableCell>
+                                        </TableRow>
+                                    ) : menuItems.length === 0 ? (
+                                        <TableRow>
+                                            <TableCell colSpan={8} className="text-center">
+                                                Menü öğesi bulunamadı
+                                            </TableCell>
+                                        </TableRow>
+                                    ) : (
                                         <SortableContext
                                             items={menuItems.map((item) => item._id)}
                                             strategy={verticalListSortingStrategy}
@@ -349,17 +382,17 @@ export default function MenuPage() {
                                                 />
                                             ))}
                                         </SortableContext>
-                                    </DndContext>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </div>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    </DndContext>
                 </CardContent>
             </Card>
 
             {/* Create/Edit Dialog */}
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                <DialogContent className="sm:max-w-[525px]">
+                <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>
                             {selectedItem ? "Menü Öğesi Düzenle" : "Yeni Menü Öğesi Oluştur"}
@@ -389,17 +422,60 @@ export default function MenuPage() {
                                 />
                             </div>
                             <div className="flex items-center space-x-2">
-                                <input
-                                    type="checkbox"
+                                <Checkbox
                                     id="hasDropdown"
                                     checked={formData.hasDropdown}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, hasDropdown: e.target.checked })
+                                    onCheckedChange={(checked) =>
+                                        setFormData({ ...formData, hasDropdown: checked as boolean })
                                     }
-                                    className="h-4 w-4"
                                 />
-                                <Label htmlFor="hasDropdown">Dropdown Menü</Label>
+                                <Label htmlFor="hasDropdown" className="cursor-pointer">
+                                    Dropdown Menü
+                                </Label>
                             </div>
+
+                            {/* Alt Menüler */}
+                            {formData.hasDropdown && (
+                                <div className="space-y-3 border-t pt-4">
+                                    <div className="flex items-center justify-between">
+                                        <Label>Alt Menüler</Label>
+                                        <Button type="button" size="sm" onClick={addSubMenu}>
+                                            <Plus className="h-4 w-4 mr-1" />
+                                            Alt Menü Ekle
+                                        </Button>
+                                    </div>
+                                    {formData.subMenus.map((subMenu, index) => (
+                                        <div key={index} className="grid grid-cols-[1fr,1fr,auto] gap-2 items-end">
+                                            <div className="grid gap-1">
+                                                <Label className="text-xs">Başlık</Label>
+                                                <Input
+                                                    value={subMenu.title}
+                                                    onChange={(e) => updateSubMenu(index, "title", e.target.value)}
+                                                    placeholder="Alt menü başlığı"
+                                                    size={1}
+                                                />
+                                            </div>
+                                            <div className="grid gap-1">
+                                                <Label className="text-xs">Link</Label>
+                                                <Input
+                                                    value={subMenu.link}
+                                                    onChange={(e) => updateSubMenu(index, "link", e.target.value)}
+                                                    placeholder="/link"
+                                                    size={1}
+                                                />
+                                            </div>
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => removeSubMenu(index)}
+                                            >
+                                                <X className="h-4 w-4 text-red-600" />
+                                            </Button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                         <DialogFooter>
                             <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
