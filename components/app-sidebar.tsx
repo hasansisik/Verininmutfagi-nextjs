@@ -13,6 +13,7 @@ import {
   Settings2,
   SquareTerminal,
   Users,
+  Tag,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -56,16 +57,16 @@ const data = {
       title: "Kullanıcılar",
       url: "/dashboard/kullanicilar",
       icon: Users,
-      items: [
-        {
-          title: "Tüm Kullanıcılar",
-          url: "/dashboard/kullanicilar",
-        },
-        {
-          title: "Admin Yönetimi",
-          url: "/dashboard/kullanicilar/admin",
-        },
-      ],
+    },
+    {
+      title: "Kategoriler",
+      url: "/dashboard/kategoriler",
+      icon: Tag,
+    },
+    {
+      title: "Menü",
+      url: "/dashboard/menu",
+      icon: Frame,
     },
     {
       title: "Kurslar",
@@ -79,10 +80,6 @@ const data = {
         {
           title: "Yeni Kurs Ekle",
           url: "/dashboard/kurslar/yeni",
-        },
-        {
-          title: "Kategoriler",
-          url: "/dashboard/kategoriler",
         },
       ],
     },
