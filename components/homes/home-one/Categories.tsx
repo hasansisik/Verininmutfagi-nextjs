@@ -3,58 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import Link from "next/link";
 import { useEffect } from 'react';
-
-interface DatatYpe {
-   id: number;
-   icon: string;
-   title: string;
-   total: string;
-}[]
-
-const category_data: DatatYpe[] = [
-   {
-      id: 1,
-      icon: "flaticon-graphic-design",
-      title: "Grafik Tasarım",
-      total: "(22)"
-   },
-   {
-      id: 2,
-      icon: "flaticon-investment",
-      title: "Finans",
-      total: "(41)"
-   },
-   {
-      id: 3,
-      icon: "flaticon-coding",
-      title: "Geliştirme",
-      total: "(29)"
-   },
-   {
-      id: 4,
-      icon: "flaticon-email",
-      title: "Pazarlama",
-      total: "(31)"
-   },
-   {
-      id: 5,
-      icon: "flaticon-fashion",
-      title: "Yaşam Tarzı",
-      total: "(23)"
-   },
-   {
-      id: 6,
-      icon: "flaticon-interaction",
-      title: "Yönetim",
-      total: "(19)"
-   },
-   {
-      id: 7,
-      icon: "flaticon-web-design",
-      title: "Uygulama Tasarımı",
-      total: "(18)"
-   },
-];
+import category_data from "@/data/inner-data/CategoryData";
 
 // slider setting
 const setting = {
@@ -134,12 +83,12 @@ const Categories = () => {
                         {category_data.map((item) => (
                            <SwiperSlide key={item.id} className="swiper-slide">
                               <div className="categories__item">
-                                 <Link href="/kurslar">
+                                 <Link href={`/kurslar?kategori=${item.slug}`}>
                                     <div className="icon remove-stars">
                                        <i className={item.icon}></i>
                                     </div>
-                                    <span className="name">{item.title}</span>
-                                    <span className="courses">{item.total}</span>
+                                    <span className="name">{item.name}</span>
+                                    <span className="courses">({item.courseCount})</span>
                                  </Link>
                               </div>
                            </SwiperSlide>

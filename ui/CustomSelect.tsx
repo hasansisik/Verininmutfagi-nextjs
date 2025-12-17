@@ -2,21 +2,19 @@
 import React from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import category_data from "@/data/inner-data/CategoryData";
 
 const animatedComponents = makeAnimated();
 
-const options = [
-   { value: 'business', label: 'Business' },
-   { value: 'data-science', label: 'Data Science' },
-   { value: 'art-design', label: 'Art & Design' },
-   { value: 'marketing', label: 'Marketing' },
-   { value: 'finance', label: 'Finance' },
-];
+// CategoryData'dan options oluştur
+const options = category_data.map(category => ({
+   value: category.slug,
+   label: category.name
+}));
 
 const CustomSelect = ({ value, onChange }: any) => {
    return (
       <form onSubmit={(e) => e.preventDefault()} className="tgmenu__search-form">
-
          <div className="input-grp">
             <input type="text" placeholder="Kurs Ara..." />
             <button type="submit"><i className="flaticon-search"></i></button>
