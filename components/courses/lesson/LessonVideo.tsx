@@ -2,20 +2,37 @@
 import { useEffect } from "react";
 import Plyr from 'plyr';
 
-const LessonVideo = () => {
+interface LessonVideoProps {
+   videoId?: string;
+}
+
+const LessonVideo = ({ videoId }: LessonVideoProps) => {
 
    useEffect(() => {
-      const player = new Plyr('#player');
-      return () => {
-         player.destroy();
-      };
-   }, []);
+      if (videoId) {
+         const player = new Plyr('#player');
+         return () => {
+            player.destroy();
+         };
+      }
+   }, [videoId]);
+
+   if (!videoId) {
+      return (
+         <div className="lesson__video-placeholder">
+            <p>Video yükleniyor...</p>
+         </div>
+      );
+   }
 
    return (
-      <video id="player" playsInline controls data-poster="/assets/img/bg/video_bg.webp">
-         <source src="/assets/video/video.mp4" type="video/mp4" />
-         <source src="/path/to/video.webm" type="video/webm" />
-      </video>
+      <div className="plyr__video-embed" id="player">
+         <iframe
+            src={`https://www.youtube.com/embed/${videoId}?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1`}
+            allowFullScreen
+            allow="autoplay"
+         ></iframe>
+      </div>
    )
 }
 

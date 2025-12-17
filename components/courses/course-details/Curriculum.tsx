@@ -21,13 +21,21 @@ interface CurriculumSection {
 }
 
 interface CurriculumProps {
-   curriculum: CurriculumSection[];
-   videoId: string;
+   curriculum?: CurriculumSection[];
+   videoId?: string;
 }
 
 const Curriculum = ({ curriculum, videoId }: CurriculumProps) => {
 
    const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+   if (!curriculum || !videoId) {
+      return (
+         <div className="courses__curriculum-wrap">
+            <p>Müfredat bilgileri yükleniyor...</p>
+         </div>
+      );
+   }
 
    return (
       <>

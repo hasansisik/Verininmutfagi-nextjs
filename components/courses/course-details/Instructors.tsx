@@ -12,10 +12,18 @@ interface InstructorDetail {
 }
 
 interface InstructorsProps {
-   instructorDetails: InstructorDetail[];
+   instructorDetails?: InstructorDetail[];
 }
 
 const Instructors = ({ instructorDetails }: InstructorsProps) => {
+   if (!instructorDetails || instructorDetails.length === 0) {
+      return (
+         <div className="courses__instructors-wrap">
+            <p>Eğitmen bilgileri yükleniyor...</p>
+         </div>
+      );
+   }
+
    return (
       <div className="courses__instructors-wrap">
          {instructorDetails.map((instructor, index) => (

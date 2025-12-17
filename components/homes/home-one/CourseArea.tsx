@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import Image from "next/image";
 import Link from "next/link";
-import course_data from "@/data/home-data/CourseData";
+import inner_course_data from "@/data/inner-data/InnerCourseData";
 
 const tab_title: string[] = ["Tüm Kurslar", "Tasarım", "İşletme", "Geliştirme"];
 
@@ -45,8 +45,8 @@ const setting = {
   },
 };
 
-interface StyleType{
-   style?:boolean;
+interface StyleType {
+  style?: boolean;
 }
 
 const CourseArea = ({ style }: StyleType) => {
@@ -82,48 +82,169 @@ const CourseArea = ({ style }: StyleType) => {
         </div>
 
         <div className="tab-content" id="courseTabContent">
-          {course_data.filter((items) => items.page === "home_1").map((course_item, index) => (
-            <div key={course_item.id} className={`tab-pane fade ${activeTab === index ? 'show active' : ''}`} id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab">
-              <Swiper {...setting} modules={[Autoplay, Navigation]} className="swiper courses-swiper-active">
-                {course_item.course_details.map((item) => (
-                  <SwiperSlide key={item.id} className="swiper-slide">
-                    <div className="courses__item shine__animate-item">
-                      <div className="courses__item-thumb">
-                        <Link href="/kurs-detaylari" className="shine__animate-link">
-                          <Image src={item.thumb} alt="img" />
-                        </Link>
-                      </div>
-                      <div className="courses__item-content">
-                        <ul className="courses__item-meta list-wrap">
-                          <li className="courses__item-tag">
-                            <Link href="/course">{item.tag}</Link>
-                          </li>
-                          <li className="avg-rating"><i className="fas fa-star"></i> {item.review}</li>
-                        </ul>
-                        <h5 className="title"><Link href="/kurs-detaylari">{item.title}</Link></h5>
-                        <p className="author">Eğitmen: <Link href="#">{item.author}</Link></p>
-                        <div className="courses__item-bottom">
-                          <div className="button">
-                            <Link href="/course-details">
-                              <span className="text">Hemen Kaydol</span>
-                              <i className="flaticon-arrow-right"></i>
-                            </Link>
-                          </div>
-                          <h5 className="price">${item.price}.00</h5>
+          <div className={`tab-pane fade ${activeTab === 0 ? 'show active' : ''}`} id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab">
+            <Swiper {...setting} modules={[Autoplay, Navigation]} className="swiper courses-swiper-active">
+              {inner_course_data.map((item) => (
+                <SwiperSlide key={item.id} className="swiper-slide">
+                  <div className="courses__item shine__animate-item">
+                    <div className="courses__item-thumb">
+                      <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
+                        <Image src={item.thumb} alt={item.title} />
+                      </Link>
+                    </div>
+                    <div className="courses__item-content">
+                      <ul className="courses__item-meta list-wrap">
+                        <li className="courses__item-tag">
+                          <Link href="/kurslar">{item.category}</Link>
+                        </li>
+                        <li className="avg-rating"><i className="fas fa-star"></i> {item.rating} ({item.ratingCount} Değerlendirme)</li>
+                      </ul>
+                      <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
+                      <p className="author">Eğitmen: <Link href="#">{item.instructors}</Link></p>
+                      <div className="courses__item-bottom">
+                        <div className="button">
+                          <Link href={`/kurs-detaylari/${item.slug}`}>
+                            <span className="text">Hemen Kaydol</span>
+                            <i className="flaticon-arrow-right"></i>
+                          </Link>
                         </div>
+                        <h5 className="price">{item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
                       </div>
                     </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-              {!style &&
-                <div className="courses__nav">
-                  <div className="courses-button-prev"><i className="flaticon-arrow-right"></i></div>
-                  <div className="courses-button-next"><i className="flaticon-arrow-right"></i></div>
-                </div>
-              }
-            </div>
-          ))}
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {!style &&
+              <div className="courses__nav">
+                <div className="courses-button-prev"><i className="flaticon-arrow-right"></i></div>
+                <div className="courses-button-next"><i className="flaticon-arrow-right"></i></div>
+              </div>
+            }
+          </div>
+
+          <div className={`tab-pane fade ${activeTab === 1 ? 'show active' : ''}`} id="design-tab-pane" role="tabpanel" aria-labelledby="design-tab">
+            <Swiper {...setting} modules={[Autoplay, Navigation]} className="swiper courses-swiper-active">
+              {inner_course_data.filter(item => item.category === "Sanat ve Tasarım").map((item) => (
+                <SwiperSlide key={item.id} className="swiper-slide">
+                  <div className="courses__item shine__animate-item">
+                    <div className="courses__item-thumb">
+                      <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
+                        <Image src={item.thumb} alt={item.title} />
+                      </Link>
+                    </div>
+                    <div className="courses__item-content">
+                      <ul className="courses__item-meta list-wrap">
+                        <li className="courses__item-tag">
+                          <Link href="/kurslar">{item.category}</Link>
+                        </li>
+                        <li className="avg-rating"><i className="fas fa-star"></i> {item.rating} ({item.ratingCount} Değerlendirme)</li>
+                      </ul>
+                      <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
+                      <p className="author">Eğitmen: <Link href="#">{item.instructors}</Link></p>
+                      <div className="courses__item-bottom">
+                        <div className="button">
+                          <Link href={`/kurs-detaylari/${item.slug}`}>
+                            <span className="text">Hemen Kaydol</span>
+                            <i className="flaticon-arrow-right"></i>
+                          </Link>
+                        </div>
+                        <h5 className="price">{item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {!style &&
+              <div className="courses__nav">
+                <div className="courses-button-prev"><i className="flaticon-arrow-right"></i></div>
+                <div className="courses-button-next"><i className="flaticon-arrow-right"></i></div>
+              </div>
+            }
+          </div>
+
+          <div className={`tab-pane fade ${activeTab === 2 ? 'show active' : ''}`} id="business-tab-pane" role="tabpanel" aria-labelledby="business-tab">
+            <Swiper {...setting} modules={[Autoplay, Navigation]} className="swiper courses-swiper-active">
+              {inner_course_data.filter(item => item.category === "İşletme").map((item) => (
+                <SwiperSlide key={item.id} className="swiper-slide">
+                  <div className="courses__item shine__animate-item">
+                    <div className="courses__item-thumb">
+                      <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
+                        <Image src={item.thumb} alt={item.title} />
+                      </Link>
+                    </div>
+                    <div className="courses__item-content">
+                      <ul className="courses__item-meta list-wrap">
+                        <li className="courses__item-tag">
+                          <Link href="/kurslar">{item.category}</Link>
+                        </li>
+                        <li className="avg-rating"><i className="fas fa-star"></i> {item.rating} ({item.ratingCount} Değerlendirme)</li>
+                      </ul>
+                      <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
+                      <p className="author">Eğitmen: <Link href="#">{item.instructors}</Link></p>
+                      <div className="courses__item-bottom">
+                        <div className="button">
+                          <Link href={`/kurs-detaylari/${item.slug}`}>
+                            <span className="text">Hemen Kaydol</span>
+                            <i className="flaticon-arrow-right"></i>
+                          </Link>
+                        </div>
+                        <h5 className="price">{item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {!style &&
+              <div className="courses__nav">
+                <div className="courses-button-prev"><i className="flaticon-arrow-right"></i></div>
+                <div className="courses-button-next"><i className="flaticon-arrow-right"></i></div>
+              </div>
+            }
+          </div>
+
+          <div className={`tab-pane fade ${activeTab === 3 ? 'show active' : ''}`} id="development-tab-pane" role="tabpanel" aria-labelledby="development-tab">
+            <Swiper {...setting} modules={[Autoplay, Navigation]} className="swiper courses-swiper-active">
+              {inner_course_data.filter(item => item.category === "Geliştirme").map((item) => (
+                <SwiperSlide key={item.id} className="swiper-slide">
+                  <div className="courses__item shine__animate-item">
+                    <div className="courses__item-thumb">
+                      <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
+                        <Image src={item.thumb} alt={item.title} />
+                      </Link>
+                    </div>
+                    <div className="courses__item-content">
+                      <ul className="courses__item-meta list-wrap">
+                        <li className="courses__item-tag">
+                          <Link href="/kurslar">{item.category}</Link>
+                        </li>
+                        <li className="avg-rating"><i className="fas fa-star"></i> {item.rating} ({item.ratingCount} Değerlendirme)</li>
+                      </ul>
+                      <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
+                      <p className="author">Eğitmen: <Link href="#">{item.instructors}</Link></p>
+                      <div className="courses__item-bottom">
+                        <div className="button">
+                          <Link href={`/kurs-detaylari/${item.slug}`}>
+                            <span className="text">Hemen Kaydol</span>
+                            <i className="flaticon-arrow-right"></i>
+                          </Link>
+                        </div>
+                        <h5 className="price">{item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {!style &&
+              <div className="courses__nav">
+                <div className="courses-button-prev"><i className="flaticon-arrow-right"></i></div>
+                <div className="courses-button-next"><i className="flaticon-arrow-right"></i></div>
+              </div>
+            }
+          </div>
         </div>
       </div>
     </section>

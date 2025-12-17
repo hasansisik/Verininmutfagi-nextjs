@@ -3,6 +3,7 @@ import VideoPopup from "@/modals/VideoPopup"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cartSlice";
 import InjectableSvg from "@/hooks/InjectableSvg";
@@ -13,7 +14,14 @@ import img_1 from "@/assets/img/courses/course_thumb02.jpg"
 const Sidebar = ({ single_course }: any) => {
 
    const [isVideoOpen, setIsVideoOpen] = useState(false);
+   const router = useRouter();
    const dispatch = useDispatch();
+
+   const handleStartCourse = () => {
+      if (single_course?.slug) {
+         router.push(`/ders/${single_course.slug}`);
+      }
+   };
 
    const handleAddToCart = () => {
       if (single_course) {
@@ -73,7 +81,7 @@ const Sidebar = ({ single_course }: any) => {
                </div>
                <div className="courses__details-enroll">
                   <div className="tg-button-wrap">
-                     <button onClick={handleAddToCart} className="btn btn-two arrow-btn">
+                     <button onClick={handleStartCourse} className="btn btn-two arrow-btn">
                         Kursa Başla<BtnArrow />
                      </button>
                   </div>

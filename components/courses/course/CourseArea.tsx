@@ -55,7 +55,7 @@ const CourseArea = () => {
                               <div key={item.id} className="col">
                                  <div className="courses__item shine__animate-item">
                                     <div className="courses__item-thumb">
-                                       <Link href={`/kurs-detaylari/${item.id}`} className="shine__animate-link">
+                                       <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
                                           <Image src={item.thumb} alt="img" />
                                        </Link>
                                     </div>
@@ -66,11 +66,11 @@ const CourseArea = () => {
                                           </li>
                                           <li className="avg-rating"><i className="fas fa-star"></i> ({item.rating} Değerlendirme)</li>
                                        </ul>
-                                       <h5 className="title"><Link href={`/kurs-detaylari/${item.id}`}>{item.title}</Link></h5>
+                                       <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
                                        <p className="author">Eğitmen: <Link href="#">{item.instructors}</Link></p>
                                        <div className="courses__item-bottom">
                                           <div className="button">
-                                             <Link href={`/kurs-detaylari/${item.id}`}>
+                                             <Link href={`/kurs-detaylari/${item.slug}`}>
                                                 <span className="text">Hemen Kaydol</span>
                                                 <i className="flaticon-arrow-right"></i>
                                              </Link>
@@ -100,9 +100,9 @@ const CourseArea = () => {
                               <div key={item.id} className="col">
                                  <div className="courses__item courses__item-three shine__animate-item">
                                     <div className="courses__item-thumb">
-                                       <a href="course-details.html" className="shine__animate-link">
+                                       <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
                                           <Image src={item.thumb} alt="img" />
-                                       </a>
+                                       </Link>
                                     </div>
                                     <div className="courses__item-content">
                                        <ul className="courses__item-meta list-wrap">
@@ -114,15 +114,15 @@ const CourseArea = () => {
                                           </li>
                                           <li className="price">${item.price}.00</li>
                                        </ul>
-                                       <h5 className="title"><a href="course-details.html">{item.title}</a></h5>
+                                       <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
                                        <p className="author">Eğitmen: <a href="#">{item.instructors}</a></p>
                                        <p className="info">{item.desc}</p>
                                        <div className="courses__item-bottom">
                                           <div className="button">
-                                             <a href="course-details.html">
+                                             <Link href={`/kurs-detaylari/${item.slug}`}>
                                                 <span className="text">Hemen Kaydol</span>
                                                 <i className="flaticon-arrow-right"></i>
-                                             </a>
+                                             </Link>
                                           </div>
                                        </div>
                                     </div>

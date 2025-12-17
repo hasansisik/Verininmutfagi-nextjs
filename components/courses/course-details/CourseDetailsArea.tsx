@@ -23,7 +23,14 @@ const CourseDetailsArea = ({ single_course }: any) => {
         <div className="row">
           <div className="col-xl-9 col-lg-8">
             <div className="courses__details-thumb">
-              <Image src={single_course.thumb} alt={single_course.title} />
+              <Image
+                src={single_course.thumb}
+                alt={single_course.title}
+                width={1200}
+                height={600}
+                style={{ width: '100%', height: 'auto' }}
+                className="img-fluid"
+              />
             </div>
             <div className="courses__details-content">
               <ul className="courses__item-meta list-wrap">
@@ -51,13 +58,15 @@ const CourseDetailsArea = ({ single_course }: any) => {
               </ul>
               <div className="tab-content" id="myTabContent">
                 <div className={`tab-pane fade ${activeTab === 0 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
-                  <Overview overview={single_course.overview} />
+                  {single_course?.overview && <Overview overview={single_course.overview} />}
                 </div>
                 <div className={`tab-pane fade ${activeTab === 1 ? 'show active' : ''}`} id="curriculum-tab-pane" role="tabpanel" aria-labelledby="curriculum-tab">
-                  <Curriculum curriculum={single_course.curriculum} videoId={single_course.videoId} />
+                  {single_course?.curriculum && single_course?.videoId && (
+                    <Curriculum curriculum={single_course.curriculum} videoId={single_course.videoId} />
+                  )}
                 </div>
                 <div className={`tab-pane fade ${activeTab === 2 ? 'show active' : ''}`} id="instructors-tab-pane" role="tabpanel" aria-labelledby="instructors-tab">
-                  <Instructors instructorDetails={single_course.instructorDetails} />
+                  {single_course?.instructorDetails && <Instructors instructorDetails={single_course.instructorDetails} />}
                 </div>
               </div>
             </div>

@@ -38,6 +38,7 @@ interface InstructorDetail {
 
 interface DataType {
    id: number;
+   slug: string;
    thumb: StaticImageData;
    category: string;
    rating: number;
@@ -74,6 +75,7 @@ interface DataType {
 const inner_course_data: DataType[] = [
    {
       id: 1,
+      slug: "hayal-gucuyle-javascript-ogrenmek",
       thumb: course_thumb1,
       category: "Geliştirme",
       rating: 4.9,
@@ -185,6 +187,7 @@ const inner_course_data: DataType[] = [
    },
    {
       id: 2,
+      slug: "baslangic-seviyesi-grafik-tasarim",
       thumb: course_thumb2,
       category: "Sanat ve Tasarım",
       rating: 4.7,
@@ -296,6 +299,7 @@ const inner_course_data: DataType[] = [
    },
    {
       id: 3,
+      slug: "facebook-dijital-pazarlama",
       thumb: course_thumb3,
       category: "İşletme",
       rating: 4.8,
@@ -407,6 +411,7 @@ const inner_course_data: DataType[] = [
    },
    {
       id: 4,
+      slug: "python-veri-bilimi-makine-ogrenmesi",
       thumb: course_thumb4,
       category: "Veri Bilimi",
       rating: 4.9,
@@ -529,6 +534,7 @@ const inner_course_data: DataType[] = [
    },
    {
       id: 5,
+      slug: "finansal-analiz-yatirim-stratejileri",
       thumb: course_thumb5,
       category: "Finans",
       rating: 4.6,
@@ -652,6 +658,7 @@ const inner_course_data: DataType[] = [
    },
    {
       id: 6,
+      slug: "etkili-iletisim-sunum-becerileri",
       thumb: course_thumb6,
       category: "Kişisel Gelişim",
       rating: 4.5,

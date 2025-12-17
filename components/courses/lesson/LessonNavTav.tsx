@@ -5,7 +5,11 @@ import Instructors from "../course-details/Instructors";
 
 const tab_title: string[] = ["Genel Bakış", "Eğitmenler"];
 
-const LessonNavTav = () => {
+interface LessonNavTavProps {
+   course: any;
+}
+
+const LessonNavTav = ({ course }: LessonNavTavProps) => {
 
    const [activeTab, setActiveTab] = useState(0);
 
@@ -24,10 +28,10 @@ const LessonNavTav = () => {
          </ul>
          <div className="tab-content" id="myTabContent">
             <div className={`tab-pane fade ${activeTab === 0 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
-               <Overview />
+               {course?.overview && <Overview overview={course.overview} />}
             </div>
-            <div className={`tab-pane fade ${activeTab === 1 ? 'show active' : ''}`} id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab">
-               <Instructors />
+            <div className={`tab-pane fade ${activeTab === 1 ? 'show active' : ''}`} id="instructors-tab-pane" role="tabpanel" aria-labelledby="instructors-tab">
+               {course?.instructorDetails && <Instructors instructorDetails={course.instructorDetails} />}
             </div>
          </div>
       </div>

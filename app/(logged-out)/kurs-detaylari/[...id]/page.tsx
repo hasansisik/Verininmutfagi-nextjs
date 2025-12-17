@@ -19,10 +19,15 @@ type Props = {
 export default async function Page({ params }: Props) {
 
    const { id } = await params;
-   const courseId = id[0];
+   const courseSlug = id[0];
+
+   console.log('Searching for course with slug:', courseSlug);
+   console.log('Available courses:', courses_data.map(c => ({ id: c.id, slug: c.slug, title: c.title })));
 
    const courses = courses_data;
-   const single_course = courses.find((item) => String(item.id) === courseId);
+   const single_course = courses.find((item) => item.slug === courseSlug);
+
+   console.log('Found course:', single_course ? single_course.title : 'NOT FOUND');
 
    if (!single_course) {
       notFound();

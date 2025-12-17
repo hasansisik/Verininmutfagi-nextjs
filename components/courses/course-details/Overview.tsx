@@ -1,6 +1,6 @@
 
 interface OverviewProps {
-   overview: {
+   overview?: {
       description: string;
       whatYouWillLearn: string;
       learningObjectives: string[];
@@ -9,6 +9,14 @@ interface OverviewProps {
 }
 
 const Overview = ({ overview }: OverviewProps) => {
+   if (!overview) {
+      return (
+         <div className="courses__overview-wrap">
+            <p>Kurs bilgileri yükleniyor...</p>
+         </div>
+      );
+   }
+
    return (
       <div className="courses__overview-wrap">
          <h3 className="title">Kurs Açıklaması</h3>
@@ -16,7 +24,7 @@ const Overview = ({ overview }: OverviewProps) => {
          <h3 className="title">Bu kursta neler öğreneceksiniz?</h3>
          <p>{overview.whatYouWillLearn}</p>
          <ul className="about__info-list list-wrap">
-            {overview.learningObjectives.map((objective, index) => (
+            {overview.learningObjectives?.map((objective, index) => (
                <li key={index} className="about__info-list-item">
                   <i className="flaticon-angle-right"></i>
                   <p className="content">{objective}</p>
