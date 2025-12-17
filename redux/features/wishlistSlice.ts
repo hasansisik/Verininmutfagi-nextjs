@@ -1,58 +1,88 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { setLocalStorage, getLocalStorage } from "@/utils/localstorage";
 
 interface Product {
-   id: string;
-   title: string;
-   thumb: string;
-   price: number;
+    id: string;
+    title: string;
+    thumb?: string;
+    price?: number;
 }
 
 interface WishlistState {
-   wishlist: Product[];
+    wishlist: Product[];
 }
 
+// Load from localStorage (client-side only)
+const loadWishlistFromStorage = (): Product[] => {
+    if (typeof window !== 'undefined') {
+        try {
+            const stored = localStorage.getItem('wishlist');
+            return stored ? JSON.parse(stored) : [];
+        } catch {
+            return [];
+        }
+    }
+    return [];
+};
+
+// Save to localStorage
+const saveWishlistToStorage = (wishlist: Product[]) => {
+    if (typeof window !== 'undefined') {
+        try {
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        } catch (error) {
+            console.error('Failed to save wishlist to localStorage:', error);
+        }
+    }
+};
+
 const initialState: WishlistState = {
-   wishlist: getLocalStorage<Product>("wishlist") || [], // Load initial state from localStorage
+    wishlist: [],
 };
 
 const wishlistSlice = createSlice({
-   name: "wishlist",
-   initialState,
-   reducers: {
-      addToWishlist: (state, { payload }: PayloadAction<Product>) => {
-         const productIndex = state.wishlist.findIndex((item) => item.id === payload.id);
-         if (productIndex >= 0) {
-            toast.info(`${payload.title} is already in your wishlist`, {
-               position: "top-right",
+    name: "wishlist",
+    initialState,
+    reducers: {
+        initializeWishlist: (state) => {
+            state.wishlist = loadWishlistFromStorage();
+        },
+        addToWishlist: (state, { payload }: PayloadAction<Product>) => {
+            const productIndex = state.wishlist.findIndex((item) => item.id === payload.id);
+            if (productIndex >= 0) {
+                toast.info(`${payload.title} zaten listenizde`, {
+                    position: "top-right",
+                });
+            } else {
+                state.wishlist.push(payload);
+                toast.success(`${payload.title} listenize eklendi`, {
+                    position: "top-right",
+                });
+                saveWishlistToStorage(state.wishlist);
+            }
+        },
+        removeFromWishlist: (state, { payload }: PayloadAction<Product>) => {
+            state.wishlist = state.wishlist.filter((item) => item.id !== payload.id);
+            toast.error(`Listeden kaldırıldı`, {
+                position: "top-right",
             });
-         } else {
-            state.wishlist.push(payload);
-            toast.success(`${payload.title} listenize eklendi`, {
-               position: "top-right",
+            saveWishlistToStorage(state.wishlist);
+        },
+        clearWishlist: (state) => {
+            state.wishlist = [];
+            saveWishlistToStorage(state.wishlist);
+            toast.info("Liste temizlendi", {
+                position: "top-right",
             });
-            setLocalStorage("wishlist", state.wishlist); // Save wishlist to localStorage
-         }
-      },
-      removeFromWishlist: (state, { payload }: PayloadAction<Product>) => {
-         state.wishlist = state.wishlist.filter((item) => item.id !== payload.id);
-         toast.error(`Removed from your wishlist`, {
-            position: "top-right",
-         });
-         setLocalStorage("wishlist", state.wishlist); // Update localStorage
-      },
-      clearWishlist: (state) => {
-         state.wishlist = [];
-         setLocalStorage("wishlist", state.wishlist); // Clear localStorage
-      },
-   },
+        },
+    },
 });
 
 export const {
-   addToWishlist,
-   removeFromWishlist,
-   clearWishlist,
+    initializeWishlist,
+    addToWishlist,
+    removeFromWishlist,
+    clearWishlist,
 } = wishlistSlice.actions;
 
 export default wishlistSlice.reducer;

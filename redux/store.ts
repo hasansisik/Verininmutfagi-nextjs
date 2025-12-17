@@ -1,19 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit';
-import courseSlice from './features/courseSlice';
-import cartSlice from './features/cartSlice';
-import productSlice from './features/productSlice';
-import wishlistSlice from './features/wishlistSlice';
+// redux/store.ts
+import { configureStore } from "@reduxjs/toolkit";
+import { userReducer } from "./reducers/userReducer";
+import cartReducer from "./features/cartSlice";
+import wishlistReducer from "./features/wishlistSlice";
 
 const store = configureStore({
-    reducer: {
-        courses: courseSlice,
-        products: productSlice,
-        cart: cartSlice,
-        wishlist: wishlistSlice,
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false,
-    }),
+  reducer: {
+    user: userReducer,
+    cart: cartReducer,
+    wishlist: wishlistReducer,
+  },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

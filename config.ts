@@ -1,1 +1,1 @@
-export const server: string ="https://kurstanbul-kos-bf0d67428b62.herokuapp.com/v1";
+export const server: string ="http://localhost:3040/v1";

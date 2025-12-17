@@ -2,8 +2,35 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import Link from "next/link";
-import { useEffect } from 'react';
-import category_data from "@/data/inner-data/CategoryData";
+import { useEffect, useState } from 'react';
+import { Code2, Palette, Briefcase, Database, TrendingUp, Users } from 'lucide-react';
+
+// Lucide icon mapping
+const iconMap: { [key: string]: any } = {
+   'Code2': Code2,
+   'Palette': Palette,
+   'Briefcase': Briefcase,
+   'Database': Database,
+   'TrendingUp': TrendingUp,
+   'Users': Users,
+   // Fallback for old flaticon names
+   'flaticon-coding': Code2,
+   'flaticon-graphic-design': Palette,
+   'flaticon-email': Briefcase,
+   'flaticon-data-science': Database,
+   'flaticon-investment': TrendingUp,
+   'flaticon-interaction': Users,
+};
+
+interface CategoryType {
+   _id: string;
+   slug: string;
+   name: string;
+   icon: string;
+   description: string;
+   courseCount: number;
+   isActive: boolean;
+}
 
 // slider setting
 const setting = {
@@ -41,27 +68,45 @@ const setting = {
 };
 
 const Categories = () => {
+   const [categories, setCategories] = useState<CategoryType[]>([]);
+   const [loading, setLoading] = useState(true);
+
    useEffect(() => {
-      // Remove star icons
-      const style = document.createElement('style');
-      style.textContent = `
-         .categories__item .icon::before,
-         .categories__item .icon::after {
-            display: none !important;
-            content: none !important;
-            background: none !important;
-            background-image: none !important;
-            width: 0 !important;
-            height: 0 !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
+      // Fetch categories from API
+      const fetchCategories = async () => {
+         try {
+            const response = await fetch('http://localhost:3040/v1/categories');
+            const data = await response.json();
+
+            if (data.success) {
+               setCategories(data.categories.filter((cat: CategoryType) => cat.isActive));
+            }
+         } catch (error) {
+            console.error('Kategoriler yüklenirken hata:', error);
+         } finally {
+            setLoading(false);
          }
-      `;
-      document.head.appendChild(style);
-      return () => {
-         document.head.removeChild(style);
       };
+
+      fetchCategories();
    }, []);
+
+   if (loading) {
+      return (
+         <section className="categories-area section-py-120" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
+            <div className="container">
+               <div className="row justify-content-center">
+                  <div className="col-xl-5 col-lg-7">
+                     <div className="section__title text-center mb-40">
+                        <span className="sub-title">Kurs Kategorileri</span>
+                        <h2 className="title">Yükleniyor...</h2>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+      );
+   }
 
    return (
       <section className="categories-area section-py-120" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
@@ -80,19 +125,23 @@ const Categories = () => {
                <div className="col-12">
                   <div className="categories__wrap" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
                      <Swiper {...setting} modules={[Navigation]} className="swiper categories-active">
-                        {category_data.map((item) => (
-                           <SwiperSlide key={item.id} className="swiper-slide">
-                              <div className="categories__item">
-                                 <Link href={`/kurslar?kategori=${item.slug}`}>
-                                    <div className="icon remove-stars">
-                                       <i className={item.icon}></i>
-                                    </div>
-                                    <span className="name">{item.name}</span>
-                                    <span className="courses">({item.courseCount})</span>
-                                 </Link>
-                              </div>
-                           </SwiperSlide>
-                        ))}
+                        {categories.map((item) => {
+                           const IconComponent = iconMap[item.icon] || Code2;
+
+                           return (
+                              <SwiperSlide key={item._id} className="swiper-slide">
+                                 <div className="categories__item">
+                                    <Link href={`/kurslar?kategori=${item.slug}`}>
+                                       <div className="icon remove-stars">
+                                          <IconComponent size={48} strokeWidth={1.5} />
+                                       </div>
+                                       <span className="name">{item.name}</span>
+                                       <span className="courses">({item.courseCount})</span>
+                                    </Link>
+                                 </div>
+                              </SwiperSlide>
+                           );
+                        })}
                      </Swiper>
 
                      <div className="categories__nav">
