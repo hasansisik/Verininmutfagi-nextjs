@@ -95,6 +95,10 @@ const cartSlice = createSlice({
                 }
             }
         },
+        order_clear_cart: (state) => {
+            state.cart = [];
+            saveCartToStorage(state.cart);
+        },
         get_cart_products: (state) => {
             state.cart = loadCartFromStorage();
         },
@@ -107,6 +111,7 @@ export const {
     decrease_quantity,
     remove_cart_product,
     clear_cart,
+    order_clear_cart,
     get_cart_products,
 } = cartSlice.actions;
 

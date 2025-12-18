@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import CheckOutForm from "./CheckOutForm"
+import PayTRPayment from "./PayTRPayment"
 import { useSelector } from "react-redux";
 import UseCartInfo from "@/hooks/UseCartInfo";
 import { toast } from "react-toastify";
@@ -15,7 +15,7 @@ const CheckOutArea = () => {
     <div className="checkout__area section-py-120">
       <div className="container">
         <div className="row">
-          <CheckOutForm />
+          <PayTRPayment />
 
           <div className="col-lg-5">
             <div className="order__info-wrap">
@@ -32,9 +32,8 @@ const CheckOutArea = () => {
                 <li>Ara Toplam <span>₺{total.toFixed(2)}</span></li>
                 <li>Toplam <span>₺{total.toFixed(2)}</span></li>
               </ul>
-              <p>Üzgünüz, eyaletiniz için mevcut ödeme yöntemi bulunmuyor. Yardıma ihtiyacınız varsa veya alternatif düzenlemeler yapmak istiyorsanız lütfen bizimle iletişime geçin.</p>
-              <p>Kişisel verileriniz siparişinizi işlemek, bu web sitesindeki deneyiminizi desteklemek ve <Link href="#">gizlilik politikamızda</Link> açıklanan diğer amaçlar için kullanılacaktır.</p>
-              <button onClick={notify} className="btn">Sipariş Ver</button>
+              <p>Ödemenizi PayTR güvenli ödeme altyapısı ile kredi kartınızı kullanarak gerçekleştirebilirsiniz.</p>
+              <p>Kişisel verileriniz siparişinizi işlemek, bu web sitesindeki deneyiminizi desteklemek ve <Link href="/politikalar/gizlilik-politikasi">gizlilik politikamızda</Link> açıklanan diğer amaçlar için kullanılacaktır.</p>
             </div>
           </div>
         </div>
