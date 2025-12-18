@@ -1,0 +1,62 @@
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+  z-index: 1000;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.2s;
+  background-color: transparent;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.menuItem:hover {
+  background-color: #f8f9fa;
+}
+
+.menuItem i {
+  width: 16px;
+  color: #666;
+}
+
+.logoutButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: #dc3545;
+  text-decoration: none;
+  transition: background 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 8px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.logoutButton:hover {
+  background-color: #fff5f5;
+}
+
+.logoutButton i {
+  width: 16px;
+  color: #dc3545;
+}
