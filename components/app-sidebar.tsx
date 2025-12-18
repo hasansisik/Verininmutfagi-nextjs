@@ -29,20 +29,30 @@ import {
 const data = {
   navMain: [
     {
+      title: "Kurslar",
+      url: "/dashboard/kurslar",
+      icon: BookOpen,
+      isActive: true,
+      items: [
+        {
+          title: "Tüm Kurslar",
+          url: "/dashboard/kurslar",
+        },
+        {
+          title: "Yeni Kurs Ekle",
+          url: "/dashboard/kurslar/yeni",
+        },
+      ],
+    },
+    {
       title: "Kullanıcılar",
       url: "/dashboard/kullanicilar",
       icon: Users,
-      isActive: true,
     },
     {
       title: "Ödemeler",
       url: "/dashboard/odemeler",
       icon: CreditCard,
-    },
-    {
-      title: "Ayarlar",
-      url: "/dashboard/ayarlar",
-      icon: Settings,
     },
     {
       title: "Kategoriler",
@@ -55,19 +65,9 @@ const data = {
       icon: Frame,
     },
     {
-      title: "Kurslar",
-      url: "/dashboard/kurslar",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Tüm Kurslar",
-          url: "/dashboard/kurslar",
-        },
-        {
-          title: "Yeni Kurs Ekle",
-          url: "/dashboard/kurslar/yeni",
-        },
-      ],
+      title: "Ayarlar",
+      url: "/dashboard/ayarlar",
+      icon: Settings,
     },
   ],
   navSecondary: [],
