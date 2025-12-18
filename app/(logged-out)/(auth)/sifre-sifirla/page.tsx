@@ -3,6 +3,7 @@ import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
    title: "Şifre Sıfırla - Verinin Mutfağı",
+   description: "Yeni şifrenizi belirleyin ve hesabınıza tekrar erişim sağlayın.",
 };
 const index = () => {
    return (

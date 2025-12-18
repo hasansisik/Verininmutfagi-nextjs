@@ -2,7 +2,8 @@ import StudentEnrolledCourses from "@/dashboard/student-dashboard/student-enroll
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Student Dashboard Verinin Mutfağı - Online Courses & Education React Next js Template",
+   title: "Kayıtlı Kurslar - Verinin Mutfağı",
+   description: "Kayıtlı olduğunuz tüm kursları görüntüleyin ve eğitiminize devam edin.",
 };
 const index = () => {
    return (

@@ -2,7 +2,8 @@ import Registration from "@/components/inner-pages/registration";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Registration Verinin Mutfağı - Online Courses & Education React Next js Template",
+   title: "Kayıt Ol - Verinin Mutfağı",
+   description: "Verinin Mutfağı'na üye olun ve binlerce kursa erişim sağlayın.",
 };
 const index = () => {
    return (

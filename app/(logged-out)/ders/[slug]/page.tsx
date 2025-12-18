@@ -43,7 +43,7 @@ export default function Page() {
         return (
             <Wrapper>
                 <div className="container">
-                    <div className="text-center py-5">Ders yükleniyor...</div>
+                    <div className="text-center py-5">Yükleniyor...</div>
                 </div>
             </Wrapper>
         );

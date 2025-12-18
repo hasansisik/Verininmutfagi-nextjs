@@ -3,6 +3,7 @@ import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
    title: "Doğrulama - Verinin Mutfağı",
+   description: "E-posta adresinizi doğrulayın ve hesabınızı aktifleştirin.",
 };
 const index = () => {
    return (

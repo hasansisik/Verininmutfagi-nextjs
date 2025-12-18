@@ -3,7 +3,8 @@ import Registration from "@/components/inner-pages/registration";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Login Verinin Mutfağı - Online Courses & Education React Next js Template",
+   title: "Giriş Yap - Verinin Mutfağı",
+   description: "Verinin Mutfağı hesabınıza giriş yapın ve kurslarınıza devam edin.",
 };
 const index = () => {
    return (

@@ -2,7 +2,8 @@ import Cart from "@/components/inner-shop/cart";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Cart Verinin Mutfağı - Online Courses & Education React Next js Template",
+   title: "Sepetim - Verinin Mutfağı",
+   description: "Alışveriş sepetinizdeki kursları görüntüleyin ve ödeme işlemini tamamlayın.",
 };
 const page = () => {
    return (

@@ -3,6 +3,7 @@ import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
    title: "Şifremi Unuttum - Verinin Mutfağı",
+   description: "Şifrenizi sıfırlamak için e-posta adresinizi girin.",
 };
 const index = () => {
    return (

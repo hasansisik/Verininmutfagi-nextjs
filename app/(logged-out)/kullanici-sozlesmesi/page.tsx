@@ -3,6 +3,7 @@ import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
     title: "Kullanıcı Sözleşmesi - Verinin Mutfağı",
+    description: "Verinin Mutfağı kullanıcı sözleşmesi. Platform kullanım şartlarını inceleyin.",
 };
 const page = () => {
     return (

@@ -2,7 +2,8 @@ import Course from "@/components/courses/course";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Course Verinin Mutfağı - Online Courses & Education React Next js Template",
+   title: "Kurslar - Verinin Mutfağı",
+   description: "Tüm kurslarımızı keşfedin. Veri bilimi, programlama, analitik ve daha fazlası.",
 };
 const page = () => {
    return (

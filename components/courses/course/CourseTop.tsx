@@ -1,7 +1,5 @@
 "use client"
-import { selectCourses } from "@/redux/features/courseSlice";
 import { ChangeEvent, useState } from "react";
-import { useSelector } from "react-redux";
 
 interface CourseTopProps {
    startOffset: number;

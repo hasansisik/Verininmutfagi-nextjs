@@ -48,7 +48,7 @@ export default function Page() {
             <HeaderOne />
             <main className="main-area fix">
                <div className="container">
-                  <div className="text-center py-5">Kurs yükleniyor...</div>
+                  <div className="text-center py-5">Yükleniyor...</div>
                </div>
             </main>
             <FooterOne />

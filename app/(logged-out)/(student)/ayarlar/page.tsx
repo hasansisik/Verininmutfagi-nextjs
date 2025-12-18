@@ -2,7 +2,8 @@ import StudentSetting from "@/dashboard/student-dashboard/student-setting";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Student Setting Verinin Mutfağı - Online Courses & Education React Next js Template",
+   title: "Ayarlar - Verinin Mutfağı",
+   description: "Hesap ayarlarınızı ve tercihlerinizi yönetin.",
 };
 const index = () => {
    return (
