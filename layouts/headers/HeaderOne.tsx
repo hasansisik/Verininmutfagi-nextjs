@@ -119,7 +119,7 @@ const HeaderOne = () => {
                                                 color: 'inherit'
                                              }}
                                           >
-                                             <InjectableSvg src="/assets/img/icons/user.svg" alt="user" className="injectable" style={{ width: '20px', height: '20px' }} />
+                                             <InjectableSvg src="/assets/img/icons/user.svg" alt="user" className="injectable"/>
                                              <span>{user.name}</span>
                                              <i className={`fas fa-chevron-${showDropdown ? 'up' : 'down'}`} style={{ fontSize: '12px' }}></i>
                                           </button>

@@ -15,6 +15,7 @@ export default function RootLayout({
         <meta name="description" content="Verinin Mutfağı - Online Courses & Education." />
         <link rel="icon" href="/favicon.png" sizes="any" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" />
+        <link rel="stylesheet" href="/assets/css/dashboard-override.css" />
       </head>
       <body suppressHydrationWarning={true}>
         <Provider store={store}>

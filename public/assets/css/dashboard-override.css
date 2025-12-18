@@ -1,0 +1,26 @@
+/* Remove dashboard banner shadow overlay - IMPORTANT */
+.dashboard__top-bg::before,
+.dashboard__top-bg::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.dashboard__top-bg {
+    box-shadow: none !important;
+}
+
+/* Change text colors to black for better visibility */
+.dashboard__instructor-info-left .content .title {
+    color: #000000 !important;
+}
+
+.dashboard__instructor-info-left .content .list-wrap li {
+    color: #000000 !important;
+}
+
+.dashboard__instructor-info-left .content .list-wrap li svg {
+    color: #000000 !important;
+}
