@@ -2,7 +2,14 @@
 
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import axios from "axios"
+import { useAppDispatch, useAppSelector } from "@/redux/hook"
+import {
+    getAllMenuItems,
+    createMenuItem,
+    updateMenuItem,
+    deleteMenuItem,
+    updateMenuOrder,
+} from "@/redux/actions/menuActions"
 import {
     DndContext,
     closestCenter,
@@ -145,8 +152,8 @@ function SortableRow({
 }
 
 export default function MenuPage() {
-    const [menuItems, setMenuItems] = useState<MenuItem[]>([])
-    const [loading, setLoading] = useState(true)
+    const dispatch = useAppDispatch()
+    const { menuItems, loading } = useAppSelector((state) => state.menuManagement)
     const [dialogOpen, setDialogOpen] = useState(false)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
     const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
@@ -166,21 +173,8 @@ export default function MenuPage() {
     )
 
     useEffect(() => {
-        fetchMenuItems()
+        dispatch(getAllMenuItems())
     }, [])
-
-    const fetchMenuItems = async () => {
-        try {
-            const response = await axios.get("http://localhost:3040/v1/menu")
-            if (response.data.success) {
-                setMenuItems(response.data.menuItems)
-            }
-        } catch (error) {
-            toast.error("Menü öğeleri yüklenirken hata oluştu")
-        } finally {
-            setLoading(false)
-        }
-    }
 
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event
@@ -190,23 +184,17 @@ export default function MenuPage() {
             const newIndex = menuItems.findIndex((item) => item._id === over.id)
 
             const newItems = arrayMove(menuItems, oldIndex, newIndex)
-            setMenuItems(newItems)
 
             try {
-                const token = localStorage.getItem("accessToken")
-                await Promise.all(
-                    newItems.map((item, index) =>
-                        axios.patch(
-                            `http://localhost:3040/v1/menu/${item._id}`,
-                            { order: index },
-                            { headers: { Authorization: `Bearer ${token}` } }
-                        )
-                    )
-                )
+                const orderUpdates = newItems.map((item, index) => ({
+                    _id: item._id,
+                    order: index,
+                }))
+                await dispatch(updateMenuOrder(orderUpdates)).unwrap()
                 toast.success("Sıralama güncellendi")
-            } catch (error) {
-                toast.error("Sıralama güncellenirken hata oluştu")
-                fetchMenuItems()
+            } catch (error: any) {
+                toast.error(error || "Sıralama güncellenirken hata oluştu")
+                dispatch(getAllMenuItems())
             }
         }
     }
@@ -220,29 +208,18 @@ export default function MenuPage() {
         }
 
         try {
-            const token = localStorage.getItem("accessToken")
-
             if (selectedItem) {
-                await axios.patch(
-                    `http://localhost:3040/v1/menu/${selectedItem._id}`,
-                    formData,
-                    { headers: { Authorization: `Bearer ${token}` } }
-                )
+                await dispatch(updateMenuItem({ id: selectedItem._id, menuData: formData })).unwrap()
                 toast.success("Menü öğesi güncellendi")
             } else {
-                await axios.post(
-                    "http://localhost:3040/v1/menu",
-                    { ...formData, order: menuItems.length },
-                    { headers: { Authorization: `Bearer ${token}` } }
-                )
+                await dispatch(createMenuItem({ ...formData, order: menuItems.length })).unwrap()
                 toast.success("Menü öğesi oluşturuldu")
             }
 
             setDialogOpen(false)
             resetForm()
-            fetchMenuItems()
         } catch (error: any) {
-            toast.error(error.response?.data?.msg || "İşlem başarısız")
+            toast.error(error || "İşlem başarısız")
         }
     }
 
@@ -250,16 +227,12 @@ export default function MenuPage() {
         if (!selectedItem) return
 
         try {
-            const token = localStorage.getItem("accessToken")
-            await axios.delete(`http://localhost:3040/v1/menu/${selectedItem._id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+            await dispatch(deleteMenuItem(selectedItem._id)).unwrap()
             toast.success("Menü öğesi silindi")
             setDeleteDialogOpen(false)
             setSelectedItem(null)
-            fetchMenuItems()
         } catch (error: any) {
-            toast.error(error.response?.data?.msg || "Silme işlemi başarısız")
+            toast.error(error || "Silme işlemi başarısız")
         }
     }
 

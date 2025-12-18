@@ -1,9 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
+  },
   webpack: (config) => {
     // logged-out.scss için PostCSS config'ini özelleştir
     const rules = config.module.rules;
-    
+
     rules.forEach((rule) => {
       if (rule.oneOf && Array.isArray(rule.oneOf)) {
         rule.oneOf.forEach((oneOf) => {
@@ -60,7 +68,7 @@ const nextConfig = {
         });
       }
     });
-    
+
     return config;
   },
 };

@@ -1,16 +1,22 @@
 // redux/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import { userReducer } from "./reducers/userReducer";
+import { courseReducer } from "./reducers/courseReducer";
+import categoryReducer from "./reducers/categoryReducer";
+import menuReducer from "./reducers/menuReducer";
 import cartReducer from "./features/cartSlice";
 import wishlistReducer from "./features/wishlistSlice";
-import courseReducer from "./features/courseSlice";
+import courseSliceReducer from "./features/courseSlice";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     cart: cartReducer,
     wishlist: wishlistReducer,
-    courses: courseReducer,
+    courses: courseSliceReducer,
+    courseManagement: courseReducer,
+    categoryManagement: categoryReducer,
+    menuManagement: menuReducer,
   },
 });
 
