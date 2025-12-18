@@ -7,6 +7,8 @@ import menuReducer from "./reducers/menuReducer";
 import cartReducer from "./features/cartSlice";
 import wishlistReducer from "./features/wishlistSlice";
 import courseSliceReducer from "./features/courseSlice";
+import { paymentReducer } from "./reducers/paymentReducer";
+import { settingsReducer } from "./reducers/settingsReducer";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +19,8 @@ const store = configureStore({
     courseManagement: courseReducer,
     categoryManagement: categoryReducer,
     menuManagement: menuReducer,
+    paymentManagement: paymentReducer,
+    settingsManagement: settingsReducer,
   },
 });
 

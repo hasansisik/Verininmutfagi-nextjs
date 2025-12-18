@@ -40,10 +40,11 @@ const PayTRPayment = () => {
                     email: user?.email || "test@test.com", // Gerçek üyelerde user.email kullanılacak
                     payment_amount: Math.round(total * 100), // Kuruş cinsinden
                     user_basket,
-                    user_name: user?.name || "Misafir Kullanıcı",
+                    user_name: user?.name ? `${user.name} ${user.surname}` : "Misafir Kullanıcı",
                     user_address: "İstanbul", // Opsiyonel, kullanıcıdan alınabilir
                     user_phone: "05555555555", // Opsiyonel, kullanıcıdan alınabilir
-                    merchant_oid: "VM" + Math.random().toString(36).substring(2, 10).toUpperCase() // Benzersiz sipariş ID
+                    merchant_oid: "VM" + Math.random().toString(36).substring(2, 10).toUpperCase(), // Benzersiz sipariş ID
+                    courseIds: productItem.map((item: any) => item.id)
                 };
 
                 const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3040/v1'}/payment/get-token`, paymentData);

@@ -8,6 +8,8 @@ import {
   Frame,
   Users,
   Tag,
+  CreditCard,
+  Settings,
 } from "lucide-react"
 import { useAppDispatch } from "@/redux/hook"
 import { loadUser } from "@/redux/actions/userActions"
@@ -31,6 +33,16 @@ const data = {
       url: "/dashboard/kullanicilar",
       icon: Users,
       isActive: true,
+    },
+    {
+      title: "Ödemeler",
+      url: "/dashboard/odemeler",
+      icon: CreditCard,
+    },
+    {
+      title: "Ayarlar",
+      url: "/dashboard/ayarlar",
+      icon: Settings,
     },
     {
       title: "Kategoriler",
