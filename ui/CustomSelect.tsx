@@ -12,11 +12,29 @@ const options = category_data.map(category => ({
    label: category.name
 }));
 
-const CustomSelect = ({ value, onChange }: any) => {
+import { useRouter } from 'next/navigation';
+
+const CustomSelect = () => {
+   const [search, setSearch] = React.useState("");
+   const router = useRouter();
+
+   const handleSearch = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (search.trim()) {
+         router.push(`/kurslar?search=${encodeURIComponent(search.trim())}`);
+         setSearch("");
+      }
+   };
+
    return (
-      <form onSubmit={(e) => e.preventDefault()} className="tgmenu__search-form">
+      <form onSubmit={handleSearch} className="tgmenu__search-form">
          <div className="input-grp">
-            <input type="text" placeholder="Kurs Ara..." />
+            <input
+               type="text"
+               placeholder="Kurs Ara..."
+               value={search}
+               onChange={(e) => setSearch(e.target.value)}
+            />
             <button type="submit"><i className="flaticon-search"></i></button>
          </div>
       </form>

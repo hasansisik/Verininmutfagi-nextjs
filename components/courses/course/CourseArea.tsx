@@ -5,30 +5,39 @@ import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import CourseSidebar from './CourseSidebar';
 import CourseTop from './CourseTop';
+import { useSearchParams } from 'next/navigation';
 import UseCourses from '@/hooks/UseCourses';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/features/cartSlice';
 
 
 const CourseArea = () => {
-
+   const searchParams = useSearchParams();
+   const query = searchParams.get('search');
    const dispatch = useDispatch();
    const { courses, setCourses, loading } = UseCourses();
+
+   // Arama filtresi uygula
+   const filteredCourses = query
+      ? courses.filter(course =>
+         course.title?.toLowerCase().includes(query.toLowerCase())
+      )
+      : courses;
 
    const itemsPerPage = 12;
    const [itemOffset, setItemOffset] = useState(0);
    const endOffset = itemOffset + itemsPerPage;
-   const currentItems = courses.slice(itemOffset, endOffset);
-   const pageCount = Math.ceil(courses.length / itemsPerPage);
+   const currentItems = filteredCourses.slice(itemOffset, endOffset);
+   const pageCount = Math.ceil(filteredCourses.length / itemsPerPage);
 
    const startOffset = itemOffset + 1;
-   const totalItems = courses.length;
+   const totalItems = filteredCourses.length;
 
    useEffect(() => {
-   }, [courses]);
+   }, [filteredCourses]);
 
    const handlePageClick = (event: { selected: number }) => {
-      const newOffset = (event.selected * itemsPerPage) % courses.length;
+      const newOffset = (event.selected * itemsPerPage) % filteredCourses.length;
       setItemOffset(newOffset);
    };
 
@@ -76,47 +85,54 @@ const CourseArea = () => {
                   <div className="tab-content" id="myTabContent">
                      <div className={`tab-pane fade ${activeTab === 0 ? 'show active' : ''}`} id="grid" role="tabpanel" aria-labelledby="grid-tab">
                         <div className="row courses__grid-wrap row-cols-1 row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-1">
-                           {currentItems.map((item) => (
-                              <div key={item._id} className="col">
-                                 <div className="courses__item shine__animate-item">
-                                    <div className="courses__item-thumb">
-                                       <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
-                                          <Image src={item.thumb || '/assets/img/courses/course_thumb01.jpg'} alt={item.title} width={400} height={300} />
-                                       </Link>
-                                    </div>
-                                    <div className="courses__item-content">
-                                       <ul className="courses__item-meta list-wrap">
-                                          <li className="courses__item-tag">
-                                             <Link href="/kurslar">{item.category?.name || 'Kategori'}</Link>
-                                          </li>
-                                          <li className="avg-rating"><i className="fas fa-star"></i> {item.rating || '0.0'} ({item.ratingCount || 0} Değerlendirme)</li>
-                                       </ul>
-                                       <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
-                                       <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
-                                       <div className="courses__item-bottom">
-                                          <div className="button">
-                                             <button
-                                                onClick={() => handleAddToCart(item)}
-                                                style={{
-                                                   background: 'none',
-                                                   border: 'none',
-                                                   padding: 0,
-                                                   cursor: 'pointer',
-                                                   display: 'flex',
-                                                   alignItems: 'center',
-                                                   gap: '8px'
-                                                }}
-                                             >
-                                                <span className="text">Sepete Ekle</span>
-                                                <i className="flaticon-arrow-right"></i>
-                                             </button>
+                           {currentItems.length > 0 ? (
+                              currentItems.map((item) => (
+                                 <div key={item._id} className="col">
+                                    <div className="courses__item shine__animate-item">
+                                       <div className="courses__item-thumb">
+                                          <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
+                                             <Image src={item.thumb || '/assets/img/courses/course_thumb01.jpg'} alt={item.title} width={400} height={300} />
+                                          </Link>
+                                       </div>
+                                       <div className="courses__item-content">
+                                          <ul className="courses__item-meta list-wrap">
+                                             <li className="courses__item-tag">
+                                                <Link href="/kurslar">{item.category?.name || 'Kategori'}</Link>
+                                             </li>
+                                             <li className="avg-rating"><i className="fas fa-star"></i> {item.rating || '0.0'} ({item.ratingCount || 0} Değerlendirme)</li>
+                                          </ul>
+                                          <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
+                                          <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
+                                          <div className="courses__item-bottom">
+                                             <div className="button">
+                                                <button
+                                                   onClick={() => handleAddToCart(item)}
+                                                   style={{
+                                                      background: 'none',
+                                                      border: 'none',
+                                                      padding: 0,
+                                                      cursor: 'pointer',
+                                                      display: 'flex',
+                                                      alignItems: 'center',
+                                                      gap: '8px'
+                                                   }}
+                                                >
+                                                   <span className="text">Sepete Ekle</span>
+                                                   <i className="flaticon-arrow-right"></i>
+                                                </button>
+                                             </div>
+                                             <h5 className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
                                           </div>
-                                          <h5 className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
                                        </div>
                                     </div>
                                  </div>
+                              ))
+                           ) : (
+                              <div className="col-12 text-center py-5">
+                                 <h4>Aramanızla eşleşen kurs bulunamadı.</h4>
+                                 <p>Lütfen farklı anahtar kelimelerle tekrar deneyin.</p>
                               </div>
-                           ))}
+                           )}
                         </div>
                         <nav className="pagination__wrap mt-30">
                            <ReactPaginate
@@ -132,50 +148,57 @@ const CourseArea = () => {
 
                      <div className={`tab-pane fade ${activeTab === 1 ? 'show active' : ''}`} id="list" role="tabpanel" aria-labelledby="list-tab">
                         <div className="row courses__list-wrap row-cols-1">
-                           {currentItems.map((item) => (
-                              <div key={item._id} className="col">
-                                 <div className="courses__item courses__item-three shine__animate-item">
-                                    <div className="courses__item-thumb">
-                                       <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
-                                          <Image src={item.thumb || '/assets/img/courses/course_thumb01.jpg'} alt={item.title} width={400} height={300} />
-                                       </Link>
-                                    </div>
-                                    <div className="courses__item-content">
-                                       <ul className="courses__item-meta list-wrap">
-                                          <li className="courses__item-tag">
-                                             <Link href="/kurslar">{item.category?.name || 'Kategori'}</Link>
-                                             <div className="avg-rating">
-                                                <i className="fas fa-star"></i> {item.rating || '0.0'} ({item.ratingCount || 0} Değerlendirme)
+                           {currentItems.length > 0 ? (
+                              currentItems.map((item) => (
+                                 <div key={item._id} className="col">
+                                    <div className="courses__item courses__item-three shine__animate-item">
+                                       <div className="courses__item-thumb">
+                                          <Link href={`/kurs-detaylari/${item.slug}`} className="shine__animate-link">
+                                             <Image src={item.thumb || '/assets/img/courses/course_thumb01.jpg'} alt={item.title} width={400} height={300} />
+                                          </Link>
+                                       </div>
+                                       <div className="courses__item-content">
+                                          <ul className="courses__item-meta list-wrap">
+                                             <li className="courses__item-tag">
+                                                <Link href="/kurslar">{item.category?.name || 'Kategori'}</Link>
+                                                <div className="avg-rating">
+                                                   <i className="fas fa-star"></i> {item.rating || '0.0'} ({item.ratingCount || 0} Değerlendirme)
+                                                </div>
+                                             </li>
+                                             <li className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</li>
+                                          </ul>
+                                          <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
+                                          <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
+                                          <p className="info">{item.desc}</p>
+                                          <div className="courses__item-bottom">
+                                             <div className="button">
+                                                <button
+                                                   onClick={() => handleAddToCart(item)}
+                                                   style={{
+                                                      background: 'none',
+                                                      border: 'none',
+                                                      padding: 0,
+                                                      cursor: 'pointer',
+                                                      display: 'flex',
+                                                      alignItems: 'center',
+                                                      gap: '8px'
+                                                   }}
+                                                >
+                                                   <span className="text">Sepete Ekle</span>
+                                                   <i className="flaticon-arrow-right"></i>
+                                                </button>
                                              </div>
-                                          </li>
-                                          <li className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</li>
-                                       </ul>
-                                       <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
-                                       <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
-                                       <p className="info">{item.desc}</p>
-                                       <div className="courses__item-bottom">
-                                          <div className="button">
-                                             <button
-                                                onClick={() => handleAddToCart(item)}
-                                                style={{
-                                                   background: 'none',
-                                                   border: 'none',
-                                                   padding: 0,
-                                                   cursor: 'pointer',
-                                                   display: 'flex',
-                                                   alignItems: 'center',
-                                                   gap: '8px'
-                                                }}
-                                             >
-                                                <span className="text">Sepete Ekle</span>
-                                                <i className="flaticon-arrow-right"></i>
-                                             </button>
                                           </div>
                                        </div>
                                     </div>
                                  </div>
+                              ))
+                           ) : (
+                              <div className="col-12 text-center py-5">
+                                 <h4>Aramanızla eşleşen kurs bulunamadı.</h4>
+                                 <p>Lütfen farklı anahtar kelimelerle tekrar deneyin.</p>
                               </div>
-                           ))}
+                           )}
                         </div>
                         <nav className="pagination__wrap mt-30">
                            <ul className="list-wrap">
