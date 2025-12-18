@@ -8,9 +8,8 @@ import MobileSidebar from "./menu/MobileSidebar"
 import InjectableSvg from "@/hooks/InjectableSvg"
 import dynamic from "next/dynamic"
 import { useAppDispatch, useAppSelector } from "@/redux/hook"
-import { loadUser, logout } from "@/redux/actions/userActions"
-import { useRouter } from "next/navigation"
-import { toast } from "react-toastify"
+import { loadUser } from "@/redux/actions/userActions"
+import UserDropdown from "@/components/common/UserDropdown"
 
 const TotalCart = dynamic(() => import("@/components/common/TotalCart"), { ssr: false });
 const CustomSelect = dynamic(() => import("@/ui/CustomSelect"), { ssr: false });
@@ -21,7 +20,6 @@ const HeaderOne = () => {
 
    const [selectedOption, setSelectedOption] = React.useState(null);
    const dispatch = useAppDispatch();
-   const router = useRouter();
    const { user, isAuthenticated } = useAppSelector((state) => state.user);
    const [showDropdown, setShowDropdown] = useState(false);
    const dropdownRef = useRef<HTMLLIElement>(null);
@@ -45,30 +43,8 @@ const HeaderOne = () => {
       setSelectedOption(option);
    };
 
-   const handleLogout = async () => {
-      try {
-         await dispatch(logout()).unwrap();
-         toast.success("Çıkış yapıldı");
-         router.push("/");
-         setShowDropdown(false);
-      } catch (error) {
-         toast.error("Çıkış yapılırken hata oluştu");
-      }
-   };
-
    const { sticky } = UseSticky();
    const [isActive, setIsActive] = useState<boolean>(false);
-
-   const menuItemStyle: React.CSSProperties = {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      padding: '12px 16px',
-      color: '#333',
-      textDecoration: 'none',
-      transition: 'background 0.2s',
-      backgroundColor: 'transparent'
-   };
 
    return (
       <>
@@ -91,7 +67,7 @@ const HeaderOne = () => {
                               </div>
                               <div className="tgmenu__action">
                                  <ul className="list-wrap">
-   
+
                                     <li className="mini-cart-icon">
                                        <Link href="/sepet" className="cart-count">
                                           <InjectableSvg src="/assets/img/icons/cart.svg" className="injectable" alt="img" />
@@ -119,96 +95,7 @@ const HeaderOne = () => {
                                           </button>
 
                                           {showDropdown && (
-                                             <div style={{
-                                                position: 'absolute',
-                                                top: '100%',
-                                                right: 0,
-                                                marginTop: '8px',
-                                                backgroundColor: 'white',
-                                                borderRadius: '8px',
-                                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                                                minWidth: '200px',
-                                                zIndex: 1000,
-                                                overflow: 'hidden'
-                                             }}>
-                                                <Link
-                                                   href="/panelim"
-                                                   onClick={() => setShowDropdown(false)}
-                                                   style={menuItemStyle}
-                                                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
-                                                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                                                >
-                                                   <i className="fas fa-home" style={{ width: '16px', color: '#666' }}></i>
-                                                   <span style={{ color: '#333' }}>Panelim</span>
-                                                </Link>
-
-                                                <Link
-                                                   href="/panelim/ayarlar"
-                                                   onClick={() => setShowDropdown(false)}
-                                                   style={menuItemStyle}
-                                                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
-                                                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                                                >
-                                                   <i className="fas fa-cog" style={{ width: '16px', color: '#666' }}></i>
-                                                   <span style={{ color: '#333' }}>Ayarlar</span>
-                                                </Link>
-
-                                                <Link
-                                                   href="/istek-listesi"
-                                                   onClick={() => setShowDropdown(false)}
-                                                   style={menuItemStyle}
-                                                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
-                                                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                                                >
-                                                   <i className="fas fa-heart" style={{ width: '16px', color: '#666' }}></i>
-                                                   <span style={{ color: '#333' }}>İstek Listem</span>
-                                                </Link>
-
-                                                <Link
-                                                   href="/panelim/kayitli-kurslar"
-                                                   onClick={() => setShowDropdown(false)}
-                                                   style={menuItemStyle}
-                                                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
-                                                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                                                >
-                                                   <i className="fas fa-book" style={{ width: '16px', color: '#666' }}></i>
-                                                   <span style={{ color: '#333' }}>Kayıtlı Kurslar</span>
-                                                </Link>
-
-                                                <Link
-                                                   href="/panelim/siparis-gecmisim"
-                                                   onClick={() => setShowDropdown(false)}
-                                                   style={menuItemStyle}
-                                                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
-                                                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                                                >
-                                                   <i className="fas fa-shopping-bag" style={{ width: '16px', color: '#666' }}></i>
-                                                   <span style={{ color: '#333' }}>Sipariş Geçmişim</span>
-                                                </Link>
-
-                                                <button
-                                                   onClick={handleLogout}
-                                                   style={{
-                                                      width: '100%',
-                                                      display: 'flex',
-                                                      alignItems: 'center',
-                                                      gap: '12px',
-                                                      padding: '12px 16px',
-                                                      color: '#dc3545',
-                                                      textDecoration: 'none',
-                                                      transition: 'background 0.2s',
-                                                      background: 'none',
-                                                      border: 'none',
-                                                      cursor: 'pointer',
-                                                      textAlign: 'left'
-                                                   }}
-                                                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fff5f5'}
-                                                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                                                >
-                                                   <i className="fas fa-sign-out-alt" style={{ width: '16px', color: '#dc3545' }}></i>
-                                                   <span style={{ color: '#dc3545' }}>Çıkış Yap</span>
-                                                </button>
-                                             </div>
+                                             <UserDropdown onClose={() => setShowDropdown(false)} />
                                           )}
                                        </li>
                                     ) : (

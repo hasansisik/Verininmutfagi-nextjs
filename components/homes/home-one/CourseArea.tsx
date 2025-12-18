@@ -6,6 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { server } from "@/config";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '@/redux/features/cartSlice';
+import { toast } from 'react-toastify';
 
 const tab_title: string[] = ["Tüm Kurslar", "Tasarım", "İşletme", "Geliştirme"];
 
@@ -51,6 +54,7 @@ interface StyleType {
 }
 
 const CourseArea = ({ style }: StyleType) => {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(0);
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -74,6 +78,18 @@ const CourseArea = ({ style }: StyleType) => {
 
   const handleTabClick = (index: number) => {
     setActiveTab(index);
+  };
+
+  const handleAddToCart = (course: any) => {
+    const cartItem = {
+      id: course._id,
+      title: course.title,
+      price: course.price || 0,
+      img: course.thumb || '/assets/img/courses/course_thumb01.jpg',
+      quantity: 1,
+    };
+    dispatch(addToCart(cartItem));
+    toast.success(`${course.title} sepete eklendi!`, { position: 'top-right' });
   };
 
   const getFilteredCourses = (category?: string) => {
@@ -137,12 +153,6 @@ const CourseArea = ({ style }: StyleType) => {
                       <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
                       <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
                       <div className="courses__item-bottom">
-                        <div className="button">
-                          <Link href={`/kurs-detaylari/${item.slug}`}>
-                            <span className="text">Hemen Kaydol</span>
-                            <i className="flaticon-arrow-right"></i>
-                          </Link>
-                        </div>
                         <h5 className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
                       </div>
                     </div>
@@ -179,12 +189,6 @@ const CourseArea = ({ style }: StyleType) => {
                       <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
                       <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
                       <div className="courses__item-bottom">
-                        <div className="button">
-                          <Link href={`/kurs-detaylari/${item.slug}`}>
-                            <span className="text">Hemen Kaydol</span>
-                            <i className="flaticon-arrow-right"></i>
-                          </Link>
-                        </div>
                         <h5 className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
                       </div>
                     </div>
@@ -221,12 +225,6 @@ const CourseArea = ({ style }: StyleType) => {
                       <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
                       <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
                       <div className="courses__item-bottom">
-                        <div className="button">
-                          <Link href={`/kurs-detaylari/${item.slug}`}>
-                            <span className="text">Hemen Kaydol</span>
-                            <i className="flaticon-arrow-right"></i>
-                          </Link>
-                        </div>
                         <h5 className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
                       </div>
                     </div>
@@ -263,12 +261,6 @@ const CourseArea = ({ style }: StyleType) => {
                       <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
                       <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
                       <div className="courses__item-bottom">
-                        <div className="button">
-                          <Link href={`/kurs-detaylari/${item.slug}`}>
-                            <span className="text">Hemen Kaydol</span>
-                            <i className="flaticon-arrow-right"></i>
-                          </Link>
-                        </div>
                         <h5 className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
                       </div>
                     </div>

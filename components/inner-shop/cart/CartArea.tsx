@@ -22,8 +22,8 @@ const CartArea = () => {
                <div className="mb-30">
                   <div className="empty_bag text-center">
                      <p className="py-3">Sepetiniz Boş</p>
-                     <Link href={"/shop"}>
-                        <button className="btn">Mağazaya Git</button>
+                     <Link href={"/"}>
+                        <button className="btn">Anasayfaya Dön</button>
                      </Link>
                   </div>
                </div>
@@ -46,7 +46,29 @@ const CartArea = () => {
                               <tr key={i}>
                                  <td className="product__thumb">
                                     <Link href={`/shop-details/${item.id}`}>
-                                       <Image src={item.thumb} alt="cart" />
+                                       {item.thumb ? (
+                                          <Image
+                                             src={item.thumb}
+                                             alt="cart"
+                                             width={100}
+                                             height={100}
+                                             style={{ objectFit: 'cover' }}
+                                          />
+                                       ) : (
+                                          <div
+                                             style={{
+                                                width: 100,
+                                                height: 100,
+                                                backgroundColor: '#f0f0f0',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: '#999'
+                                             }}
+                                          >
+                                             Resim Yok
+                                          </div>
+                                       )}
                                     </Link>
                                  </td>
                                  <td className="product__name">

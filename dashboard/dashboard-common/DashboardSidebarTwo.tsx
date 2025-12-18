@@ -32,12 +32,6 @@ const sidebar_data: DataType[] = [
             icon: "skillgro-book",
             title: "Kayıtlı Kurslar",
          },
-         {
-            id: 4,
-            link: "/siparis-gecmisim",
-            icon: "skillgro-satchel",
-            title: "Sipariş Geçmişim",
-         },
       ],
    },
    {

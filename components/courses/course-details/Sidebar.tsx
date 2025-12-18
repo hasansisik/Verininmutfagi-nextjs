@@ -9,6 +9,7 @@ import { addToCart } from "@/redux/features/cartSlice";
 import InjectableSvg from "@/hooks/InjectableSvg";
 import BtnArrow from "@/svg/BtnArrow";
 
+
 import img_1 from "@/assets/img/courses/course_thumb02.jpg"
 
 const Sidebar = ({ single_course }: any) => {
@@ -30,6 +31,7 @@ const Sidebar = ({ single_course }: any) => {
             title: single_course.title || "Kurs",
             quantity: 1,
             price: single_course.price || 0,
+            thumb: single_course.thumbnail || single_course.thumb || '/assets/img/courses/course_thumb01.jpg',
          };
          dispatch(addToCart(cartItem));
       }
@@ -81,8 +83,8 @@ const Sidebar = ({ single_course }: any) => {
                </div>
                <div className="courses__details-enroll">
                   <div className="tg-button-wrap">
-                     <button onClick={handleStartCourse} className="btn btn-two arrow-btn">
-                        Kursa Başla<BtnArrow />
+                     <button onClick={handleAddToCart} className="btn btn-two arrow-btn">
+                        Sepete Ekle<BtnArrow />
                      </button>
                   </div>
                </div>

@@ -6,9 +6,13 @@ import ReactPaginate from 'react-paginate';
 import CourseSidebar from './CourseSidebar';
 import CourseTop from './CourseTop';
 import UseCourses from '@/hooks/UseCourses';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '@/redux/features/cartSlice';
+
 
 const CourseArea = () => {
 
+   const dispatch = useDispatch();
    const { courses, setCourses, loading } = UseCourses();
 
    const itemsPerPage = 12;
@@ -32,6 +36,17 @@ const CourseArea = () => {
 
    const handleTabClick = (index: number) => {
       setActiveTab(index);
+   };
+
+   const handleAddToCart = (course: any) => {
+      const cartItem = {
+         id: course._id,
+         title: course.title,
+         price: course.price || 0,
+         thumb: course.thumb || '/assets/img/courses/course_thumb01.jpg',
+         quantity: 1,
+      };
+      dispatch(addToCart(cartItem));
    };
 
    if (loading) {
@@ -80,10 +95,21 @@ const CourseArea = () => {
                                        <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
                                        <div className="courses__item-bottom">
                                           <div className="button">
-                                             <Link href={`/kurs-detaylari/${item.slug}`}>
-                                                <span className="text">Hemen Kaydol</span>
+                                             <button
+                                                onClick={() => handleAddToCart(item)}
+                                                style={{
+                                                   background: 'none',
+                                                   border: 'none',
+                                                   padding: 0,
+                                                   cursor: 'pointer',
+                                                   display: 'flex',
+                                                   alignItems: 'center',
+                                                   gap: '8px'
+                                                }}
+                                             >
+                                                <span className="text">Sepete Ekle</span>
                                                 <i className="flaticon-arrow-right"></i>
-                                             </Link>
+                                             </button>
                                           </div>
                                           <h5 className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
                                        </div>
@@ -129,10 +155,21 @@ const CourseArea = () => {
                                        <p className="info">{item.desc}</p>
                                        <div className="courses__item-bottom">
                                           <div className="button">
-                                             <Link href={`/kurs-detaylari/${item.slug}`}>
-                                                <span className="text">Hemen Kaydol</span>
+                                             <button
+                                                onClick={() => handleAddToCart(item)}
+                                                style={{
+                                                   background: 'none',
+                                                   border: 'none',
+                                                   padding: 0,
+                                                   cursor: 'pointer',
+                                                   display: 'flex',
+                                                   alignItems: 'center',
+                                                   gap: '8px'
+                                                }}
+                                             >
+                                                <span className="text">Sepete Ekle</span>
                                                 <i className="flaticon-arrow-right"></i>
-                                             </Link>
+                                             </button>
                                           </div>
                                        </div>
                                     </div>
