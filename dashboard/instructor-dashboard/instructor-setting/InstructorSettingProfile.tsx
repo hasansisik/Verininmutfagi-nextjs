@@ -83,25 +83,6 @@ const InstructorSettingProfile = ({ style }: StyleType) => {
 
    return (
       <>
-         <div
-            className="instructor__cover-bg"
-            style={{ backgroundImage: `url(/assets/img/bg/${style ? 'student_bg' : 'instructor_dashboard_bg'}.jpg)` }}
-         >
-            <div className="instructor__cover-info">
-               <div className="instructor__cover-info-left">
-                  <div className="thumb">
-                     <Image
-                        src={profilePhoto}
-                        alt={`${formData.name} ${formData.surname}`}
-                        width={120}
-                        height={120}
-                        style={{ objectFit: 'cover', borderRadius: '50%' }}
-                     />
-                  </div>
-               </div>
-            </div>
-         </div>
-
          <div className="instructor__profile-form-wrap">
             <form onSubmit={handleSubmit} className="instructor__profile-form">
                <div className="row">
