@@ -1,30 +1,55 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+"use client"
+
+import { useEffect, useState } from "react";
+import { useParams, notFound } from "next/navigation";
+import axios from "axios";
+import { server } from "@/config";
 
 import Lesson from "@/components/courses/lesson";
-import courses_data from "@/data/inner-data/InnerCourseData";
 import Wrapper from "@/layouts/Wrapper";
 
-export const metadata: Metadata = {
-    title: "Lesson Verinin Mutfağı - Online Courses & Education React Next js Template",
-    description: "Verinin Mutfağı ile veri bilimi ve analitik derslerine katılın. Online eğitim platformumuzda uzman eğitmenlerden ders alın.",
-};
+export default function Page() {
+    const params = useParams();
+    const slug = params.slug as string;
 
-type Props = {
-    params: Promise<{ slug: string }>;
-};
+    const [course, setCourse] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+    const [notFoundFlag, setNotFoundFlag] = useState(false);
 
-export default async function Page({ params }: Props) {
-    const { slug } = await params;
+    useEffect(() => {
+        fetchCourse();
+    }, [slug]);
 
-    console.log('Searching for lesson with slug:', slug);
-    console.log('Available courses:', courses_data.map(c => ({ id: c.id, slug: c.slug, title: c.title })));
+    const fetchCourse = async () => {
+        try {
+            const response = await axios.get(`${server}/courses`);
+            if (response.data.success) {
+                const foundCourse = response.data.courses.find((item: any) => item.slug === slug);
+                if (foundCourse) {
+                    setCourse(foundCourse);
+                } else {
+                    setNotFoundFlag(true);
+                }
+            }
+        } catch (error) {
+            console.error("Kurs yüklenirken hata:", error);
+            setNotFoundFlag(true);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const course = courses_data.find((item) => item.slug === slug);
+    if (loading) {
+        return (
+            <Wrapper>
+                <div className="container">
+                    <div className="text-center py-5">Ders yükleniyor...</div>
+                </div>
+            </Wrapper>
+        );
+    }
 
-    console.log('Found course for lesson:', course ? course.title : 'NOT FOUND');
-
-    if (!course) {
+    if (notFoundFlag || !course) {
         notFound();
     }
 

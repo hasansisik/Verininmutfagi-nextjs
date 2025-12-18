@@ -10,10 +10,12 @@ interface CurriculumLesson {
    title: string;
    duration: string;
    class_name?: string;
+   videoUrl?: string;
 }
 
 interface CurriculumSection {
-   id: number;
+   id?: number;
+   _id?: string;
    title: string;
    show?: string;
    collapsed?: string;
@@ -43,14 +45,14 @@ const Curriculum = ({ curriculum, videoId }: CurriculumProps) => {
             <h3 className="title">Kurs Müfredatı</h3>
             <p>Kurs müfredatı, temel kavramlardan başlayarak ileri seviye konulara kadar kapsamlı bir öğrenme yolculuğu sunmaktadır. Her bölüm, önceki konuları pekiştirerek ilerlemekte ve pratik uygulamalarla desteklenmektedir.</p>
             <div className="accordion" id="accordionExample">
-               {curriculum.map((item) => (
-                  <div key={item.id} className="accordion-item">
-                     <h2 className="accordion-header" id={`headingOne${item.id}`}>
-                        <button className={`accordion-button ${item.collapsed}`} type="button" data-bs-toggle="collapse" data-bs-target={`#collapseOne${item.id}`} aria-expanded="true" aria-controls={`collapseOne${item.id}`}>
+               {curriculum.map((item, index) => (
+                  <div key={item._id || item.id || index} className="accordion-item">
+                     <h2 className="accordion-header" id={`headingOne${index}`}>
+                        <button className={`accordion-button ${item.collapsed || (index === 0 ? '' : 'collapsed')}`} type="button" data-bs-toggle="collapse" data-bs-target={`#collapseOne${index}`} aria-expanded={index === 0 ? "true" : "false"} aria-controls={`collapseOne${index}`}>
                            {item.title}
                         </button>
                      </h2>
-                     <div id={`collapseOne${item.id}`} className={`accordion-collapse collapse ${item.show}`} aria-labelledby={`headingOne${item.id}`} data-bs-parent="#accordionExample">
+                     <div id={`collapseOne${index}`} className={`accordion-collapse collapse ${item.show || (index === 0 ? 'show' : '')}`} aria-labelledby={`headingOne${index}`} data-bs-parent="#accordionExample">
                         <div className="accordion-body">
                            <ul className="list-wrap">
                               {item.lessons.map((lesson, i) => (

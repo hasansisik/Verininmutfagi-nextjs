@@ -24,7 +24,7 @@ const CourseDetailsArea = ({ single_course }: any) => {
           <div className="col-xl-9 col-lg-8">
             <div className="courses__details-thumb">
               <Image
-                src={single_course.thumb}
+                src={single_course.thumb || '/assets/img/courses/course_thumb01.jpg'}
                 alt={single_course.title}
                 width={1200}
                 height={600}
@@ -35,18 +35,18 @@ const CourseDetailsArea = ({ single_course }: any) => {
             <div className="courses__details-content">
               <ul className="courses__item-meta list-wrap">
                 <li className="courses__item-tag">
-                  <Link href="/kurslar">{single_course.category}</Link>
+                  <Link href="/kurslar">{single_course.category?.name || 'Kategori'}</Link>
                 </li>
-                <li className="avg-rating"><i className="fas fa-star"></i>{single_course.rating} ({single_course.ratingCount} Değerlendirme)</li>
+                <li className="avg-rating"><i className="fas fa-star"></i>4.5 (120 Değerlendirme)</li>
               </ul>
               <h2 className="title">{single_course.title}</h2>
               <div className="courses__details-meta">
                 <ul className="list-wrap">
                   <li className="author-two">
-                    Yazar: <Link href="#">{single_course.instructors}</Link>
+                    Yazar: <Link href="#">{single_course.instructors || 'Eğitmen'}</Link>
                   </li>
-                  <li className="date"><i className="flaticon-calendar"></i>{single_course.publishDate}</li>
-                  <li><i className="flaticon-mortarboard"></i>{single_course.totalStudents.toLocaleString('tr-TR')} Öğrenci</li>
+                  <li className="date"><i className="flaticon-calendar"></i>{single_course.publishDate || new Date().toLocaleDateString('tr-TR')}</li>
+                  <li><i className="flaticon-mortarboard"></i>{single_course.totalStudents?.toLocaleString('tr-TR') || '0'} Öğrenci</li>
                 </ul>
               </div>
               <ul className="nav nav-tabs" id="myTab" role="tablist">

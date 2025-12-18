@@ -219,13 +219,13 @@ export default function KursFormPage() {
     }
 
     const updateSection = (index: number, title: string) => {
-        const newCurriculum = [...formData.curriculum]
+        const newCurriculum = JSON.parse(JSON.stringify(formData.curriculum))
         newCurriculum[index].title = title
         setFormData({ ...formData, curriculum: newCurriculum })
     }
 
     const addLesson = (sectionIndex: number) => {
-        const newCurriculum = [...formData.curriculum]
+        const newCurriculum = JSON.parse(JSON.stringify(formData.curriculum))
         newCurriculum[sectionIndex].lessons.push({
             lock: false,
             title: "",
@@ -236,9 +236,9 @@ export default function KursFormPage() {
     }
 
     const removeLesson = (sectionIndex: number, lessonIndex: number) => {
-        const newCurriculum = [...formData.curriculum]
+        const newCurriculum = JSON.parse(JSON.stringify(formData.curriculum))
         newCurriculum[sectionIndex].lessons = newCurriculum[sectionIndex].lessons.filter(
-            (_, i) => i !== lessonIndex
+            (_: any, i: number) => i !== lessonIndex
         )
         setFormData({ ...formData, curriculum: newCurriculum })
     }
@@ -249,7 +249,7 @@ export default function KursFormPage() {
         field: keyof Lesson,
         value: string | boolean
     ) => {
-        const newCurriculum = [...formData.curriculum]
+        const newCurriculum = JSON.parse(JSON.stringify(formData.curriculum))
         newCurriculum[sectionIndex].lessons[lessonIndex] = {
             ...newCurriculum[sectionIndex].lessons[lessonIndex],
             [field]: value,
