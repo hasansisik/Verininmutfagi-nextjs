@@ -6,12 +6,7 @@ import course_thumb3 from "@/assets/img/courses/course_thumb03.jpg"
 import course_thumb4 from "@/assets/img/courses/course_thumb04.jpg"
 import course_thumb5 from "@/assets/img/courses/course_thumb05.jpg"
 import course_thumb6 from "@/assets/img/courses/course_thumb06.jpg"
-import course_thumb7 from "@/assets/img/courses/course_thumb07.jpg"
-import course_thumb8 from "@/assets/img/courses/course_thumb08.jpg"
-import course_thumb9 from "@/assets/img/courses/course_thumb09.jpg"
-import course_thumb10 from "@/assets/img/courses/course_thumb10.jpg"
-import course_thumb11 from "@/assets/img/courses/course_thumb11.jpg"
-import course_thumb12 from "@/assets/img/courses/course_thumb12.jpg"
+
 
 interface CurriculumLesson {
    lock: boolean;
