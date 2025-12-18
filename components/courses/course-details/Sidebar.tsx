@@ -27,7 +27,7 @@ const Sidebar = ({ single_course }: any) => {
    const handleAddToCart = () => {
       if (single_course) {
          const cartItem = {
-            id: String(single_course.id),
+            id: single_course._id || single_course.id,
             title: single_course.title || "Kurs",
             quantity: 1,
             price: single_course.price || 0,
