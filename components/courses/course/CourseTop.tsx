@@ -7,6 +7,7 @@ interface CourseTopProps {
    startOffset: number;
    endOffset: number;
    totalItems: number;
+   allCourses: any[];
    setCourses: (courses: any[]) => void;
    handleTabClick: any;
    activeTab: any;
@@ -36,9 +37,8 @@ const tab_title: TitleType[] = [
    },
 ];
 
-const CourseTop = ({ startOffset, endOffset, totalItems, setCourses, handleTabClick, activeTab }: CourseTopProps) => {
+const CourseTop = ({ startOffset, endOffset, totalItems, allCourses, setCourses, handleTabClick, activeTab }: CourseTopProps) => {
 
-   const allCourses = useSelector(selectCourses);
    const [selected, setSelected] = useState('');
 
    const selectHandler = (event: ChangeEvent<HTMLSelectElement>) => {

@@ -9,20 +9,36 @@ import { useSearchParams } from 'next/navigation';
 import UseCourses from '@/hooks/UseCourses';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/features/cartSlice';
+import { useAppSelector } from '@/redux/hook';
 
 
 const CourseArea = () => {
    const searchParams = useSearchParams();
    const query = searchParams.get('search');
    const dispatch = useDispatch();
-   const { courses, setCourses, loading } = UseCourses();
+   const { user } = useAppSelector((state) => state.user);
+   const { courses: allFetchedCourses, loading } = UseCourses();
+   const [displayCourses, setDisplayCourses] = useState<any[]>([]);
+
+   useEffect(() => {
+      if (allFetchedCourses.length > 0) {
+         setDisplayCourses(allFetchedCourses);
+      }
+   }, [allFetchedCourses]);
+
+   // Helper function to check if user is enrolled
+   const isEnrolled = (courseId: string) => {
+      return user?.enrolledCourses?.some((ec: any) =>
+         (ec.course?._id === courseId || ec.course === courseId)
+      );
+   };
 
    // Arama filtresi uygula
    const filteredCourses = query
-      ? courses.filter(course =>
+      ? displayCourses.filter(course =>
          course.title?.toLowerCase().includes(query.toLowerCase())
       )
-      : courses;
+      : displayCourses;
 
    const itemsPerPage = 12;
    const [itemOffset, setItemOffset] = useState(0);
@@ -34,7 +50,8 @@ const CourseArea = () => {
    const totalItems = filteredCourses.length;
 
    useEffect(() => {
-   }, [filteredCourses]);
+      setItemOffset(0); // Reset pagination on filter change
+   }, [filteredCourses.length]);
 
    const handlePageClick = (event: { selected: number }) => {
       const newOffset = (event.selected * itemsPerPage) % filteredCourses.length;
@@ -72,13 +89,14 @@ const CourseArea = () => {
       <section className="all-courses-area section-py-120">
          <div className="container">
             <div className="row">
-               <CourseSidebar setCourses={setCourses} />
+               <CourseSidebar allCourses={allFetchedCourses} setCourses={setDisplayCourses} />
                <div className="col-xl-9 col-lg-8">
                   <CourseTop
                      startOffset={startOffset}
                      endOffset={Math.min(endOffset, totalItems)}
                      totalItems={totalItems}
-                     setCourses={setCourses}
+                     allCourses={displayCourses}
+                     setCourses={setDisplayCourses}
                      handleTabClick={handleTabClick}
                      activeTab={activeTab}
                   />
@@ -105,21 +123,27 @@ const CourseArea = () => {
                                           <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
                                           <div className="courses__item-bottom">
                                              <div className="button">
-                                                <button
-                                                   onClick={() => handleAddToCart(item)}
-                                                   style={{
-                                                      background: 'none',
-                                                      border: 'none',
-                                                      padding: 0,
-                                                      cursor: 'pointer',
-                                                      display: 'flex',
-                                                      alignItems: 'center',
-                                                      gap: '8px'
-                                                   }}
-                                                >
-                                                   <span className="text">Sepete Ekle</span>
-                                                   <i className="flaticon-arrow-right"></i>
-                                                </button>
+                                                {isEnrolled(item._id) ? (
+                                                   <Link href={`/ders/${item.slug}`} className="read-more">
+                                                      Kursu İzle <i className="flaticon-arrow-right"></i>
+                                                   </Link>
+                                                ) : (
+                                                   <button
+                                                      onClick={() => handleAddToCart(item)}
+                                                      style={{
+                                                         background: 'none',
+                                                         border: 'none',
+                                                         padding: 0,
+                                                         cursor: 'pointer',
+                                                         display: 'flex',
+                                                         alignItems: 'center',
+                                                         gap: '8px'
+                                                      }}
+                                                   >
+                                                      <span className="text">Sepete Ekle</span>
+                                                      <i className="flaticon-arrow-right"></i>
+                                                   </button>
+                                                )}
                                              </div>
                                              <h5 className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</h5>
                                           </div>
@@ -172,21 +196,27 @@ const CourseArea = () => {
                                           <p className="info">{item.desc}</p>
                                           <div className="courses__item-bottom">
                                              <div className="button">
-                                                <button
-                                                   onClick={() => handleAddToCart(item)}
-                                                   style={{
-                                                      background: 'none',
-                                                      border: 'none',
-                                                      padding: 0,
-                                                      cursor: 'pointer',
-                                                      display: 'flex',
-                                                      alignItems: 'center',
-                                                      gap: '8px'
-                                                   }}
-                                                >
-                                                   <span className="text">Sepete Ekle</span>
-                                                   <i className="flaticon-arrow-right"></i>
-                                                </button>
+                                                {isEnrolled(item._id) ? (
+                                                   <Link href={`/ders/${item.slug}`} className="read-more">
+                                                      Kursu İzle <i className="flaticon-arrow-right"></i>
+                                                   </Link>
+                                                ) : (
+                                                   <button
+                                                      onClick={() => handleAddToCart(item)}
+                                                      style={{
+                                                         background: 'none',
+                                                         border: 'none',
+                                                         padding: 0,
+                                                         cursor: 'pointer',
+                                                         display: 'flex',
+                                                         alignItems: 'center',
+                                                         gap: '8px'
+                                                      }}
+                                                   >
+                                                      <span className="text">Sepete Ekle</span>
+                                                      <i className="flaticon-arrow-right"></i>
+                                                   </button>
+                                                )}
                                              </div>
                                           </div>
                                        </div>

@@ -1,118 +1,167 @@
-import { selectCourses } from "@/redux/features/courseSlice";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { server } from "@/config";
 
-const CourseSidebar = ({ setCourses }: any) => {
-
+const CourseSidebar = ({ allCourses, setCourses }: any) => {
+   const [categories, setCategories] = useState<any[]>([]);
    const [showMoreCategory, setShowMoreCategory] = useState(false);
-   const [showMoreInstructor, setShowMoreInstructor] = useState(false);
 
    const [categorySelected, setCategorySelected] = useState('');
-   const [priceSelected, setPriceSelected] = useState('');
+   const [priceTypeSelected, setPriceTypeSelected] = useState('');
    const [skillSelected, setSkillSelected] = useState('');
-   const [instructorSelected, setInstructorSelected] = useState('');
+   const [priceRange, setPriceRange] = useState({ min: 0, max: 2000 });
 
-   const categoryFilter = useSelector(selectCourses).map(course => course.category);
-   const priceFilter = useSelector(selectCourses).map(course => course.price_type);
-   const skillFilter = useSelector(selectCourses).map(course => course.skill_level);
-   const instructorFilter = useSelector(selectCourses).map(course => course.instructors);
+   const skillLevels = ['Başlangıç', 'Orta', 'İleri'];
+   const priceTypes = ['Ücretsiz'];
 
-   const allCategory = ['Tüm Kategoriler', ...new Set(categoryFilter)];
-   const allPrice = ['Tüm Fiyatlar', ...new Set(priceFilter)];
-   const allSkill = ['Tüm Seviyeler', ...new Set(skillFilter)];
-   const allInstructor = ['Tüm Eğitmenler', ...new Set(instructorFilter)];
+   useEffect(() => {
+      fetchCategories();
+   }, []);
 
-   const allCourses = useSelector(selectCourses);
-
-   // Handle category selection
-   const handleCategory = (category: string) => {
-      setCategorySelected(prevCategory => prevCategory === category ? '' : category);
-      filterCourses({ category: category === categorySelected ? '' : category, price: priceSelected, skill: skillSelected, instructor: instructorSelected });
+   const fetchCategories = async () => {
+      try {
+         const response = await axios.get(`${server}/categories`);
+         if (response.data.success) {
+            setCategories(response.data.categories);
+         }
+      } catch (error) {
+         console.error("Kategoriler yüklenirken hata:", error);
+      }
    };
 
-   // Handle price selection
-   const handlePrice = (price: string) => {
-      setPriceSelected(prevPrice => prevPrice === price ? '' : price);
-      filterCourses({ category: categorySelected, price: price === priceSelected ? '' : price, skill: skillSelected, instructor: instructorSelected });
+   // Logic to handle all filters
+   const applyFilters = (filters: any) => {
+      let filtered = [...allCourses];
+
+      if (filters.category) {
+         filtered = filtered.filter(course => course.category?._id === filters.category || course.category?.name === filters.category);
+      }
+
+      if (filters.priceType === 'Ücretsiz') {
+         filtered = filtered.filter(course => course.price === 0 || course.price_type === 'Ücretsiz');
+      }
+
+      if (filters.skill) {
+         filtered = filtered.filter(course => course.skill_level === filters.skill);
+      }
+
+      if (filters.minPrice !== undefined && filters.maxPrice !== undefined) {
+         filtered = filtered.filter(course => {
+            const price = course.price || 0;
+            return price >= filters.minPrice && price <= filters.maxPrice;
+         });
+      }
+
+      setCourses(filtered);
    };
 
-   // Handle skill selection
+   const handleCategory = (id: string, name: string) => {
+      const newCategory = categorySelected === id ? '' : id;
+      setCategorySelected(newCategory);
+      applyFilters({ category: newCategory, priceType: priceTypeSelected, skill: skillSelected, minPrice: priceRange.min, maxPrice: priceRange.max });
+   };
+
+   const handlePriceType = (type: string) => {
+      const newType = priceTypeSelected === type ? '' : type;
+      setPriceTypeSelected(newType);
+      applyFilters({ category: categorySelected, priceType: newType, skill: skillSelected, minPrice: priceRange.min, maxPrice: priceRange.max });
+   };
+
    const handleSkill = (skill: string) => {
-      setSkillSelected(prevSkill => prevSkill === skill ? '' : skill);
-      filterCourses({ category: categorySelected, price: priceSelected, skill: skill === skillSelected ? '' : skill, instructor: instructorSelected });
+      const newSkill = skillSelected === skill ? '' : skill;
+      setSkillSelected(newSkill);
+      applyFilters({ category: categorySelected, priceType: priceTypeSelected, skill: newSkill, minPrice: priceRange.min, maxPrice: priceRange.max });
    };
 
-   // Handle Instructor selection
-   const handleInstructor = (instructor: string) => {
-      setInstructorSelected(instructor);
-      filterCourses({ category: categorySelected, price: priceSelected, skill: skillSelected, instructor });
+   const handlePriceRange = (e: any) => {
+      const { name, value } = e.target;
+      const newRange = { ...priceRange, [name]: Number(value) };
+      setPriceRange(newRange);
+      applyFilters({ category: categorySelected, priceType: priceTypeSelected, skill: skillSelected, minPrice: newRange.min, maxPrice: newRange.max });
    };
 
-   // Filter courses based on selected criteria
-   const filterCourses = ({ category, price, skill, instructor }: any) => {
-      let filteredCourses = allCourses;
-
-      if (category && category !== 'Tüm Kategoriler') {
-         filteredCourses = filteredCourses.filter(course => course.category === category);
-      }
-
-      if (price && price !== 'Tüm Fiyatlar') {
-         filteredCourses = filteredCourses.filter(course => course.price_type === price);
-      }
-
-      if (skill && skill !== 'Tüm Seviyeler') {
-         filteredCourses = filteredCourses.filter(course => course.skill_level === skill);
-      }
-
-      if (instructor && instructor !== 'Tüm Eğitmenler') {
-         filteredCourses = filteredCourses.filter(course => course.instructors === instructor);
-      }
-
-      setCourses(filteredCourses);
-   };
-
-   // Determine categories to display based on "Show More" toggle
-   const categoriesToShow = showMoreCategory ? allCategory : allCategory.slice(0, 8);
-   const instructorToShow = showMoreInstructor ? allInstructor : allInstructor.slice(0, 4);
+   const categoriesToShow = showMoreCategory ? categories : categories.slice(0, 8);
 
    return (
       <div className="col-xl-3 col-lg-4">
          <aside className="courses__sidebar">
+            {/* Category Filter */}
             <div className="courses-widget">
                <h4 className="widget-title">Kategoriler</h4>
                <div className="courses-cat-list">
                   <ul className="list-wrap">
-                     {categoriesToShow.map((category: any, i: any) => (
-                        <li key={i}>
-                           <div onClick={() => handleCategory(category)} className="form-check">
-                              <input className="form-check-input" type="checkbox" checked={category === categorySelected} readOnly id={`cat_${i}`} />
-                              <label className="form-check-label" htmlFor={`cat_${i}`} onClick={() => handleCategory(category)}>{category}</label>
+                     {categoriesToShow.map((cat: any) => (
+                        <li key={cat._id}>
+                           <div onClick={() => handleCategory(cat._id, cat.name)} className="form-check">
+                              <input className="form-check-input" type="checkbox" checked={cat._id === categorySelected} readOnly id={`cat_${cat._id}`} />
+                              <label className="form-check-label" htmlFor={`cat_${cat._id}`}>{cat.name}</label>
                            </div>
                         </li>
                      ))}
                   </ul>
-                  <div className="show-more">
-                     <a className={`show-more-btn ${showMoreCategory ? 'active' : ''}`} style={{ cursor: "pointer" }} onClick={() => setShowMoreCategory(!showMoreCategory)}>
-                        {showMoreCategory ? "Daha Az Göster -" : "Daha Fazla Göster +"}
-                     </a>
-                  </div>
+                  {categories.length > 8 && (
+                     <div className="show-more">
+                        <a className={`show-more-btn ${showMoreCategory ? 'active' : ''}`} style={{ cursor: "pointer" }} onClick={() => setShowMoreCategory(!showMoreCategory)}>
+                           {showMoreCategory ? "Daha Az Göster -" : "Daha Fazla Göster +"}
+                        </a>
+                     </div>
+                  )}
                </div>
             </div>
 
             {/* Price Filter */}
             <div className="courses-widget">
-               <h4 className="widget-title">Fiyat</h4>
+               <h4 className="widget-title">Ücret Durumu</h4>
                <div className="courses-cat-list">
                   <ul className="list-wrap">
-                     {allPrice.map((price: any, i: any) => (
-                        <li key={i}>
-                           <div onClick={() => handlePrice(price)} className="form-check">
-                              <input className="form-check-input" type="checkbox" checked={price === priceSelected} readOnly id={`price_${i}`} />
-                              <label className="form-check-label" htmlFor={`price_${i}`} onClick={() => handlePrice(price)}>{price}</label>
+                     {priceTypes.map((type: string) => (
+                        <li key={type}>
+                           <div onClick={() => handlePriceType(type)} className="form-check">
+                              <input className="form-check-input" type="checkbox" checked={type === priceTypeSelected} readOnly id={`price_${type}`} />
+                              <label className="form-check-label" htmlFor={`price_${type}`}>{type}</label>
                            </div>
                         </li>
                      ))}
                   </ul>
+               </div>
+            </div>
+
+            {/* Price Range */}
+            <div className="courses-widget">
+               <h4 className="widget-title">Fiyat Aralığı</h4>
+               <div className="courses-price-range">
+                  <div className="d-flex align-items-center gap-2 mb-15">
+                     <input
+                        type="number"
+                        name="min"
+                        value={priceRange.min}
+                        onChange={handlePriceRange}
+                        placeholder="Min"
+                        style={{ width: '80px', padding: '5px', borderRadius: '4px', border: '1px solid #ddd' }}
+                     />
+                     <span>-</span>
+                     <input
+                        type="number"
+                        name="max"
+                        value={priceRange.max}
+                        onChange={handlePriceRange}
+                        placeholder="Max"
+                        style={{ width: '80px', padding: '5px', borderRadius: '4px', border: '1px solid #ddd' }}
+                     />
+                     <span>₺</span>
+                  </div>
+                  <input
+                     type="range"
+                     className="form-range"
+                     min="0"
+                     max="5000"
+                     step="10"
+                     value={priceRange.max}
+                     onChange={(e) => handlePriceRange({ target: { name: 'max', value: e.target.value } })}
+                  />
+                  <div className="d-flex justify-content-between mt-10">
+                     <span style={{ fontSize: '13px', color: '#6B7280' }}>Max: {priceRange.max}₺</span>
+                  </div>
                </div>
             </div>
 
@@ -121,37 +170,15 @@ const CourseSidebar = ({ setCourses }: any) => {
                <h4 className="widget-title">Seviye</h4>
                <div className="courses-cat-list">
                   <ul className="list-wrap">
-                     {allSkill.map((skill: any, i: any) => (
-                        <li key={i}>
+                     {skillLevels.map((skill: string) => (
+                        <li key={skill}>
                            <div onClick={() => handleSkill(skill)} className="form-check">
-                              <input className="form-check-input" type="checkbox" checked={skill === skillSelected} readOnly id={`skill_${i}`} />
-                              <label className="form-check-label" htmlFor={`skill_${i}`} onClick={() => handleSkill(skill)}>{skill}</label>
+                              <input className="form-check-input" type="checkbox" checked={skill === skillSelected} readOnly id={`skill_${skill}`} />
+                              <label className="form-check-label" htmlFor={`skill_${skill}`}>{skill}</label>
                            </div>
                         </li>
                      ))}
                   </ul>
-               </div>
-            </div>
-
-            {/* Instructors Filter */}
-            <div className="courses-widget">
-               <h4 className="widget-title">Eğitmenler</h4>
-               <div className="courses-cat-list">
-                  <ul className="list-wrap">
-                     {instructorToShow.map((instructor: any, i: any) => (
-                        <li key={i}>
-                           <div onClick={() => handleInstructor(instructor)} className="form-check">
-                              <input className="form-check-input" type="checkbox" checked={instructor === instructorSelected} readOnly id={`instructor_${i}`} />
-                              <label className="form-check-label" htmlFor={`instructor_${i}`} onClick={() => handleInstructor(instructor)}>{instructor}</label>
-                           </div>
-                        </li>
-                     ))}
-                  </ul>
-                  <div className="show-more">
-                     <a className={`show-more-btn ${showMoreInstructor ? 'active' : ''}`} style={{ cursor: "pointer" }} onClick={() => setShowMoreInstructor(!showMoreInstructor)}>
-                        {showMoreInstructor ? "Daha Az Göster -" : "Daha Fazla Göster +"}
-                     </a>
-                  </div>
                </div>
             </div>
          </aside>
