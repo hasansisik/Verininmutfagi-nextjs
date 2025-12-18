@@ -33,12 +33,6 @@ const sidebar_data: DataType[] = [
             title: "Kayıtlı Kurslar",
          },
          {
-            id: 3,
-            link: "/istek-listem",
-            icon: "skillgro-label",
-            title: "İstek Listem",
-         },
-         {
             id: 4,
             link: "/siparis-gecmisim",
             icon: "skillgro-satchel",

@@ -23,12 +23,6 @@ const StudentDashboardArea = () => {
          title: "Kayıtlı Kurslar"
       },
       {
-         id: 2,
-         icon: "skillgro-tutorial",
-         count: user?.wishlist?.length || 0,
-         title: "İstek Listesi"
-      },
-      {
          id: 3,
          icon: "skillgro-graduated",
          count: user?.orders?.filter((order: any) => order.status === 'completed')?.length || 0,

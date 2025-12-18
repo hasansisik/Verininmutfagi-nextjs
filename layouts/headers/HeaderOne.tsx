@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 
 const TotalCart = dynamic(() => import("@/components/common/TotalCart"), { ssr: false });
-const TotalWishlist = dynamic(() => import("@/components/common/TotalWishlist"), { ssr: false });
 const CustomSelect = dynamic(() => import("@/ui/CustomSelect"), { ssr: false });
 
 import logo from "@/public/logo.png"
@@ -92,12 +91,7 @@ const HeaderOne = () => {
                               </div>
                               <div className="tgmenu__action">
                                  <ul className="list-wrap">
-                                    <li className="wishlist-icon">
-                                       <Link href="/istek-listesi" className="cart-count">
-                                          <InjectableSvg src="/assets/img/icons/heart.svg" className="injectable" alt="img" />
-                                          <TotalWishlist />
-                                       </Link>
-                                    </li>
+   
                                     <li className="mini-cart-icon">
                                        <Link href="/sepet" className="cart-count">
                                           <InjectableSvg src="/assets/img/icons/cart.svg" className="injectable" alt="img" />
@@ -119,7 +113,7 @@ const HeaderOne = () => {
                                                 color: 'inherit'
                                              }}
                                           >
-                                             <InjectableSvg src="/assets/img/icons/user.svg" alt="user" className="injectable"/>
+                                             <InjectableSvg src="/assets/img/icons/user.svg" alt="user" className="injectable" />
                                              <span>{user.name}</span>
                                              <i className={`fas fa-chevron-${showDropdown ? 'up' : 'down'}`} style={{ fontSize: '12px' }}></i>
                                           </button>
