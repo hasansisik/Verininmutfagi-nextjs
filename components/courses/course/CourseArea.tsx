@@ -89,7 +89,7 @@ const CourseArea = () => {
                                           <li className="courses__item-tag">
                                              <Link href="/kurslar">{item.category?.name || 'Kategori'}</Link>
                                           </li>
-                                          <li className="avg-rating"><i className="fas fa-star"></i> (4.5 Değerlendirme)</li>
+                                          <li className="avg-rating"><i className="fas fa-star"></i> {item.rating || '0.0'} ({item.ratingCount || 0} Değerlendirme)</li>
                                        </ul>
                                        <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
                                        <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>
@@ -145,7 +145,7 @@ const CourseArea = () => {
                                           <li className="courses__item-tag">
                                              <Link href="/kurslar">{item.category?.name || 'Kategori'}</Link>
                                              <div className="avg-rating">
-                                                <i className="fas fa-star"></i>  (4.5 Değerlendirme)
+                                                <i className="fas fa-star"></i> {item.rating || '0.0'} ({item.ratingCount || 0} Değerlendirme)
                                              </div>
                                           </li>
                                           <li className="price">{item.price_type === 'Ücretsiz' || item.price === 0 ? 'Ücretsiz' : `₺${item.price}`}</li>

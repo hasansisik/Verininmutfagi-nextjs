@@ -6,17 +6,20 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cartSlice";
+import { useAppSelector } from "@/redux/hook";
 import InjectableSvg from "@/hooks/InjectableSvg";
 import BtnArrow from "@/svg/BtnArrow";
 
-
-import img_1 from "@/assets/img/courses/course_thumb02.jpg"
-
 const Sidebar = ({ single_course }: any) => {
-
+   const { user } = useAppSelector((state) => state.user);
    const [isVideoOpen, setIsVideoOpen] = useState(false);
    const router = useRouter();
    const dispatch = useDispatch();
+
+   // Kullanıcın bu kursa kayıtlı olup olmadığını kontrol et
+   const isEnrolled = user?.enrolledCourses?.some((item: any) =>
+      (item.course?._id || item.course) === (single_course?._id || single_course?.id)
+   );
 
    const handleStartCourse = () => {
       if (single_course?.slug) {
@@ -42,7 +45,13 @@ const Sidebar = ({ single_course }: any) => {
          <div className="col-xl-3 col-lg-4">
             <div className="courses__details-sidebar">
                <div className="courses__details-video">
-                  <Image src={img_1} alt="img" />
+                  <Image
+                     src={single_course.thumb || '/assets/img/courses/course_thumb01.jpg'}
+                     alt={single_course.title || "video preview"}
+                     width={450}
+                     height={250}
+                     style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                  />
                   <a onClick={() => setIsVideoOpen(true)} style={{ cursor: "pointer" }} className="popup-video"><i className="fas fa-play"></i></a>
                </div>
                <div className="courses__cost-wrap">
@@ -73,19 +82,19 @@ const Sidebar = ({ single_course }: any) => {
                         Dersler
                         <span>{single_course.totalLessons}</span>
                      </li>
-
-                     <li>
-                        <InjectableSvg src="/assets/img/icons/course_icon06.svg" alt="img" className="injectable" />
-                        Mezun Sayısı
-                        <span>{single_course.graduates}</span>
-                     </li>
                   </ul>
                </div>
                <div className="courses__details-enroll">
                   <div className="tg-button-wrap">
-                     <button onClick={handleAddToCart} className="btn btn-two arrow-btn">
-                        Sepete Ekle<BtnArrow />
-                     </button>
+                     {isEnrolled ? (
+                        <button onClick={handleStartCourse} className="btn btn-two arrow-btn">
+                           Kursu İzle<BtnArrow />
+                        </button>
+                     ) : (
+                        <button onClick={handleAddToCart} className="btn btn-two arrow-btn">
+                           Sepete Ekle<BtnArrow />
+                        </button>
+                     )}
                   </div>
                </div>
             </div>

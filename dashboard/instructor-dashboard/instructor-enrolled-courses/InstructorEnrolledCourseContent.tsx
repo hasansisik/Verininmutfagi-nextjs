@@ -4,6 +4,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { useAppDispatch, useAppSelector } from "@/redux/hook"
 import { loadUser } from "@/redux/actions/userActions"
+import { useState } from "react"
+import RatingModal from "@/modals/RatingModal"
 
 interface StyleType {
    style?: boolean;
@@ -12,12 +14,19 @@ interface StyleType {
 const InstructorEnrolledCourseContent = ({ style }: StyleType) => {
    const dispatch = useAppDispatch();
    const { user, loading } = useAppSelector((state) => state.user);
+   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+   const [selectedCourse, setSelectedCourse] = useState<{ id: string, title: string } | null>(null);
 
    useEffect(() => {
       dispatch(loadUser());
    }, [dispatch]);
 
    const enrolledCourses = user?.enrolledCourses || [];
+
+   const openRatingModal = (id: string, title: string) => {
+      setSelectedCourse({ id, title });
+      setIsRatingModalOpen(true);
+   };
 
    if (loading) {
       return (
@@ -65,12 +74,12 @@ const InstructorEnrolledCourseContent = ({ style }: StyleType) => {
                   if (!course) return null;
 
                   return (
-                     <div key={enrollment._id || course._id} className="col-xl-4 col-md-6">
+                     <div key={enrollment._id || (course.slug || course._id)} className="col-xl-4 col-md-6">
                         <div className="courses__item courses__item-two shine__animate-item">
                            <div className="courses__item-thumb courses__item-thumb-two">
-                              <Link href={`/kurs-detaylari/${course._id}`} className="shine__animate-link">
+                              <Link href={`/kurs-detaylari/${course.slug}`} className="shine__animate-link">
                                  <Image
-                                    src={course.thumbnail || '/assets/img/courses/course_thumb01.jpg'}
+                                    src={course.thumb || '/assets/img/courses/course_thumb01.jpg'}
                                     alt={course.title || 'Course'}
                                     width={400}
                                     height={300}
@@ -80,33 +89,56 @@ const InstructorEnrolledCourseContent = ({ style }: StyleType) => {
                            <div className="courses__item-content courses__item-content-two">
                               <ul className="courses__item-meta list-wrap">
                                  <li className="courses__item-tag">
-                                    <Link href="/ders">{course.category?.name || 'Genel'}</Link>
+                                    <Link href="/kurslar">{course.category?.name || 'Genel'}</Link>
                                  </li>
-                                 {course.price && (
+                                 {course.price > 0 && (
                                     <li className="price">
-                                       {course.oldPrice && <del>₺{course.oldPrice}.00</del>}
+                                       {course.originalPrice > course.price && <del>₺{course.originalPrice}.00</del>}
                                        ₺{course.price}.00
                                     </li>
                                  )}
                               </ul>
                               <h5 className="title">
-                                 <Link href={`/kurs-detaylari/${course._id}`}>{course.title || 'Kurs Başlığı'}</Link>
+                                 <Link href={`/kurs-detaylari/${course.slug}`}>{course.title || 'Kurs Başlığı'}</Link>
                               </h5>
                               <div className="courses__item-content-bottom">
                                  <div className="author-two">
-                                    <Link href="/instructor-details">
+                                    <Link href="#">
                                        <Image
-                                          src={course.instructor?.profile?.picture || '/assets/img/courses/course_author001.png'}
-                                          alt={course.instructor?.name || 'Instructor'}
+                                          src={course.createdBy?.profile?.picture || '/assets/img/courses/course_author001.png'}
+                                          alt={course.createdBy?.name || 'Instructor'}
                                           width={30}
                                           height={30}
                                        />
-                                       {course.instructor ? `${course.instructor.name} ${course.instructor.surname || ''}`.trim() : 'Eğitmen'}
+                                       {course.createdBy ? `${course.createdBy.name} ${course.createdBy.surname || ''}`.trim() : (course.instructors || 'Eğitmen')}
                                     </Link>
                                  </div>
                                  <div className="avg-rating">
                                     <i className="fas fa-star"></i> {course.rating || '0.0'}
                                  </div>
+                              </div>
+                              <div className="courses__item-content-bottom" style={{ marginTop: '10px', paddingTop: '10px', borderTop: '1px solid #f0f0f0' }}>
+                                 {enrollment.rating > 0 ? (
+                                    <div style={{ color: '#FFB21D', fontWeight: '600', fontSize: '14px' }}>
+                                       Verdiğiniz Puan: {enrollment.rating} <i className="fas fa-star"></i>
+                                    </div>
+                                 ) : (
+                                    <button
+                                       onClick={() => openRatingModal(course._id, course.title)}
+                                       style={{
+                                          color: '#6B7280',
+                                          background: '#F3F4F6',
+                                          border: 'none',
+                                          padding: '4px 12px',
+                                          borderRadius: '4px',
+                                          fontSize: '13px',
+                                          fontWeight: '500',
+                                          cursor: 'pointer'
+                                       }}
+                                    >
+                                       <i className="far fa-star mr-5"></i> Kursu Değerlendir
+                                    </button>
+                                 )}
                               </div>
                            </div>
                            <div className="courses__item-bottom-two">
@@ -122,6 +154,14 @@ const InstructorEnrolledCourseContent = ({ style }: StyleType) => {
                })}
             </div>
          </div>
+         {selectedCourse && (
+            <RatingModal
+               isOpen={isRatingModalOpen}
+               onClose={() => setIsRatingModalOpen(false)}
+               courseId={selectedCourse.id}
+               courseTitle={selectedCourse.title}
+            />
+         )}
       </div>
    )
 }

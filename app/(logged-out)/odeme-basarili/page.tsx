@@ -6,14 +6,38 @@ import FooterOne from "@/layouts/footers/FooterOne";
 import BreadcrumbOne from "@/components/common/breadcrumb/BreadcrumbOne";
 import { useAppDispatch } from "@/redux/hook";
 import { order_clear_cart } from "@/redux/features/cartSlice";
+import { useSearchParams } from 'next/navigation';
+import axios from 'axios';
+import { server } from "@/config";
+import { loadUser } from "@/redux/actions/userActions";
 
 const SuccessPage = () => {
     const dispatch = useAppDispatch();
+    const searchParams = useSearchParams();
+    const merchant_oid = searchParams.get('merchant_oid');
 
     useEffect(() => {
         // Ödeme başarılı olduğu için sepeti temizleyelim
         dispatch(order_clear_cart());
-    }, [dispatch]);
+
+        const verifyPayment = async () => {
+            if (merchant_oid) {
+                try {
+                    const token = localStorage.getItem("accessToken");
+                    await axios.post(`${server}/payment/verify-order`,
+                        { merchant_oid },
+                        { headers: { Authorization: `Bearer ${token}` } }
+                    );
+                    // Kullanıcı bilgilerini yenileyerek yeni kursları yükleyelim
+                    dispatch(loadUser());
+                } catch (error) {
+                    console.error("Ödeme doğrulama hatası:", error);
+                }
+            }
+        };
+
+        verifyPayment();
+    }, [dispatch, merchant_oid]);
 
     return (
         <>

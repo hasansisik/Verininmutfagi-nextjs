@@ -41,12 +41,12 @@ const DashboardCourse = () => {
                if (!course) return null;
 
                return (
-                  <div key={enrollment._id || course._id} className="col-xl-4 col-md-6">
+                  <div key={enrollment._id || (course.slug || course._id)} className="col-xl-4 col-md-6">
                      <div className="courses__item courses__item-two shine__animate-item">
                         <div className="courses__item-thumb courses__item-thumb-two">
-                           <Link href={`/kurs-detaylari/${course._id}`} className="shine__animate-link">
+                           <Link href={`/kurs-detaylari/${course.slug}`} className="shine__animate-link">
                               <Image
-                                 src={course.thumbnail || '/assets/img/courses/course_thumb01.jpg'}
+                                 src={course.thumb || '/assets/img/courses/course_thumb01.jpg'}
                                  alt={course.title || 'Course'}
                                  width={400}
                                  height={300}
@@ -56,32 +56,26 @@ const DashboardCourse = () => {
                         <div className="courses__item-content courses__item-content-two">
                            <ul className="courses__item-meta list-wrap">
                               <li className="courses__item-tag">
-                                 <Link href="/ders">{course.category?.name || 'Genel'}</Link>
+                                 <Link href="/kurslar">{course.category?.name || 'Genel'}</Link>
                               </li>
                            </ul>
                            <h5 className="title">
-                              <Link href={`/kurs-detaylari/${course._id}`}>{course.title || 'Kurs Başlığı'}</Link>
+                              <Link href={`/kurs-detaylari/${course.slug}`}>{course.title || 'Kurs Başlığı'}</Link>
                            </h5>
                            <div className="courses__item-content-bottom">
                               <div className="author-two">
-                                 <Link href="/instructor-details">
+                                 <Link href="#">
                                     <Image
-                                       src={course.instructor?.profile?.picture || '/assets/img/courses/course_author001.png'}
-                                       alt={course.instructor?.name || 'Instructor'}
+                                       src={course.createdBy?.profile?.picture || '/assets/img/courses/course_author001.png'}
+                                       alt={course.createdBy?.name || 'Instructor'}
                                        width={30}
                                        height={30}
                                     />
-                                    {course.instructor ? `${course.instructor.name} ${course.instructor.surname || ''}`.trim() : 'Eğitmen'}
+                                    {course.createdBy ? `${course.createdBy.name} ${course.createdBy.surname || ''}`.trim() : (course.instructors || 'Eğitmen')}
                                  </Link>
                               </div>
                               <div className="avg-rating">
                                  <i className="fas fa-star"></i> {course.rating || '0.0'}
-                              </div>
-                           </div>
-                           <div className="progress-item progress-item-two">
-                              <h6 className="title">TAMAMLANDI <span>{enrollment.progress || 0}%</span></h6>
-                              <div className="progress">
-                                 <div className="progress-bar" style={{ width: `${enrollment.progress || 0}%` }}></div>
                               </div>
                            </div>
                         </div>
@@ -89,7 +83,7 @@ const DashboardCourse = () => {
                            <ul className="list-wrap">
                               <li><i className="flaticon-book"></i>{course.curriculum?.length || 0} Ders</li>
                               <li><i className="flaticon-clock"></i>{course.duration || '0h'}</li>
-                              <li><i className="flaticon-mortarboard"></i>{course.students || 0} Öğrenci</li>
+                              <li><i className="flaticon-mortarboard"></i>{course.totalStudents || 0} Öğrenci</li>
                            </ul>
                         </div>
                      </div>

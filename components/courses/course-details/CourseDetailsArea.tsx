@@ -7,7 +7,7 @@ import Sidebar from "./Sidebar";
 import Curriculum from "./Curriculum"
 import Instructors from "./Instructors"
 
-const tab_title: string[] = ["Genel Bakış", "Müfredat", "Eğitmenler"];
+const tab_title: string[] = ["Genel Bakış", "Müfredat"];
 
 const CourseDetailsArea = ({ single_course }: any) => {
 
@@ -22,13 +22,13 @@ const CourseDetailsArea = ({ single_course }: any) => {
       <div className="container">
         <div className="row">
           <div className="col-xl-9 col-lg-8">
-            <div className="courses__details-thumb">
+            <div className="courses__details-thumb" style={{ position: 'relative', width: '100%', aspectRatio: '16/9', overflow: 'hidden', borderRadius: '12px', marginBottom: '30px' }}>
               <Image
                 src={single_course.thumb || '/assets/img/courses/course_thumb01.jpg'}
                 alt={single_course.title}
-                width={1200}
-                height={600}
-                style={{ width: '100%', height: 'auto' }}
+                fill
+                priority
+                style={{ objectFit: 'cover' }}
                 className="img-fluid"
               />
             </div>
@@ -37,7 +37,7 @@ const CourseDetailsArea = ({ single_course }: any) => {
                 <li className="courses__item-tag">
                   <Link href="/kurslar">{single_course.category?.name || 'Kategori'}</Link>
                 </li>
-                <li className="avg-rating"><i className="fas fa-star"></i>4.5 (120 Değerlendirme)</li>
+                <li className="avg-rating"><i className="fas fa-star"></i>{single_course.rating || '0.0'} ({single_course.ratingCount || 0} Değerlendirme)</li>
               </ul>
               <h2 className="title">{single_course.title}</h2>
               <div className="courses__details-meta">
@@ -45,7 +45,7 @@ const CourseDetailsArea = ({ single_course }: any) => {
                   <li className="author-two">
                     Yazar: <Link href="#">{single_course.instructors || 'Eğitmen'}</Link>
                   </li>
-                  <li className="date"><i className="flaticon-calendar"></i>{single_course.publishDate || new Date().toLocaleDateString('tr-TR')}</li>
+                  <li className="date"><i className="flaticon-calendar"></i>{single_course.publishDate ? new Date(single_course.publishDate).toLocaleDateString('tr-TR') : new Date().toLocaleDateString('tr-TR')}</li>
                   <li><i className="flaticon-mortarboard"></i>{single_course.totalStudents?.toLocaleString('tr-TR') || '0'} Öğrenci</li>
                 </ul>
               </div>
