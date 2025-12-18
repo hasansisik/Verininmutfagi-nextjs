@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
-import MobileMenu from "./MobileMenu"
+import NavMenu from "./NavMenu"
 
-import logo from "@/assets/img/logo/logo.svg"
+import logo from "@/public/logo.png"
 
 interface MobileMenuProps {
    isActive: boolean;
@@ -19,16 +19,10 @@ const MobileSidebar = ({ isActive, setIsActive }: MobileMenuProps) => {
                <div className="nav-logo">
                   <Link href="/"><Image src={logo} alt="Logo" /></Link>
                </div>
-               <div className="tgmobile__search">
-                  <form action="#">
-                     <input type="text" placeholder="Search here..." />
-                     <button><i className="fas fa-search"></i></button>
-                  </form>
-               </div>
                <div className="tgmobile__menu-outer">
-                  <MobileMenu />
+                  <NavMenu />
                </div>
-              
+
             </nav>
          </div>
          <div className="tgmobile__menu-backdrop"></div>

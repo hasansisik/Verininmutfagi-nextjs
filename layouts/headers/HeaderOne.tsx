@@ -106,17 +106,23 @@ const HeaderOne = () => {
                                  </ul>
                               </div>
                               <div className="mobile-login-btn">
+                                 <div className="mini-cart-icon">
+                                    <Link href="/sepet" className="cart-count">
+                                       <InjectableSvg src="/assets/img/icons/cart.svg" className="injectable" alt="cart" />
+                                       <TotalCart />
+                                    </Link>
+                                 </div>
                                  {isAuthenticated && user ? (
-                                    <Link href="/panelim">
+                                    <Link href="/panelim" className="user-btn">
                                        <InjectableSvg src="/assets/img/icons/user.svg" alt="" className="injectable" />
                                     </Link>
                                  ) : (
-                                    <Link href="/giris">
+                                    <Link href="/giris" className="user-btn">
                                        <InjectableSvg src="/assets/img/icons/user.svg" alt="" className="injectable" />
                                     </Link>
                                  )}
                               </div>
-                              <div onClick={() => setIsActive(true)} className="mobile-nav-toggler"><i className="tg-flaticon-menu-1"></i></div>
+                              <div onClick={() => setIsActive(true)} className="mobile-nav-toggler"><i className="fas fa-bars"></i></div>
                            </nav>
                         </div>
                      </div>

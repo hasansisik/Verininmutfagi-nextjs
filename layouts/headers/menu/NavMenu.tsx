@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -20,9 +19,9 @@ interface MenuItem {
 }
 
 const NavMenu = () => {
-   const pathname = usePathname();
    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
    const [loading, setLoading] = useState(true);
+   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
    useEffect(() => {
       fetchMenuItems();
@@ -41,10 +40,9 @@ const NavMenu = () => {
       }
    };
 
-   const isActive = (href: string) => pathname === href;
-
-   const isAnyChildActive = (subMenus: SubMenu[] = []) =>
-      subMenus.some((sub) => pathname === sub.link);
+   const toggleMenu = (menuId: string) => {
+      setOpenMenuId(openMenuId === menuId ? null : menuId);
+   };
 
    if (loading) {
       return <ul className="navigation"></ul>;
@@ -54,25 +52,32 @@ const NavMenu = () => {
       <ul className="navigation">
          {menuItems.map((menu) => {
             const hasChildren = menu.hasDropdown && menu.subMenus && menu.subMenus.length > 0;
-            const isParentActive = isActive(menu.link) || isAnyChildActive(menu.subMenus);
+            const isOpen = openMenuId === menu._id;
 
             return (
                <li
                   key={menu._id}
-                  className={`${hasChildren ? "menu-item-has-children" : ""} ${isParentActive ? "active" : ""}`}
+                  className={`${hasChildren ? "menu-item-has-children" : ""}`}
                >
                   <Link href={menu.link}>{menu.title}</Link>
                   {hasChildren && (
-                     <ul className="sub-menu">
-                        {menu.subMenus.map((subMenu, index) => {
-                           const isSubActive = isActive(subMenu.link);
-                           return (
-                              <li key={index} className={isSubActive ? "active" : ""}>
-                                 <Link href={subMenu.link}>{subMenu.title}</Link>
-                              </li>
-                           );
-                        })}
-                     </ul>
+                     <>
+                        <ul className="sub-menu" style={{ display: isOpen ? "block" : "none" }}>
+                           {menu.subMenus.map((subMenu, index) => {
+                              return (
+                                 <li key={index}>
+                                    <Link href={subMenu.link}>{subMenu.title}</Link>
+                                 </li>
+                              );
+                           })}
+                        </ul>
+                        <div
+                           className={`dropdown-btn ${isOpen ? "open" : ""}`}
+                           onClick={() => toggleMenu(menu._id)}
+                        >
+                           <span className="plus-line"></span>
+                        </div>
+                     </>
                   )}
                </li>
             );

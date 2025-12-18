@@ -28,5 +28,40 @@ body {
     background: #ffffff !important;
 }
 
+.mobile-login-btn {
 
+    .mini-cart-icon,
+    .user-btn {
 
+        .cart-count,
+        &.user-btn {
+            background: transparent !important;
+            border: 1px solid #7F7E97 !important;
+            color: #7F7E97 !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50% !important;
+            margin-right: 15px !important;
+            position: relative;
+
+            .mini-cart-count {
+                position: absolute;
+                top: -9px;
+                right: -9px;
+                width: 22px;
+                height: 22px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                font-weight: 500;
+                background: var(--tg-theme-secondary);
+                color: var(--tg-common-color-white);
+                border-radius: 50%;
+            }
+        }
+    }
+}
