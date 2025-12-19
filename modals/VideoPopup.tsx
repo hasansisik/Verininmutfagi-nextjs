@@ -10,19 +10,25 @@ interface VideoPopupProps {
 }
 
 const VideoPopup: React.FC<VideoPopupProps> = ({ isOpen, onClose, videoId }) => {
+  if (!videoId) return null;
+
+  // URL mi yoksa YouTube ID mi kontrol et
+  const videoUrl = videoId.startsWith('http')
+    ? videoId
+    : `https://www.youtube.com/watch?v=${videoId}`;
+
   return (
     <Modal open={isOpen} onClose={onClose} center classNames={{ modal: "video-modal" }}>
-      <div style={{ width: "100%", height: "100%", aspectRatio: "16/9" }}>
+      <div style={{ width: "100%", minWidth: "300px", aspectRatio: "16/9", background: "#000" }}>
         <ReactPlayer
-          src={`https://www.youtube.com/watch?v=${videoId}`}
-          playing
-          controls
-          muted
-          width="100%"
-          height="100%"
-          onError={(e) => {
-            console.error("Error playing video:", e);
-          }}
+          {...({
+            url: videoUrl,
+            playing: true,
+            controls: true,
+            width: "100%",
+            height: "100%",
+            onError: (e: any) => console.error("Error playing video:", e)
+          } as any)}
         />
       </div>
     </Modal>

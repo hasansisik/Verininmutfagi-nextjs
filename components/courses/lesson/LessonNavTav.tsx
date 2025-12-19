@@ -3,7 +3,7 @@ import { useState } from "react";
 import Overview from "../course-details/Overview";
 import Instructors from "../course-details/Instructors";
 
-const tab_title: string[] = ["Genel Bakış", "Eğitmenler"];
+const tab_title: string[] = ["Genel Bakış"];
 
 interface LessonNavTavProps {
    course: any;

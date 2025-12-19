@@ -100,6 +100,40 @@ export default function KursFormPage() {
         }
     }, [courseId, dispatch])
 
+    // Toplam süreyi hesapla
+    const calculateTotalDuration = useCallback(() => {
+        let totalSeconds = 0;
+        formData.curriculum.forEach(section => {
+            section.lessons.forEach(lesson => {
+                const parts = lesson.duration.split(':').map(Number);
+                if (parts.length === 2) {
+                    // mm:ss
+                    totalSeconds += parts[0] * 60 + parts[1];
+                } else if (parts.length === 3) {
+                    // hh:mm:ss
+                    totalSeconds += parts[0] * 3600 + parts[1] * 60 + parts[2];
+                }
+            });
+        });
+
+        if (totalSeconds === 0) return;
+
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        let durationStr = "";
+        if (hours > 0) durationStr += `${hours}sa `;
+        if (minutes > 0) durationStr += `${minutes}dk `;
+        if (seconds > 0 && hours === 0) durationStr += `${seconds}sn`;
+
+        setFormData(prev => ({ ...prev, duration: durationStr.trim() }));
+    }, [formData.curriculum]);
+
+    useEffect(() => {
+        calculateTotalDuration();
+    }, [formData.curriculum, calculateTotalDuration]);
+
     useEffect(() => {
         if (isEdit && courseId) {
             loadCourse()
@@ -160,11 +194,24 @@ export default function KursFormPage() {
             const result = await dispatch(uploadVideo(file)).unwrap()
 
             if (sectionIndex !== undefined && lessonIndex !== undefined) {
-                const newCurriculum = [...formData.curriculum]
-                newCurriculum[sectionIndex].lessons[lessonIndex].videoUrl = result.videoUrl
-                setFormData({ ...formData, curriculum: newCurriculum })
+                setFormData(prev => {
+                    const newCurriculum = JSON.parse(JSON.stringify(prev.curriculum))
+                    if (newCurriculum[sectionIndex]?.lessons[lessonIndex]) {
+                        newCurriculum[sectionIndex].lessons[lessonIndex].videoUrl = result.videoUrl
+
+                        // Süreyi otomatik doldur (eğer gelmişse ve boşsa)
+                        if (result.duration && !newCurriculum[sectionIndex].lessons[lessonIndex].duration) {
+                            const totalSeconds = Math.round(result.duration);
+                            const mins = Math.floor(totalSeconds / 60);
+                            const secs = totalSeconds % 60;
+                            newCurriculum[sectionIndex].lessons[lessonIndex].duration =
+                                `${mins}:${secs.toString().padStart(2, '0')}`;
+                        }
+                    }
+                    return { ...prev, curriculum: newCurriculum }
+                })
             } else {
-                setFormData({ ...formData, videoId: result.videoUrl })
+                setFormData(prev => ({ ...prev, videoId: result.videoUrl }))
             }
 
             toast.success("Video yüklendi")
@@ -456,65 +503,108 @@ export default function KursFormPage() {
                                                     </Button>
                                                 </div>
                                             </CardHeader>
-                                            <CardContent className="space-y-2">
+                                            <CardContent className="space-y-4">
                                                 {section.lessons.map((lesson, lessonIndex) => (
-                                                    <div
-                                                        key={lessonIndex}
-                                                        className="flex items-center gap-2 p-3 border rounded-lg"
-                                                    >
-                                                        <Input
-                                                            value={lesson.title}
-                                                            onChange={(e) =>
-                                                                updateLesson(sectionIndex, lessonIndex, "title", e.target.value)
-                                                            }
-                                                            placeholder="Ders adı"
-                                                            className="flex-1"
-                                                        />
-                                                        <Input
-                                                            value={lesson.duration}
-                                                            onChange={(e) =>
-                                                                updateLesson(sectionIndex, lessonIndex, "duration", e.target.value)
-                                                            }
-                                                            placeholder="10:30"
-                                                            className="w-24"
-                                                        />
-                                                        <Input
-                                                            type="file"
-                                                            accept="video/*"
-                                                            onChange={(e) => handleVideoUpload(e, sectionIndex, lessonIndex)}
-                                                            className="hidden"
-                                                            id={`video-${sectionIndex}-${lessonIndex}`}
-                                                        />
-                                                        <Button
-                                                            type="button"
-                                                            size="icon"
-                                                            variant="outline"
-                                                            onClick={() =>
-                                                                document
-                                                                    .getElementById(`video-${sectionIndex}-${lessonIndex}`)
-                                                                    ?.click()
-                                                            }
-                                                            disabled={uploadingVideo}
-                                                        >
-                                                            <Video className="h-4 w-4" />
-                                                        </Button>
-                                                        <div className="flex items-center gap-2">
-                                                            <Switch
-                                                                checked={lesson.lock}
-                                                                onCheckedChange={(checked) =>
-                                                                    updateLesson(sectionIndex, lessonIndex, "lock", checked)
+                                                    <div key={lessonIndex} className="space-y-3 p-4 border rounded-xl bg-gray-50/30">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="bg-white border rounded-lg p-2 text-xs font-bold text-muted-foreground w-8 h-8 flex items-center justify-center shrink-0">
+                                                                {lessonIndex + 1}
+                                                            </div>
+                                                            <Input
+                                                                value={lesson.title}
+                                                                onChange={(e) =>
+                                                                    updateLesson(sectionIndex, lessonIndex, "title", e.target.value)
                                                                 }
+                                                                placeholder="Ders adı"
+                                                                className="flex-1 bg-white"
                                                             />
-                                                            <Label className="text-xs">Kilitli</Label>
+                                                            <Input
+                                                                value={lesson.duration}
+                                                                onChange={(e) =>
+                                                                    updateLesson(sectionIndex, lessonIndex, "duration", e.target.value)
+                                                                }
+                                                                placeholder="mm:ss"
+                                                                className="w-24 bg-white"
+                                                            />
+                                                            <div className="flex items-center gap-2 px-2">
+                                                                <Switch
+                                                                    checked={lesson.lock}
+                                                                    onCheckedChange={(checked) =>
+                                                                        updateLesson(sectionIndex, lessonIndex, "lock", checked)
+                                                                    }
+                                                                />
+                                                                <Label className="text-xs">Kilitli</Label>
+                                                            </div>
+                                                            <Button
+                                                                type="button"
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                onClick={() => removeLesson(sectionIndex, lessonIndex)}
+                                                                className="text-red-500 hover:bg-red-50"
+                                                            >
+                                                                <X className="h-4 w-4" />
+                                                            </Button>
                                                         </div>
-                                                        <Button
-                                                            type="button"
-                                                            variant="ghost"
-                                                            size="icon"
-                                                            onClick={() => removeLesson(sectionIndex, lessonIndex)}
-                                                        >
-                                                            <X className="h-4 w-4" />
-                                                        </Button>
+
+                                                        <div className="flex items-center gap-4 pl-11">
+                                                            <Input
+                                                                type="file"
+                                                                accept="video/*"
+                                                                onChange={(e) => handleVideoUpload(e, sectionIndex, lessonIndex)}
+                                                                className="hidden"
+                                                                id={`video-${sectionIndex}-${lessonIndex}`}
+                                                            />
+
+                                                            {lesson.videoUrl ? (
+                                                                <div className="flex-1 flex items-center gap-4 bg-white p-3 border rounded-xl shadow-sm">
+                                                                    <div className="relative w-32 aspect-video rounded-lg overflow-hidden bg-black flex items-center justify-center">
+                                                                        <video
+                                                                            src={lesson.videoUrl}
+                                                                            className="w-full h-full object-cover"
+                                                                            onMouseOver={e => (e.currentTarget as HTMLVideoElement).play()}
+                                                                            onMouseOut={e => (e.currentTarget as HTMLVideoElement).pause()}
+                                                                            muted
+                                                                        />
+                                                                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                                                            <Button
+                                                                                type="button"
+                                                                                variant="secondary"
+                                                                                size="icon"
+                                                                                className="rounded-full w-8 h-8"
+                                                                                onClick={() => window.open(lesson.videoUrl, '_blank')}
+                                                                            >
+                                                                                <Video className="h-3 w-3" />
+                                                                            </Button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="flex-1 min-w-0">
+                                                                        <p className="text-sm font-medium truncate">Video Yüklendi</p>
+                                                                        <p className="text-xs text-muted-foreground truncate opacity-70">
+                                                                            {lesson.videoUrl.split('/').pop()}
+                                                                        </p>
+                                                                        <Button
+                                                                            type="button"
+                                                                            variant="link"
+                                                                            className="h-auto p-0 text-xs text-blue-600"
+                                                                            onClick={() => document.getElementById(`video-${sectionIndex}-${lessonIndex}`)?.click()}
+                                                                        >
+                                                                            Değiştir
+                                                                        </Button>
+                                                                    </div>
+                                                                </div>
+                                                            ) : (
+                                                                <Button
+                                                                    type="button"
+                                                                    variant="outline"
+                                                                    onClick={() => document.getElementById(`video-${sectionIndex}-${lessonIndex}`)?.click()}
+                                                                    className="w-full h-12 border-dashed border-2 hover:border-blue-400 hover:bg-blue-50/50 transition-all rounded-xl"
+                                                                    disabled={uploadingVideo}
+                                                                >
+                                                                    <Video className="h-4 w-4 mr-2" />
+                                                                    {uploadingVideo ? "Yükleniyor..." : "Ders Videosu Yükle"}
+                                                                </Button>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </CardContent>
@@ -687,12 +777,16 @@ export default function KursFormPage() {
                                 )}
 
                                 <div className="space-y-2">
-                                    <Label>Süre</Label>
+                                    <Label>Toplam Süre</Label>
                                     <Input
                                         value={formData.duration}
-                                        onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
-                                        placeholder="10sa 30dk"
+                                        readOnly
+                                        placeholder="Müfredattan hesaplanır"
+                                        className="bg-gray-50 cursor-not-allowed"
                                     />
+                                    <p className="text-[10px] text-muted-foreground">
+                                        Müfredattaki ders sürelerinden otomatik hesaplanır.
+                                    </p>
                                 </div>
                             </CardContent>
                         </Card>
@@ -708,7 +802,7 @@ export default function KursFormPage() {
                                     <Input
                                         value={formData.videoId}
                                         onChange={(e) => setFormData({ ...formData, videoId: e.target.value })}
-                                        placeholder="YouTube ID"
+                                        placeholder="YouTube ID veya Video URL"
                                     />
                                 </div>
                                 <Input
@@ -718,16 +812,60 @@ export default function KursFormPage() {
                                     className="hidden"
                                     id="main-video"
                                 />
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    className="w-full"
-                                    onClick={() => document.getElementById("main-video")?.click()}
-                                    disabled={uploadingVideo}
-                                >
-                                    <Upload className="h-4 w-4 mr-2" />
-                                    {uploadingVideo ? "Yükleniyor..." : "Video Yükle"}
-                                </Button>
+
+                                {formData.videoId ? (
+                                    <div className="space-y-3">
+                                        <div className="relative aspect-video rounded-lg overflow-hidden bg-black border group">
+                                            {formData.videoId.includes('youtube.com') || formData.videoId.includes('youtu.be') ? (
+                                                <iframe
+                                                    src={`https://www.youtube.com/embed/${formData.videoId.split('v=')[1]?.split('&')[0] || formData.videoId.split('/').pop()}`}
+                                                    className="w-full h-full"
+                                                    allowFullScreen
+                                                />
+                                            ) : (
+                                                <video
+                                                    src={formData.videoId}
+                                                    className="w-full h-full object-cover"
+                                                    controls
+                                                />
+                                            )}
+                                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <Button
+                                                    type="button"
+                                                    variant="destructive"
+                                                    size="icon"
+                                                    className="h-8 w-8"
+                                                    onClick={() => setFormData({ ...formData, videoId: "" })}
+                                                >
+                                                    <X className="h-4 w-4" />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            className="w-full"
+                                            onClick={() => document.getElementById("main-video")?.click()}
+                                            disabled={uploadingVideo}
+                                        >
+                                            <Upload className="h-4 w-4 mr-2" />
+                                            Videoyu Değiştir
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        className="w-full border-dashed border-2 py-8"
+                                        onClick={() => document.getElementById("main-video")?.click()}
+                                        disabled={uploadingVideo}
+                                    >
+                                        <div className="flex flex-col items-center gap-2">
+                                            <Video className="h-8 w-8 text-muted-foreground" />
+                                            <span>{uploadingVideo ? "Yükleniyor..." : "Tanıtım Videosu Yükle"}</span>
+                                        </div>
+                                    </Button>
+                                )}
                             </CardContent>
                         </Card>
                     </div>

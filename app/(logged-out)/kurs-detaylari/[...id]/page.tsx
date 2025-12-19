@@ -37,7 +37,7 @@ export default function Page() {
       fetchCourse();
    }, [courseSlug, dispatch]);
 
-   if (loading) {
+   if (loading || (!course && !notFoundFlag)) {
       return (
          <Wrapper>
             <HeaderOne />
@@ -60,7 +60,7 @@ export default function Page() {
          <HeaderOne />
          <main className="main-area fix">
             <BreadcrumbOne title={course.title} sub_title="Kurs Detayları" />
-            <CourseDetailsArea course={course} />
+            <CourseDetailsArea single_course={course} />
          </main>
          <FooterOne />
       </Wrapper>

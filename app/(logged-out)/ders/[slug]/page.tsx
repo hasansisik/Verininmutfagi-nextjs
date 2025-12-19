@@ -29,7 +29,7 @@ export default function Page() {
         fetchCourse();
     }, [slug, dispatch]);
 
-    if (loading) {
+    if (loading || (!course && !notFoundFlag)) {
         return (
             <Wrapper>
                 <div className="container">
