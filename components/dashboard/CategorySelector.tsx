@@ -43,10 +43,7 @@ export default function CategorySelector({ value, onValueChange }: CategorySelec
                 {categories && categories.length > 0 ? (
                     categories.map((category: any) => (
                         <SelectItem key={category._id} value={category._id}>
-                            <div className="flex items-center gap-2">
-                                <span>{category.icon}</span>
-                                <span>{category.name}</span>
-                            </div>
+                            {category.name}
                         </SelectItem>
                     ))
                 ) : (

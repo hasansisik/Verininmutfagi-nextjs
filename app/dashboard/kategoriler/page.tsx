@@ -41,8 +41,19 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Plus, Pencil, Trash2, Tag } from "lucide-react"
+import { Plus, Pencil, Trash2, Tag, Search, X, Filter } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { SimplePagination } from "@/components/common/SimplePagination"
+
+const ITEMS_PER_PAGE = 8
+
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 interface Category {
     _id: string
@@ -62,13 +73,39 @@ export default function KategorilerPage() {
     const [dialogOpen, setDialogOpen] = useState(false)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
+    const [searchTerm, setSearchTerm] = useState("")
+    const [statusFilter, setStatusFilter] = useState<string>("all")
+    const [currentPage, setCurrentPage] = useState(1)
     const [formData, setFormData] = useState({
         slug: "",
         name: "",
         icon: "",
         description: "",
-        courseCount: 0,
     })
+
+    const filteredCategories = categories?.filter((category) => {
+        const matchesSearch =
+            category.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            category.slug?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            category.description?.toLowerCase().includes(searchTerm.toLowerCase())
+
+        const matchesStatus = statusFilter === "all" ||
+            (statusFilter === "active" ? category.isActive : !category.isActive)
+
+        return matchesSearch && matchesStatus
+    }) || []
+
+    const totalPages = Math.ceil(filteredCategories.length / ITEMS_PER_PAGE)
+    const paginatedCategories = filteredCategories.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    )
+
+    const clearFilters = () => {
+        setSearchTerm("")
+        setStatusFilter("all")
+        setCurrentPage(1)
+    }
 
     useEffect(() => {
         dispatch(getAllCategories({}))
@@ -125,7 +162,6 @@ export default function KategorilerPage() {
             name: category.name,
             icon: category.icon,
             description: category.description,
-            courseCount: category.courseCount,
         })
         setDialogOpen(true)
     }
@@ -142,7 +178,6 @@ export default function KategorilerPage() {
             name: "",
             icon: "",
             description: "",
-            courseCount: 0,
         })
         setSelectedCategory(null)
     }
@@ -162,25 +197,70 @@ export default function KategorilerPage() {
                 </Button>
             </div>
 
-            <Card>
+            <Card className="border-none shadow-none bg-transparent">
                 <CardHeader>
-                    <CardTitle>Kategoriler</CardTitle>
-                    <CardDescription>
-                        Toplam {categories.length} kategori
-                    </CardDescription>
+                    <div className="flex items-center justify-between gap-4">
+                        <div>
+                            <CardTitle>Kategoriler</CardTitle>
+                            <CardDescription>
+                                Toplam {filteredCategories.length} kategori bulundu
+                            </CardDescription>
+                        </div>
+                    </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="rounded-md border">
+                    <div className="flex flex-col md:flex-row gap-4 mb-8">
+                        <div className="relative flex-1 group">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
+                            <Input
+                                placeholder="Kategori adı, slug veya açıklama ile ara..."
+                                value={searchTerm}
+                                onChange={(e) => {
+                                    setSearchTerm(e.target.value)
+                                    setCurrentPage(1)
+                                }}
+                                className="pl-9 h-11 bg-white border-gray-200 focus:ring-1 focus:ring-gray-200 transition-all shadow-sm rounded-xl"
+                            />
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0">
+                            <div className="flex items-center gap-2 bg-white p-1 px-3 rounded-xl border border-gray-200 focus-within:ring-1 focus-within:ring-gray-200 transition-all shadow-sm">
+                                <Filter className="h-4 w-4 text-muted-foreground" />
+                                <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setCurrentPage(1); }}>
+                                    <SelectTrigger className="w-[130px] h-9 border-none bg-transparent shadow-none focus:ring-0">
+                                        <SelectValue placeholder="Durum Seç" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="all">Tüm Durumlar</SelectItem>
+                                        <SelectItem value="active">Aktif</SelectItem>
+                                        <SelectItem value="inactive">Pasif</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            {(searchTerm || statusFilter !== "all") && (
+                                <Button
+                                    variant="ghost"
+                                    onClick={clearFilters}
+                                    className="h-11 px-4 text-muted-foreground hover:text-red-500 hover:bg-red-50/50 transition-all rounded-xl"
+                                >
+                                    <X className="h-4 w-4 mr-2" />
+                                    Temizle
+                                </Button>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="overflow-hidden">
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>İkon</TableHead>
-                                    <TableHead>Kategori Adı</TableHead>
-                                    <TableHead>Slug</TableHead>
-                                    <TableHead>Açıklama</TableHead>
-                                    <TableHead>Kurs Sayısı</TableHead>
-                                    <TableHead>Durum</TableHead>
-                                    <TableHead className="text-right">İşlemler</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">İkon</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Kategori Adı</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Slug</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Açıklama</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Kurs Sayısı</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Durum</TableHead>
+                                    <TableHead className="text-right font-semibold text-foreground/80">İşlemler</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -190,15 +270,15 @@ export default function KategorilerPage() {
                                             Yükleniyor...
                                         </TableCell>
                                     </TableRow>
-                                ) : categories.length === 0 ? (
+                                ) : filteredCategories.length === 0 ? (
                                     <TableRow>
                                         <TableCell colSpan={7} className="text-center">
                                             Kategori bulunamadı
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                    categories.map((category) => (
-                                        <TableRow key={category._id}>
+                                    paginatedCategories.map((category) => (
+                                        <TableRow key={category._id} className="hover:bg-gray-50/50 transition-colors border-b border-gray-100 last:border-0">
                                             <TableCell>
                                                 <Tag className="h-5 w-5" />
                                             </TableCell>
@@ -252,6 +332,14 @@ export default function KategorilerPage() {
                             </TableBody>
                         </Table>
                     </div>
+
+                    {totalPages > 1 && (
+                        <SimplePagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                        />
+                    )}
                 </CardContent>
             </Card>
 
@@ -306,16 +394,6 @@ export default function KategorilerPage() {
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                     placeholder="Kategori açıklaması"
                                     rows={3}
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="courseCount">Kurs Sayısı</Label>
-                                <Input
-                                    id="courseCount"
-                                    type="number"
-                                    value={formData.courseCount}
-                                    onChange={(e) => setFormData({ ...formData, courseCount: parseInt(e.target.value) || 0 })}
-                                    min="0"
                                 />
                             </div>
                         </div>

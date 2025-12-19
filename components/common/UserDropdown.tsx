@@ -69,7 +69,7 @@ const UserDropdown = ({ onClose }: UserDropdownProps) => {
             </Link>
 
             <Link
-                href="/panelim/ayarlar"
+                href="/ayarlar"
                 onClick={onClose}
                 style={menuItemStyle}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}

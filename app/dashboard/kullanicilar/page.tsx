@@ -32,15 +32,28 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { SimplePagination } from "@/components/common/SimplePagination"
+
+const ITEMS_PER_PAGE = 10
 import { Input } from "@/components/ui/input"
-import { MoreHorizontal, Search, Shield, Trash2, UserCog } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { X, Filter, Search, MoreHorizontal, Shield, Trash2, UserCog } from "lucide-react"
 
 export default function KullanicilarPage() {
     const dispatch = useAppDispatch()
     const { allUsers, usersLoading, user: currentUser } = useAppSelector((state) => state.user)
 
     const [searchTerm, setSearchTerm] = useState("")
+    const [roleFilter, setRoleFilter] = useState<string>("all")
+    const [statusFilter, setStatusFilter] = useState<string>("all")
+    const [currentPage, setCurrentPage] = useState(1)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
 
@@ -72,11 +85,31 @@ export default function KullanicilarPage() {
         }
     }
 
-    const filteredUsers = allUsers?.filter((user: any) =>
-        user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.surname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email?.toLowerCase().includes(searchTerm.toLowerCase())
-    ) || []
+    const filteredUsers = allUsers?.filter((user: any) => {
+        const matchesSearch =
+            user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.surname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.username?.toLowerCase().includes(searchTerm.toLowerCase())
+
+        const matchesRole = roleFilter === "all" || user.role === roleFilter
+        const matchesStatus = statusFilter === "all" || (statusFilter === "active" ? user.status === "active" : user.status !== "active")
+
+        return matchesSearch && matchesRole && matchesStatus
+    }) || []
+
+    const totalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE)
+    const paginatedUsers = filteredUsers.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    )
+
+    const clearFilters = () => {
+        setSearchTerm("")
+        setRoleFilter("all")
+        setStatusFilter("all")
+        setCurrentPage(1)
+    }
 
     const getRoleBadge = (role: string) => {
         switch (role) {
@@ -112,7 +145,7 @@ export default function KullanicilarPage() {
                 </div>
             </div>
 
-            <Card>
+            <Card className="border-none shadow-none bg-transparent">
                 <CardHeader>
                     <CardTitle>Kullanıcılar</CardTitle>
                     <CardDescription>
@@ -120,28 +153,71 @@ export default function KullanicilarPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="mb-4">
-                        <div className="relative">
-                            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <div className="flex flex-col md:flex-row gap-4 mb-8">
+                        <div className="relative flex-1 group">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
                             <Input
-                                placeholder="Kullanıcı ara..."
+                                placeholder="İsim, kullanıcı adı veya email ile ara..."
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-8"
+                                onChange={(e) => {
+                                    setSearchTerm(e.target.value)
+                                    setCurrentPage(1)
+                                }}
+                                className="pl-9 h-11 bg-white border-gray-200 focus:ring-1 focus:ring-gray-200 transition-all shadow-sm rounded-xl"
                             />
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0">
+                            <div className="flex items-center gap-2 bg-white p-1 px-2 rounded-xl border border-gray-200 focus-within:ring-1 focus-within:ring-gray-200 transition-all shadow-sm">
+                                <Filter className="h-4 w-4 text-muted-foreground" />
+                                <Select value={roleFilter} onValueChange={(v) => { setRoleFilter(v); setCurrentPage(1); }}>
+                                    <SelectTrigger className="w-[110px] h-9 border-none bg-transparent shadow-none focus:ring-0">
+                                        <SelectValue placeholder="Rol" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="all">Tüm Roller</SelectItem>
+                                        <SelectItem value="admin">Admin</SelectItem>
+                                        <SelectItem value="moderator">Moderator</SelectItem>
+                                        <SelectItem value="user">Kullanıcı</SelectItem>
+                                    </SelectContent>
+                                </Select>
+
+                                <div className="w-[1px] h-4 bg-gray-300 mx-1" />
+
+                                <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setCurrentPage(1); }}>
+                                    <SelectTrigger className="w-[130px] h-9 border-none bg-transparent shadow-none focus:ring-0">
+                                        <SelectValue placeholder="Durum" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="all">Tüm Durumlar</SelectItem>
+                                        <SelectItem value="active">Aktif</SelectItem>
+                                        <SelectItem value="inactive">Pasif</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            {(searchTerm || roleFilter !== "all" || statusFilter !== "all") && (
+                                <Button
+                                    variant="ghost"
+                                    onClick={clearFilters}
+                                    className="h-11 px-4 text-muted-foreground hover:text-red-500 hover:bg-red-50/50 transition-all rounded-xl"
+                                >
+                                    <X className="h-4 w-4 mr-2" />
+                                    Filtreleri Temizle
+                                </Button>
+                            )}
                         </div>
                     </div>
 
-                    <div className="rounded-md border">
+                    <div className="overflow-hidden">
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Kullanıcı</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead>Rol</TableHead>
-                                    <TableHead>Durum</TableHead>
-                                    <TableHead>Kayıt Tarihi</TableHead>
-                                    <TableHead className="text-right">İşlemler</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Kullanıcı</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Email</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Rol</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Durum</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Kayıt Tarihi</TableHead>
+                                    <TableHead className="text-right font-semibold text-foreground/80">İşlemler</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -158,8 +234,8 @@ export default function KullanicilarPage() {
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                    filteredUsers.map((user: any) => (
-                                        <TableRow key={user._id}>
+                                    paginatedUsers.map((user: any) => (
+                                        <TableRow key={user._id} className="hover:bg-gray-50/50 transition-colors border-b border-gray-100 last:border-0">
                                             <TableCell className="font-medium">
                                                 <div className="flex items-center gap-2">
                                                     <div>
@@ -214,6 +290,14 @@ export default function KullanicilarPage() {
                             </TableBody>
                         </Table>
                     </div>
+
+                    {totalPages > 1 && (
+                        <SimplePagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                        />
+                    )}
                 </CardContent>
             </Card>
 

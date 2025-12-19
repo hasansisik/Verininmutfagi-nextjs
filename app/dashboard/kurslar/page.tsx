@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Plus, Pencil, Trash2, Search, X } from "lucide-react"
+import { Plus, Pencil, Trash2, Search, X, Filter } from "lucide-react"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -39,6 +39,9 @@ import {
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
+import { SimplePagination } from "@/components/common/SimplePagination"
+
+const ITEMS_PER_PAGE = 8
 
 export default function KurslarPage() {
     const dispatch = useAppDispatch()
@@ -51,6 +54,7 @@ export default function KurslarPage() {
     const [selectedLevel, setSelectedLevel] = useState<string>("all")
     const [selectedPriceType, setSelectedPriceType] = useState<string>("all")
     const [selectedStatus, setSelectedStatus] = useState<string>("all")
+    const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
         dispatch(getAllCourses({}))
@@ -86,12 +90,15 @@ export default function KurslarPage() {
         setSelectedLevel("all")
         setSelectedPriceType("all")
         setSelectedStatus("all")
+        setCurrentPage(1)
     }
 
     // Filter courses
-    const filteredCourses = courses.filter((course: any) => {
-        const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.desc?.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredCourses = (courses || []).filter((course: any) => {
+        const titleMatch = course.title?.toLowerCase().includes(searchTerm.toLowerCase())
+        const descMatch = course.desc?.toLowerCase().includes(searchTerm.toLowerCase())
+        const matchesSearch = titleMatch || descMatch
+
         const matchesCategory = selectedCategory === "all" || course.category?._id === selectedCategory
         const matchesLevel = selectedLevel === "all" || course.skill_level === selectedLevel
         const matchesPriceType = selectedPriceType === "all" || course.price_type === selectedPriceType
@@ -102,227 +109,219 @@ export default function KurslarPage() {
         return matchesSearch && matchesCategory && matchesLevel && matchesPriceType && matchesStatus
     })
 
+    const totalPages = Math.ceil(filteredCourses.length / ITEMS_PER_PAGE)
+    const paginatedCourses = filteredCourses.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    )
+
     const hasActiveFilters = selectedCategory !== "all" || selectedLevel !== "all" ||
-        selectedPriceType !== "all" || selectedStatus !== "all"
+        selectedPriceType !== "all" || selectedStatus !== "all" || searchTerm !== ""
 
     return (
         <div className="flex-1 space-y-6 p-8 pt-6">
-            {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Kurs Yönetimi</h2>
-                    <p className="text-muted-foreground">
-                        {filteredCourses.length} / {courses.length} kurs gösteriliyor
+                    <h2 className="text-3xl font-bold tracking-tight text-foreground">Kurs Yönetimi</h2>
+                    <p className="text-muted-foreground mt-1">
+                        Toplam {courses.length} kurstan {filteredCourses.length} tanesi gösteriliyor
                     </p>
                 </div>
-                <Button onClick={() => router.push("/dashboard/kurslar/yeni")}>
+                <Button
+                    onClick={() => router.push("/dashboard/kurslar/yeni")}
+                    className="bg-black text-white hover:bg-black/90 shadow-sm rounded-xl"
+                >
                     <Plus className="mr-2 h-4 w-4" />
-                    Yeni Kurs
+                    Yeni Kurs Oluştur
                 </Button>
             </div>
 
-            {/* Search */}
-            <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                    placeholder="Kurs adı veya açıklama ile ara..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                />
-            </div>
-
-            {/* Filters */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                    <Label>Kategori</Label>
-                    <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Tüm Kategoriler" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">Tüm Kategoriler</SelectItem>
-                            {categories.map((cat: any) => (
-                                <SelectItem key={cat._id} value={cat._id}>
-                                    {cat.icon} {cat.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+            <div className="space-y-4">
+                <div className="flex flex-col md:flex-row gap-4">
+                    <div className="relative flex-1 group">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
+                        <Input
+                            placeholder="Kurs adı veya açıklama ile ara..."
+                            value={searchTerm}
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value)
+                                setCurrentPage(1)
+                            }}
+                            className="pl-9 h-11 bg-white border-gray-200 focus:ring-1 focus:ring-gray-200 transition-all shadow-sm rounded-xl"
+                        />
+                    </div>
                 </div>
 
-                <div className="space-y-2">
-                    <Label>Seviye</Label>
-                    <Select value={selectedLevel} onValueChange={setSelectedLevel}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Tüm Seviyeler" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">Tüm Seviyeler</SelectItem>
-                            <SelectItem value="Başlangıç">Başlangıç</SelectItem>
-                            <SelectItem value="Orta">Orta</SelectItem>
-                            <SelectItem value="İleri">İleri</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex items-center gap-2 bg-white p-1 px-3 rounded-xl border border-gray-200 shadow-sm">
+                        <Filter className="h-4 w-4 text-muted-foreground" />
 
-                <div className="space-y-2">
-                    <Label>Fiyat Tipi</Label>
-                    <Select value={selectedPriceType} onValueChange={setSelectedPriceType}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Tüm Fiyatlar" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">Tüm Fiyatlar</SelectItem>
-                            <SelectItem value="Ücretsiz">Ücretsiz</SelectItem>
-                            <SelectItem value="Ücretli">Ücretli</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
+                        <Select value={selectedCategory} onValueChange={(v) => { setSelectedCategory(v); setCurrentPage(1); }}>
+                            <SelectTrigger className="w-[140px] h-9 border-none bg-transparent shadow-none focus:ring-0">
+                                <SelectValue placeholder="Kategori" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">Tüm Kategoriler</SelectItem>
+                                {categories.map((cat: any) => (
+                                    <SelectItem key={cat._id} value={cat._id}>{cat.name}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
 
-                <div className="space-y-2">
-                    <Label>Durum</Label>
-                    <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Tüm Durumlar" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">Tüm Durumlar</SelectItem>
-                            <SelectItem value="active">Aktif</SelectItem>
-                            <SelectItem value="inactive">Pasif</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
+                        <div className="w-[1px] h-4 bg-gray-300" />
 
-                {hasActiveFilters && (
-                    <div className="md:col-span-4 flex justify-end">
-                        <Button variant="ghost" size="sm" onClick={clearFilters}>
-                            <X className="mr-2 h-4 w-4" />
+                        <Select value={selectedLevel} onValueChange={(v) => { setSelectedLevel(v); setCurrentPage(1); }}>
+                            <SelectTrigger className="w-[110px] h-9 border-none bg-transparent shadow-none focus:ring-0">
+                                <SelectValue placeholder="Seviye" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">Tüm Seviyeler</SelectItem>
+                                <SelectItem value="Başlangıç">Başlangıç</SelectItem>
+                                <SelectItem value="Orta">Orta</SelectItem>
+                                <SelectItem value="İleri">İleri</SelectItem>
+                            </SelectContent>
+                        </Select>
+
+                        <div className="w-[1px] h-4 bg-gray-300" />
+
+                        <Select value={selectedPriceType} onValueChange={(v) => { setSelectedPriceType(v); setCurrentPage(1); }}>
+                            <SelectTrigger className="w-[110px] h-9 border-none bg-transparent shadow-none focus:ring-0">
+                                <SelectValue placeholder="Fiyat" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">Tüm Fiyatlar</SelectItem>
+                                <SelectItem value="Ücretsiz">Ücretsiz</SelectItem>
+                                <SelectItem value="Ücretli">Ücretli</SelectItem>
+                            </SelectContent>
+                        </Select>
+
+                        <div className="w-[1px] h-4 bg-gray-300" />
+
+                        <Select value={selectedStatus} onValueChange={(v) => { setSelectedStatus(v); setCurrentPage(1); }}>
+                            <SelectTrigger className="w-[110px] h-9 border-none bg-transparent shadow-none focus:ring-0">
+                                <SelectValue placeholder="Durum" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">Tüm Durumlar</SelectItem>
+                                <SelectItem value="active">Aktif</SelectItem>
+                                <SelectItem value="inactive">Pasif</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {hasActiveFilters && (
+                        <Button
+                            variant="ghost"
+                            onClick={clearFilters}
+                            className="h-11 px-4 text-muted-foreground hover:text-red-500 hover:bg-red-50/50 transition-all rounded-xl"
+                        >
+                            <X className="h-4 w-4 mr-2" />
                             Filtreleri Temizle
                         </Button>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
 
-            {/* Table */}
-            <div className="rounded-md border">
+            <div className="overflow-hidden bg-transparent">
                 <Table>
                     <TableHeader>
-                        <TableRow>
-                            <TableHead className="w-[80px]">Görsel</TableHead>
-                            <TableHead>Başlık</TableHead>
-                            <TableHead>Kategori</TableHead>
-                            <TableHead>Seviye</TableHead>
-                            <TableHead>Müfredat</TableHead>
-                            <TableHead>Fiyat</TableHead>
-                            <TableHead>Durum</TableHead>
-                            <TableHead className="text-right">İşlemler</TableHead>
+                        <TableRow className="hover:bg-transparent border-b border-gray-100">
+                            <TableHead className="w-[80px] font-semibold text-foreground/80">Görsel</TableHead>
+                            <TableHead className="font-semibold text-foreground/80 text-nowrap">Kurs Bilgisi</TableHead>
+                            <TableHead className="font-semibold text-foreground/80 text-nowrap">Kategori</TableHead>
+                            <TableHead className="font-semibold text-foreground/80 text-nowrap">Seviye</TableHead>
+                            <TableHead className="font-semibold text-foreground/80 text-nowrap">Fiyat</TableHead>
+                            <TableHead className="font-semibold text-foreground/80 text-nowrap">Durum</TableHead>
+                            <TableHead className="text-right font-semibold text-foreground/80 text-nowrap">İşlemler</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {loading ? (
                             <TableRow>
-                                <TableCell colSpan={8} className="text-center">
-                                    Yükleniyor...
+                                <TableCell colSpan={7} className="text-center py-20">
+                                    <div className="flex flex-col items-center gap-2">
+                                        <div className="h-8 w-8 animate-spin rounded-full border-2 border-black border-t-transparent" />
+                                        <span className="text-sm text-muted-foreground">Yükleniyor...</span>
+                                    </div>
                                 </TableCell>
                             </TableRow>
-                        ) : filteredCourses.length === 0 ? (
+                        ) : paginatedCourses.length === 0 ? (
                             <TableRow>
-                                <TableCell colSpan={8} className="text-center">
-                                    {searchTerm || hasActiveFilters ? "Filtrelere uygun kurs bulunamadı" : "Kurs bulunamadı"}
+                                <TableCell colSpan={7} className="text-center py-20">
+                                    <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                                        <Search className="h-10 w-10 opacity-20" />
+                                        <span>Filtrelere uygun kurs bulunamadı</span>
+                                    </div>
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            filteredCourses.map((course: any) => (
-                                <TableRow key={course._id}>
+                            paginatedCourses.map((course: any) => (
+                                <TableRow key={course._id} className="hover:bg-gray-50/50 transition-all border-b border-gray-100 last:border-0 group">
                                     <TableCell>
-                                        <div className="relative w-16 h-16 rounded-md overflow-hidden bg-muted">
+                                        <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
                                             {course.thumb ? (
-                                                <Image
-                                                    src={course.thumb}
-                                                    alt={course.title}
-                                                    fill
-                                                    className="object-cover"
-                                                />
+                                                <Image src={course.thumb} alt={course.title} fill className="object-cover transition-transform group-hover:scale-110" />
                                             ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
-                                                    Görsel Yok
-                                                </div>
+                                                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-[10px] text-center p-1">Görsel Yok</div>
                                             )}
                                         </div>
                                     </TableCell>
-                                    <TableCell className="font-medium max-w-[300px]">
-                                        <div className="truncate">{course.title}</div>
-                                        {course.desc && (
-                                            <div className="text-xs text-muted-foreground truncate mt-1">
-                                                {course.desc}
-                                            </div>
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {course.category?.icon && (
-                                            <span className="mr-1">{course.category.icon}</span>
-                                        )}
-                                        {course.category?.name || "N/A"}
-                                    </TableCell>
-                                    <TableCell>
-                                        <Badge variant="secondary">{course.skill_level}</Badge>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Badge variant="outline">
-                                            {course.curriculum?.length || 0} Bölüm
-                                        </Badge>
-                                    </TableCell>
-                                    <TableCell>
-                                        {course.price_type === "Ücretsiz" ? (
-                                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                                                Ücretsiz
-                                            </Badge>
-                                        ) : (
-                                            <span className="font-medium">₺{course.price}</span>
-                                        )}
+                                    <TableCell className="max-w-[350px]">
+                                        <div className="font-semibold text-foreground line-clamp-1">{course.title}</div>
+                                        <div className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{course.curriculum?.length || 0} Bölüm • {course.totalLessons || 0} Ders</div>
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex items-center gap-2">
+                                            {course.category?.icon && <span className="text-sm">{course.category.icon}</span>}
+                                            <span className="text-sm">{course.category?.name || "Belirlenmedi"}</span>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Badge variant="secondary" className="bg-blue-50 text-blue-700 border-blue-100 rounded-lg font-medium">{course.skill_level}</Badge>
+                                    </TableCell>
+                                    <TableCell>
+                                        {course.price_type === "Ücretsiz" ? (
+                                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 rounded-lg">Ücretsiz</Badge>
+                                        ) : (
+                                            <span className="font-semibold text-foreground">₺{course.price}</span>
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className="flex items-center gap-3">
                                             <Switch
                                                 checked={course.isActive}
                                                 onCheckedChange={() => handleStatusToggle(course)}
+                                                className="data-[state=checked]:bg-green-500 scale-90"
                                             />
-                                            <span className="text-xs text-muted-foreground">
-                                                {course.isActive ? "Aktif" : "Pasif"}
+                                            <span className={`text-[11px] font-medium ${course.isActive ? 'text-green-600' : 'text-gray-400'}`}>
+                                                {course.isActive ? "AKTİF" : "PASİF"}
                                             </span>
                                         </div>
                                     </TableCell>
                                     <TableCell className="text-right">
-                                        <div className="flex justify-end gap-2">
+                                        <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <Button
                                                 variant="ghost"
                                                 size="sm"
                                                 onClick={() => router.push(`/dashboard/kurslar/yeni?id=${course._id}`)}
+                                                className="h-9 w-9 p-0 rounded-xl hover:bg-white hover:shadow-sm"
                                             >
                                                 <Pencil className="h-4 w-4" />
                                             </Button>
                                             <AlertDialog>
                                                 <AlertDialogTrigger asChild>
-                                                    <Button variant="ghost" size="sm">
-                                                        <Trash2 className="h-4 w-4 text-red-600" />
+                                                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0 rounded-xl hover:bg-red-50 hover:text-red-500">
+                                                        <Trash2 className="h-4 w-4" />
                                                     </Button>
                                                 </AlertDialogTrigger>
-                                                <AlertDialogContent>
+                                                <AlertDialogContent className="rounded-2xl border-none shadow-2xl">
                                                     <AlertDialogHeader>
                                                         <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
-                                                        <AlertDialogDescription>
-                                                            Bu kurs kalıcı olarak silinecektir. Bu işlem geri alınamaz.
-                                                        </AlertDialogDescription>
+                                                        <AlertDialogDescription>Bu kurs kalıcı olarak silinecektir. Bu işlem geri alınamaz.</AlertDialogDescription>
                                                     </AlertDialogHeader>
                                                     <AlertDialogFooter>
-                                                        <AlertDialogCancel>İptal</AlertDialogCancel>
-                                                        <AlertDialogAction
-                                                            onClick={() => handleDelete(course._id)}
-                                                            className="bg-red-600 hover:bg-red-700"
-                                                        >
-                                                            Sil
-                                                        </AlertDialogAction>
+                                                        <AlertDialogCancel className="rounded-xl">İptal</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => handleDelete(course._id)} className="bg-red-600 hover:bg-red-700 rounded-xl">Sil</AlertDialogAction>
                                                     </AlertDialogFooter>
                                                 </AlertDialogContent>
                                             </AlertDialog>
@@ -334,6 +333,14 @@ export default function KurslarPage() {
                     </TableBody>
                 </Table>
             </div>
+
+            {totalPages > 1 && (
+                <SimplePagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+            )}
         </div>
     )
 }

@@ -13,25 +13,55 @@ import {
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Search, CreditCard, Calendar, User, Hash } from "lucide-react"
+import { Search, CreditCard, Calendar, User, Hash, X, Filter } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { Button } from "@/components/ui/button"
+import { SimplePagination } from "@/components/common/SimplePagination"
+
+const ITEMS_PER_PAGE = 10
 
 export default function OdemelerPage() {
     const dispatch = useAppDispatch()
     const { allOrders, loading } = useAppSelector((state) => state.paymentManagement)
 
     const [searchTerm, setSearchTerm] = useState("")
+    const [statusFilter, setStatusFilter] = useState<string>("all")
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const clearFilters = () => {
+        setSearchTerm("")
+        setStatusFilter("all")
+        setCurrentPage(1)
+    }
 
     useEffect(() => {
         dispatch(getAllOrders())
     }, [dispatch])
 
-    const filteredOrders = allOrders?.filter((order: any) =>
-        order.user?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.user?.surname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.user?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.orderNumber?.toLowerCase().includes(searchTerm.toLowerCase())
-    ) || []
+    const filteredOrders = allOrders?.filter((order: any) => {
+        const matchesSearch =
+            order.user?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            order.user?.surname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            order.user?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            order.orderNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+
+        const matchesStatus = statusFilter === "all" || order.status === statusFilter
+
+        return matchesSearch && matchesStatus
+    }) || []
+
+    const totalPages = Math.ceil(filteredOrders.length / ITEMS_PER_PAGE)
+    const paginatedOrders = filteredOrders.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    )
 
     const getStatusBadge = (status: string) => {
         switch (status) {
@@ -57,7 +87,7 @@ export default function OdemelerPage() {
                 </div>
             </div>
 
-            <Card>
+            <Card className="border-none shadow-none bg-transparent">
                 <CardHeader>
                     <CardTitle>Ödemeler</CardTitle>
                     <CardDescription>
@@ -65,28 +95,58 @@ export default function OdemelerPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="mb-4">
-                        <div className="relative">
-                            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <div className="flex flex-col md:flex-row gap-4 mb-8">
+                        <div className="relative flex-1 group">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
                             <Input
                                 placeholder="Müşteri adı, e-posta veya sipariş no ile ara..."
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-8"
+                                onChange={(e) => {
+                                    setSearchTerm(e.target.value)
+                                    setCurrentPage(1)
+                                }}
+                                className="pl-9 h-11 bg-white border-gray-200 focus:ring-1 focus:ring-gray-200 transition-all shadow-sm rounded-xl"
                             />
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0">
+                            <div className="flex items-center gap-2 bg-white p-1 px-3 rounded-xl border border-gray-200 focus-within:ring-1 focus-within:ring-gray-200 transition-all shadow-sm">
+                                <Filter className="h-4 w-4 text-muted-foreground" />
+                                <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setCurrentPage(1); }}>
+                                    <SelectTrigger className="w-[140px] h-9 border-none bg-transparent shadow-none focus:ring-0">
+                                        <SelectValue placeholder="Durum Seç" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="all">Tüm Durumlar</SelectItem>
+                                        <SelectItem value="completed">Tamamlandı</SelectItem>
+                                        <SelectItem value="pending">Beklemede</SelectItem>
+                                        <SelectItem value="cancelled">İptal Edildi</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            {(searchTerm || statusFilter !== "all") && (
+                                <Button
+                                    variant="ghost"
+                                    onClick={clearFilters}
+                                    className="h-11 px-4 text-muted-foreground hover:text-red-500 hover:bg-red-50/50 transition-all rounded-xl"
+                                >
+                                    <X className="h-4 w-4 mr-2" />
+                                    Temizle
+                                </Button>
+                            )}
                         </div>
                     </div>
 
-                    <div className="rounded-md border">
+                    <div className="overflow-hidden">
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead><Hash className="inline h-4 w-4 mr-1" /> Sipariş No</TableHead>
-                                    <TableHead><User className="inline h-4 w-4 mr-1" /> Müşteri</TableHead>
-                                    <TableHead><CreditCard className="inline h-4 w-4 mr-1" /> Tutar</TableHead>
-                                    <TableHead>Durum</TableHead>
-                                    <TableHead><Calendar className="inline h-4 w-4 mr-1" /> Tarih</TableHead>
-                                    <TableHead>Kurslar</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80"><Hash className="inline h-4 w-4 mr-1 text-muted-foreground" /> Sipariş No</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80"><User className="inline h-4 w-4 mr-1 text-muted-foreground" /> Müşteri</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80"><CreditCard className="inline h-4 w-4 mr-1 text-muted-foreground" /> Tutar</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Durum</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80"><Calendar className="inline h-4 w-4 mr-1 text-muted-foreground" /> Tarih</TableHead>
+                                    <TableHead className="font-semibold text-foreground/80">Kurslar</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -103,8 +163,8 @@ export default function OdemelerPage() {
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                    filteredOrders.map((order: any) => (
-                                        <TableRow key={order._id}>
+                                    paginatedOrders.map((order: any) => (
+                                        <TableRow key={order._id} className="hover:bg-gray-50/50 transition-colors border-b border-gray-100 last:border-0">
                                             <TableCell className="font-mono text-sm">{order.orderNumber}</TableCell>
                                             <TableCell>
                                                 <div className="flex flex-col">
@@ -113,7 +173,7 @@ export default function OdemelerPage() {
                                                 </div>
                                             </TableCell>
                                             <TableCell className="font-semibold text-black">
-                                                ₺{order.totalAmount.toFixed(2)}
+                                                {new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(order.totalAmount)}
                                             </TableCell>
                                             <TableCell>{getStatusBadge(order.status)}</TableCell>
                                             <TableCell className="text-sm">
@@ -134,6 +194,14 @@ export default function OdemelerPage() {
                             </TableBody>
                         </Table>
                     </div>
+
+                    {totalPages > 1 && (
+                        <SimplePagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                        />
+                    )}
                 </CardContent>
             </Card>
         </div>
