@@ -40,6 +40,37 @@ const Sidebar = ({ single_course }: any) => {
       }
    };
 
+   // Müfredat üzerinden toplam ders ve süre hesaplama
+   const allLessons = single_course?.curriculum?.reduce((acc: any[], section: any) => {
+      return [...acc, ...(section.lessons || [])];
+   }, []) || [];
+
+   const calculatedTotalLessons = allLessons.length;
+
+   const totalSeconds = allLessons.reduce((acc: number, lesson: any) => {
+      if (!lesson.duration) return acc;
+      const parts = lesson.duration.split(':').map(Number);
+      let seconds = 0;
+      if (parts.length === 2) { // mm:ss
+         seconds = (parts[0] || 0) * 60 + (parts[1] || 0);
+      } else if (parts.length === 3) { // hh:mm:ss
+         seconds = (parts[0] || 0) * 3600 + (parts[1] || 0) * 60 + (parts[2] || 0);
+      }
+      return acc + seconds;
+   }, 0);
+
+   const formatDuration = (seconds: number) => {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+
+      if (h > 0) return `${h} Saat ${m} Dakika`;
+      if (m > 0) return `${m} Dakika`;
+      return "0 Dakika";
+   };
+
+   const displayDuration = totalSeconds > 0 ? formatDuration(totalSeconds) : (single_course.duration || "Belli değil");
+   const displayTotalLessons = calculatedTotalLessons > 0 ? calculatedTotalLessons : (single_course.totalLessons || 0);
+
    return (
       <>
          <div className="col-xl-3 col-lg-4">
@@ -75,12 +106,12 @@ const Sidebar = ({ single_course }: any) => {
                      <li>
                         <InjectableSvg src="/assets/img/icons/course_icon02.svg" alt="img" className="injectable" />
                         Süre
-                        <span>{single_course.duration}</span>
+                        <span>{displayDuration}</span>
                      </li>
                      <li>
                         <InjectableSvg src="/assets/img/icons/course_icon03.svg" alt="img" className="injectable" />
                         Dersler
-                        <span>{single_course.totalLessons}</span>
+                        <span>{displayTotalLessons}</span>
                      </li>
                   </ul>
                </div>

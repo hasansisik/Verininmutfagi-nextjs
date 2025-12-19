@@ -46,7 +46,6 @@ const CourseDetailsArea = ({ single_course }: any) => {
                     Yazar: <Link href="#">{single_course.instructors || 'Eğitmen'}</Link>
                   </li>
                   <li className="date"><i className="flaticon-calendar"></i>{single_course.publishDate ? new Date(single_course.publishDate).toLocaleDateString('tr-TR') : new Date().toLocaleDateString('tr-TR')}</li>
-                  <li><i className="flaticon-mortarboard"></i>{single_course.totalStudents?.toLocaleString('tr-TR') || '0'} Öğrenci</li>
                 </ul>
               </div>
               <ul className="nav nav-tabs" id="myTab" role="tablist">

@@ -83,7 +83,6 @@ const DashboardCourse = () => {
                            <ul className="list-wrap">
                               <li><i className="flaticon-book"></i>{course.curriculum?.length || 0} Ders</li>
                               <li><i className="flaticon-clock"></i>{course.duration || '0h'}</li>
-                              <li><i className="flaticon-mortarboard"></i>{course.totalStudents || 0} Öğrenci</li>
                            </ul>
                         </div>
                      </div>
