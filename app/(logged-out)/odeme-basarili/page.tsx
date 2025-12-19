@@ -7,8 +7,7 @@ import BreadcrumbOne from "@/components/common/breadcrumb/BreadcrumbOne";
 import { useAppDispatch } from "@/redux/hook";
 import { order_clear_cart } from "@/redux/features/cartSlice";
 import { useSearchParams } from 'next/navigation';
-import axios from 'axios';
-import { server } from "@/config";
+import { verifyOrder } from "@/redux/actions/paymentActions";
 import { loadUser } from "@/redux/actions/userActions";
 
 const SuccessPage = () => {
@@ -23,11 +22,7 @@ const SuccessPage = () => {
         const verifyPayment = async () => {
             if (merchant_oid) {
                 try {
-                    const token = localStorage.getItem("accessToken");
-                    await axios.post(`${server}/payment/verify-order`,
-                        { merchant_oid },
-                        { headers: { Authorization: `Bearer ${token}` } }
-                    );
+                    await dispatch(verifyOrder(merchant_oid)).unwrap();
                     // Kullanıcı bilgilerini yenileyerek yeni kursları yükleyelim
                     dispatch(loadUser());
                 } catch (error) {

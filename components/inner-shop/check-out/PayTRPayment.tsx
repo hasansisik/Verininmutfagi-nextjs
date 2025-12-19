@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import Script from 'next/script';
 import { useSelector } from "react-redux";
 import UseCartInfo from "@/hooks/UseCartInfo";
-import axios from 'axios';
+import { useAppDispatch } from "@/redux/hook";
+import { getPaymentToken } from "@/redux/actions/paymentActions";
 import { toast } from 'react-toastify';
-import { server } from "@/config";
 
 declare global {
     interface Window {
@@ -14,6 +14,7 @@ declare global {
 }
 
 const PayTRPayment = () => {
+    const dispatch = useAppDispatch();
     const [token, setToken] = useState<string | null>(null);
     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -74,23 +75,14 @@ const PayTRPayment = () => {
                     return;
                 }
 
-                const response = await axios.post(
-                    `${server}/payment/get-token`,
-                    paymentData,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`
-                        }
-                    }
-                );
+                const response = await dispatch(getPaymentToken(paymentData)).unwrap();
 
-                if (response.data.token) {
-                    setToken(response.data.token);
+                if (response.token) {
+                    setToken(response.token);
                 }
             } catch (error: any) {
-                const errorMsg = error.response?.data?.msg || error.message;
-                console.error("PayTR Token Hatası Detayı:", error.response?.data || error.message);
-                toast.error(`Ödeme formu hatası: ${errorMsg}`);
+                console.error("PayTR Token Hatası Detayı:", error);
+                toast.error(`Ödeme formu hatası: ${error}`);
             } finally {
                 setLoading(false);
             }
@@ -101,7 +93,7 @@ const PayTRPayment = () => {
         } else {
             setLoading(false);
         }
-    }, [productItem, total, user]);
+    }, [productItem, total, user, dispatch]);
 
     useEffect(() => {
         if (isScriptLoaded && token && window.iFrameResize) {

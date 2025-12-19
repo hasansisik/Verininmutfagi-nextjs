@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { server } from "@/config";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getAllCategories } from "@/redux/actions/categoryActions";
 
 const CourseSidebar = ({ allCourses, setCourses }: any) => {
-   const [categories, setCategories] = useState<any[]>([]);
+   const dispatch = useAppDispatch();
+   const { categories } = useAppSelector((state) => state.categoryManagement);
    const [showMoreCategory, setShowMoreCategory] = useState(false);
 
    const [categorySelected, setCategorySelected] = useState('');
@@ -15,19 +16,8 @@ const CourseSidebar = ({ allCourses, setCourses }: any) => {
    const priceTypes = ['Ücretsiz'];
 
    useEffect(() => {
-      fetchCategories();
-   }, []);
-
-   const fetchCategories = async () => {
-      try {
-         const response = await axios.get(`${server}/categories`);
-         if (response.data.success) {
-            setCategories(response.data.categories);
-         }
-      } catch (error) {
-         console.error("Kategoriler yüklenirken hata:", error);
-      }
-   };
+      dispatch(getAllCategories({}));
+   }, [dispatch]);
 
    // Logic to handle all filters
    const applyFilters = (filters: any) => {

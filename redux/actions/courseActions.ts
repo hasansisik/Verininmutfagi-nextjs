@@ -94,6 +94,28 @@ export const deleteCourse = createAsyncThunk(
     }
 );
 
+// Upload image
+export const uploadImage = createAsyncThunk(
+    "courses/uploadImage",
+    async (imageFile: File, thunkAPI) => {
+        try {
+            const token = localStorage.getItem("accessToken");
+            const formData = new FormData();
+            formData.append("image", imageFile);
+
+            const { data } = await axios.post(`${server}/courses/upload-image`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            return data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+        }
+    }
+);
+
 // Upload video
 export const uploadVideo = createAsyncThunk(
     "courses/uploadVideo",
@@ -120,3 +142,23 @@ export const uploadVideo = createAsyncThunk(
 export const clearError = createAsyncThunk("courses/clearError", async () => {
     return null;
 });
+
+// Rate course
+export const rateCourse = createAsyncThunk(
+    "courses/rate",
+    async ({ courseId, rating }: { courseId: string; rating: number }, thunkAPI) => {
+        try {
+            const token = localStorage.getItem("accessToken");
+            const { data } = await axios.post(
+                `${server}/courses/rate/${courseId}`,
+                { rating },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            return data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+        }
+    }
+);

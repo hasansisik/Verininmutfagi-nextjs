@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getAllMenuItems } from "@/redux/actions/menuActions";
 
 interface SubMenu {
    title: string;
@@ -19,26 +20,13 @@ interface MenuItem {
 }
 
 const NavMenu = () => {
-   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-   const [loading, setLoading] = useState(true);
+   const dispatch = useAppDispatch();
+   const { menuItems, loading } = useAppSelector((state) => state.menuManagement);
    const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
    useEffect(() => {
-      fetchMenuItems();
-   }, []);
-
-   const fetchMenuItems = async () => {
-      try {
-         const response = await axios.get("http://localhost:3040/v1/menu?isActive=true");
-         if (response.data.success) {
-            setMenuItems(response.data.menuItems);
-         }
-      } catch (error) {
-         console.error("Menü yüklenirken hata:", error);
-      } finally {
-         setLoading(false);
-      }
-   };
+      dispatch(getAllMenuItems());
+   }, [dispatch]);
 
    const toggleMenu = (menuId: string) => {
       setOpenMenuId(openMenuId === menuId ? null : menuId);
@@ -48,9 +36,12 @@ const NavMenu = () => {
       return <ul className="navigation"></ul>;
    }
 
+   // Sadece aktif menüleri filtrele
+   const activeMenuItems = menuItems.filter((menu: MenuItem) => menu.isActive);
+
    return (
       <ul className="navigation">
-         {menuItems.map((menu) => {
+         {activeMenuItems.map((menu: MenuItem) => {
             const hasChildren = menu.hasDropdown && menu.subMenus && menu.subMenus.length > 0;
             const isOpen = openMenuId === menu._id;
 

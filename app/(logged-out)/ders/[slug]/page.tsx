@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams, notFound } from "next/navigation";
-import axios from "axios";
-import { server } from "@/config";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getCourseBySlug } from "@/redux/actions/courseActions";
 
 import Lesson from "@/components/courses/lesson";
 import Wrapper from "@/layouts/Wrapper";
@@ -11,33 +11,23 @@ import Wrapper from "@/layouts/Wrapper";
 export default function Page() {
     const params = useParams();
     const slug = params.slug as string;
+    const dispatch = useAppDispatch();
 
-    const [course, setCourse] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+    const { course, loading } = useAppSelector((state) => state.courseManagement);
     const [notFoundFlag, setNotFoundFlag] = useState(false);
 
     useEffect(() => {
-        fetchCourse();
-    }, [slug]);
-
-    const fetchCourse = async () => {
-        try {
-            const response = await axios.get(`${server}/courses`);
-            if (response.data.success) {
-                const foundCourse = response.data.courses.find((item: any) => item.slug === slug);
-                if (foundCourse) {
-                    setCourse(foundCourse);
-                } else {
-                    setNotFoundFlag(true);
-                }
+        const fetchCourse = async () => {
+            try {
+                await dispatch(getCourseBySlug(slug)).unwrap();
+            } catch (error) {
+                console.error("Kurs yüklenirken hata:", error);
+                setNotFoundFlag(true);
             }
-        } catch (error) {
-            console.error("Kurs yüklenirken hata:", error);
-            setNotFoundFlag(true);
-        } finally {
-            setLoading(false);
-        }
-    };
+        };
+
+        fetchCourse();
+    }, [slug, dispatch]);
 
     if (loading) {
         return (
@@ -57,5 +47,5 @@ export default function Page() {
         <Wrapper>
             <Lesson course={course} />
         </Wrapper>
-    )
+    );
 }

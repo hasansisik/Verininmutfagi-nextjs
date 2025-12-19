@@ -1,9 +1,8 @@
 "use client"
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
-import { server } from '@/config';
 import { useAppDispatch } from '@/redux/hook';
+import { rateCourse } from '@/redux/actions/courseActions';
 import { loadUser } from '@/redux/actions/userActions';
 
 interface RatingModalProps {
@@ -29,16 +28,12 @@ const RatingModal = ({ isOpen, onClose, courseId, courseTitle }: RatingModalProp
 
         setIsSubmitting(true);
         try {
-            const token = localStorage.getItem("accessToken");
-            await axios.post(`${server}/courses/rate/${courseId}`,
-                { rating },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            await dispatch(rateCourse({ courseId, rating })).unwrap();
             toast.success("Değerlendirmeniz için teşekkürler!");
             dispatch(loadUser());
             onClose();
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Değerlendirme gönderilemedi");
+            toast.error(error || "Değerlendirme gönderilemedi");
         } finally {
             setIsSubmitting(false);
         }

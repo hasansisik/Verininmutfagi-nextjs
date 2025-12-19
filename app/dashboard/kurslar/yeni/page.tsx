@@ -2,10 +2,9 @@
 
 import { useEffect, useState, useCallback } from "react"
 import { useAppDispatch } from "@/redux/hook"
-import { createCourse, updateCourse, getCourse } from "@/redux/actions/courseActions"
+import { createCourse, updateCourse, getCourse, uploadImage, uploadVideo } from "@/redux/actions/courseActions"
 import { toast } from "react-toastify"
 import { useRouter, useSearchParams } from "next/navigation"
-import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -138,22 +137,8 @@ export default function KursFormPage() {
 
         setUploadingImage(true)
         try {
-            const formDataUpload = new FormData()
-            formDataUpload.append("image", file)
-
-            const token = localStorage.getItem("accessToken")
-            const response = await axios.post(
-                "http://localhost:3040/v1/courses/upload-image",
-                formDataUpload,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            )
-
-            setFormData({ ...formData, thumb: response.data.imageUrl })
+            const result = await dispatch(uploadImage(file)).unwrap()
+            setFormData({ ...formData, thumb: result.imageUrl })
             toast.success("Görsel yüklendi")
         } catch (error) {
             toast.error("Görsel yüklenemedi")
@@ -172,27 +157,14 @@ export default function KursFormPage() {
 
         setUploadingVideo(true)
         try {
-            const formDataUpload = new FormData()
-            formDataUpload.append("video", file)
-
-            const token = localStorage.getItem("accessToken")
-            const response = await axios.post(
-                "http://localhost:3040/v1/courses/upload-video",
-                formDataUpload,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            )
+            const result = await dispatch(uploadVideo(file)).unwrap()
 
             if (sectionIndex !== undefined && lessonIndex !== undefined) {
                 const newCurriculum = [...formData.curriculum]
-                newCurriculum[sectionIndex].lessons[lessonIndex].videoUrl = response.data.videoUrl
+                newCurriculum[sectionIndex].lessons[lessonIndex].videoUrl = result.videoUrl
                 setFormData({ ...formData, curriculum: newCurriculum })
             } else {
-                setFormData({ ...formData, videoId: response.data.videoUrl })
+                setFormData({ ...formData, videoId: result.videoUrl })
             }
 
             toast.success("Video yüklendi")

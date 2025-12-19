@@ -15,7 +15,6 @@ const FooterOne = ({ style, style_2 }: StyleType) => {
 
                </div>
             </div>
-            {style_2 && <div className="footer__shape" style={{ backgroundImage: `url(/assets/img/others/h8_footer_shape.svg)` }}></div>}
          </div>
 
          <div className={`footer__bottom ${style_2 ? "footer__bottom-four" : ""}`} style={{ background: 'transparent', backgroundColor: 'transparent' }}>
@@ -23,7 +22,7 @@ const FooterOne = ({ style, style_2 }: StyleType) => {
                <div className="row align-items-center">
                   <div className="col-md-12">
                      <div className="copy-right-text text-center">
-                        <p className="text-center">© 2010-2024 Verinin Mutfağı. Tüm hakları saklıdır.</p>
+                        <p className="text-center">© 2025 Verinin Mutfağı. Tüm hakları saklıdır.</p>
                      </div>
                   </div>
                </div>

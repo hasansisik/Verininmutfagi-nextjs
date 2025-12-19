@@ -4,8 +4,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
-import { server } from "@/config";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getAllCourses } from "@/redux/actions/courseActions";
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/features/cartSlice';
 import { toast } from 'react-toastify';
@@ -54,27 +54,14 @@ interface StyleType {
 }
 
 const CourseArea = ({ style }: StyleType) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const cartDispatch = useDispatch();
+  const { courses, loading } = useAppSelector((state) => state.courseManagement);
   const [activeTab, setActiveTab] = useState(0);
-  const [courses, setCourses] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchCourses();
-  }, []);
-
-  const fetchCourses = async () => {
-    try {
-      const response = await axios.get(`${server}/courses`);
-      if (response.data.success) {
-        setCourses(response.data.courses);
-      }
-    } catch (error) {
-      console.error("Kurslar yüklenirken hata:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    dispatch(getAllCourses({}));
+  }, [dispatch]);
 
   const handleTabClick = (index: number) => {
     setActiveTab(index);
@@ -88,7 +75,7 @@ const CourseArea = ({ style }: StyleType) => {
       img: course.thumb || '/assets/img/courses/course_thumb01.jpg',
       quantity: 1,
     };
-    dispatch(addToCart(cartItem));
+    cartDispatch(addToCart(cartItem));
     toast.success(`${course.title} sepete eklendi!`, { position: 'top-right' });
   };
 

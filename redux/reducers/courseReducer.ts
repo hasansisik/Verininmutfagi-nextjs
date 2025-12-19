@@ -16,6 +16,12 @@ interface Course {
     title: string;
     category: any;
     price: number;
+    price_type?: string;
+    thumb?: string;
+    rating?: number;
+    ratingCount?: number;
+    instructors?: string;
+    skill_level?: string;
     // ... other fields
 }
 

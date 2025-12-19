@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams, notFound } from "next/navigation";
-import axios from "axios";
-import { server } from "@/config";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { getCourseBySlug } from "@/redux/actions/courseActions";
 
 import BreadcrumbOne from "@/components/common/breadcrumb/BreadcrumbOne";
 import CourseDetailsArea from "@/components/courses/course-details/CourseDetailsArea";
@@ -14,33 +14,28 @@ import Wrapper from "@/layouts/Wrapper";
 export default function Page() {
    const params = useParams();
    const courseSlug = Array.isArray(params.id) ? params.id[0] : params.id;
+   const dispatch = useAppDispatch();
 
-   const [course, setCourse] = useState<any>(null);
-   const [loading, setLoading] = useState(true);
+   const { course, loading } = useAppSelector((state) => state.courseManagement);
    const [notFoundFlag, setNotFoundFlag] = useState(false);
 
    useEffect(() => {
-      fetchCourse();
-   }, [courseSlug]);
-
-   const fetchCourse = async () => {
-      try {
-         const response = await axios.get(`${server}/courses`);
-         if (response.data.success) {
-            const foundCourse = response.data.courses.find((item: any) => item.slug === courseSlug);
-            if (foundCourse) {
-               setCourse(foundCourse);
-            } else {
-               setNotFoundFlag(true);
-            }
+      const fetchCourse = async () => {
+         if (!courseSlug) {
+            setNotFoundFlag(true);
+            return;
          }
-      } catch (error) {
-         console.error("Kurs yüklenirken hata:", error);
-         setNotFoundFlag(true);
-      } finally {
-         setLoading(false);
-      }
-   };
+
+         try {
+            await dispatch(getCourseBySlug(courseSlug)).unwrap();
+         } catch (error) {
+            console.error("Kurs yüklenirken hata:", error);
+            setNotFoundFlag(true);
+         }
+      };
+
+      fetchCourse();
+   }, [courseSlug, dispatch]);
 
    if (loading) {
       return (
@@ -64,9 +59,10 @@ export default function Page() {
       <Wrapper>
          <HeaderOne />
          <main className="main-area fix">
-            <CourseDetailsArea single_course={course} />
+            <BreadcrumbOne title={course.title} sub_title="Kurs Detayları" />
+            <CourseDetailsArea course={course} />
          </main>
          <FooterOne />
       </Wrapper>
-   )
+   );
 }

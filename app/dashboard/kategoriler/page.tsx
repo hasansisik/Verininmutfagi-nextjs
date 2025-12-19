@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import axios from "axios"
+import { useAppDispatch, useAppSelector } from "@/redux/hook"
+import {
+    getAllCategories,
+    createCategory,
+    updateCategory,
+    deleteCategory
+} from "@/redux/actions/categoryActions"
 import {
     Table,
     TableBody,
@@ -50,8 +56,9 @@ interface Category {
 }
 
 export default function KategorilerPage() {
-    const [categories, setCategories] = useState<Category[]>([])
-    const [loading, setLoading] = useState(true)
+    const dispatch = useAppDispatch()
+    const { categories, loading } = useAppSelector((state) => state.categoryManagement)
+
     const [dialogOpen, setDialogOpen] = useState(false)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
@@ -64,21 +71,8 @@ export default function KategorilerPage() {
     })
 
     useEffect(() => {
-        fetchCategories()
-    }, [])
-
-    const fetchCategories = async () => {
-        try {
-            const response = await axios.get("http://localhost:3040/v1/categories")
-            if (response.data.success) {
-                setCategories(response.data.categories)
-            }
-        } catch (error) {
-            toast.error("Kategoriler yüklenirken hata oluştu")
-        } finally {
-            setLoading(false)
-        }
-    }
+        dispatch(getAllCategories({}))
+    }, [dispatch])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -89,35 +83,24 @@ export default function KategorilerPage() {
         }
 
         try {
-            const token = localStorage.getItem("accessToken")
-
             if (selectedCategory) {
                 // Update
-                await axios.patch(
-                    `http://localhost:3040/v1/categories/${selectedCategory._id}`,
-                    formData,
-                    {
-                        headers: { Authorization: `Bearer ${token}` }
-                    }
-                )
+                await dispatch(updateCategory({
+                    id: selectedCategory._id,
+                    categoryData: formData
+                })).unwrap()
                 toast.success("Kategori güncellendi")
             } else {
                 // Create
-                await axios.post(
-                    "http://localhost:3040/v1/categories",
-                    formData,
-                    {
-                        headers: { Authorization: `Bearer ${token}` }
-                    }
-                )
+                await dispatch(createCategory(formData)).unwrap()
                 toast.success("Kategori oluşturuldu")
             }
 
             setDialogOpen(false)
             resetForm()
-            fetchCategories()
+            dispatch(getAllCategories({}))
         } catch (error: any) {
-            toast.error(error.response?.data?.msg || "İşlem başarısız")
+            toast.error(error || "İşlem başarısız")
         }
     }
 
@@ -125,19 +108,13 @@ export default function KategorilerPage() {
         if (!selectedCategory) return
 
         try {
-            const token = localStorage.getItem("accessToken")
-            await axios.delete(
-                `http://localhost:3040/v1/categories/${selectedCategory._id}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` }
-                }
-            )
+            await dispatch(deleteCategory(selectedCategory._id)).unwrap()
             toast.success("Kategori silindi")
             setDeleteDialogOpen(false)
             setSelectedCategory(null)
-            fetchCategories()
+            dispatch(getAllCategories({}))
         } catch (error: any) {
-            toast.error(error.response?.data?.msg || "Silme işlemi başarısız")
+            toast.error(error || "Silme işlemi başarısız")
         }
     }
 
