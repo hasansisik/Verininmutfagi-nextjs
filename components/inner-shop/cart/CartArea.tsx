@@ -36,8 +36,7 @@ const CartArea = () => {
                               <th className="product__thumb">&nbsp;</th>
                               <th className="product__name">Ürün</th>
                               <th className="product__price">Fiyat</th>
-                              <th className="product__quantity">Miktar</th>
-                              <th className="product__subtotal">Ara Toplam</th>
+                              <th className="product__subtotal">Toplam</th>
                               <th className="product__remove">&nbsp;</th>
                            </tr>
                         </thead>
@@ -45,7 +44,7 @@ const CartArea = () => {
                            {productItem.map((item: any, i: any) => (
                               <tr key={i}>
                                  <td className="product__thumb">
-                                    <Link href={`/shop-details/${item.id}`}>
+                                    <Link href={`/kurs-detaylari/${item.id}`}>
                                        {item.thumb ? (
                                           <Image
                                              src={item.thumb}
@@ -72,16 +71,9 @@ const CartArea = () => {
                                     </Link>
                                  </td>
                                  <td className="product__name">
-                                    <Link href={`/shop-details/${item.id}`}>{item.title}</Link>
+                                    <Link href={`/kurs-detaylari/${item.id}`}>{item.title}</Link>
                                  </td>
                                  <td className="product__price">₺{item.price}.00</td>
-                                 <td className="product__quantity">
-                                    <div className="cart-plus-minus">
-                                       <input type="text" onChange={handleSubmit} value={item.quantity} readOnly />
-                                       <div onClick={() => dispatch(decrease_quantity(item))} className="dec qtybutton">-</div>
-                                       <div onClick={() => dispatch(addToCart(item))} className="inc qtybutton">+</div>
-                                    </div>
-                                 </td>
                                  <td className="product__subtotal">₺{item.price * item.quantity}.00</td>
                                  <td className="product__remove">
                                     <a style={{ cursor: "pointer" }} onClick={() => dispatch(remove_cart_product(item))}>×</a>

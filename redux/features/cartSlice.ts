@@ -53,8 +53,7 @@ const cartSlice = createSlice({
         addToCart: (state, { payload }: PayloadAction<Product>) => {
             const productIndex = state.cart.findIndex((item) => item.id === payload.id);
             if (productIndex >= 0) {
-                state.cart[productIndex].quantity += 1;
-                toast.info(`${payload.title} miktarı artırıldı`, {
+                toast.info(`${payload.title} zaten sepetinizde`, {
                     position: "top-right",
                 });
             } else {
@@ -67,14 +66,8 @@ const cartSlice = createSlice({
             saveCartToStorage(state.cart);
         },
         decrease_quantity: (state, { payload }: PayloadAction<Product>) => {
-            const cartIndex = state.cart.findIndex((item) => item.id === payload.id);
-            if (cartIndex >= 0 && state.cart[cartIndex].quantity > 1) {
-                state.cart[cartIndex].quantity -= 1;
-                toast.error(`${payload.title} miktarı azaltıldı`, {
-                    position: "top-right",
-                });
-                saveCartToStorage(state.cart);
-            }
+            // Kurs sepetinde miktar azaltma işlemi artık yok
+            return;
         },
         remove_cart_product: (state, { payload }: PayloadAction<Product>) => {
             state.cart = state.cart.filter((item) => item.id !== payload.id);

@@ -32,6 +32,13 @@ const Overview = ({ overview }: OverviewProps) => {
             ))}
          </ul>
          <p className="last-info">{overview.conclusion}</p>
+         <style jsx global>{`
+            .about__info-list-item i {
+               color: #fff !important;
+               background: #2f57ef !important;
+               border-color: #2f57ef !important;
+            }
+         `}</style>
       </div>
    )
 }
