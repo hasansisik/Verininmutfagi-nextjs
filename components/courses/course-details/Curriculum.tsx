@@ -30,6 +30,12 @@ interface CurriculumProps {
 const Curriculum = ({ curriculum, videoId }: CurriculumProps) => {
 
    const [isVideoOpen, setIsVideoOpen] = useState(false);
+   const [selectedVideoId, setSelectedVideoId] = useState<string>(videoId || "");
+
+   const handleVideoPopup = (vid: string) => {
+      setSelectedVideoId(vid);
+      setIsVideoOpen(true);
+   };
 
    if (!curriculum || !videoId) {
       return (
@@ -59,19 +65,25 @@ const Curriculum = ({ curriculum, videoId }: CurriculumProps) => {
                                  <React.Fragment key={i}>
                                     {lesson.lock ? (
                                        <li className="course-item">
-                                          <Link href="#" className="course-item-link">
-                                             <span className="item-name">{lesson.title}</span>
+                                          <div className="course-item-link" style={{ opacity: 0.7 }}>
+                                             <span className="item-name">
+                                                <i className="fas fa-play-circle me-2" style={{ fontSize: '24px', color: '#e0e0e0' }}></i>
+                                                {lesson.title}
+                                             </span>
                                              <div className="course-item-meta">
                                                 <span className="item-meta duration">{lesson.duration}</span>
                                                 <span className="item-meta course-item-status">
                                                    <Image src={icon_1} alt="icon" />
                                                 </span>
                                              </div>
-                                          </Link>
+                                          </div>
                                        </li>) : (
                                        <li className="course-item open-item">
-                                          <a onClick={() => setIsVideoOpen(true)} style={{ cursor: "pointer" }} className="course-item-link popup-video">
-                                             <span className="item-name">{lesson.title}</span>
+                                          <a onClick={() => handleVideoPopup(lesson.videoUrl || videoId)} style={{ cursor: "pointer" }} className="course-item-link popup-video">
+                                             <span className="item-name">
+                                                <i className="fas fa-play-circle me-2" style={{ fontSize: '24px', color: '#2f57ef' }}></i>
+                                                {lesson.title}
+                                             </span>
                                              <div className="course-item-meta">
                                                 <span className="item-meta duration">{lesson.duration}</span>
                                              </div>
@@ -90,8 +102,36 @@ const Curriculum = ({ curriculum, videoId }: CurriculumProps) => {
          <VideoPopup
             isOpen={isVideoOpen}
             onClose={() => setIsVideoOpen(false)}
-            videoId={videoId}
+            videoId={selectedVideoId}
          />
+         <style jsx global>{`
+            .courses__curriculum-wrap .course-item .item-name::before {
+               display: none !important;
+            }
+            .courses__curriculum-wrap .accordion-button:not(.collapsed) {
+               color: #2f57ef !important;
+            }
+            .courses__curriculum-wrap .accordion-button:not(.collapsed)::after {
+               color: #2f57ef !important;
+            }
+            /* Video Modalı Büyütme */
+            .video-modal {
+               max-width: 1000px !important;
+               width: 90% !important;
+               padding: 0 !important;
+               background: #000 !important;
+               border-radius: 8px;
+               overflow: hidden;
+            }
+            .react-responsive-modal-closeButton {
+               top: -40px !important;
+               right: 0 !important;
+               color: #fff !important;
+            }
+            .react-responsive-modal-closeButton svg {
+               fill: #fff !important;
+            }
+         `}</style>
       </>
    )
 }

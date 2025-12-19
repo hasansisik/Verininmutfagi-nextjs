@@ -10,26 +10,42 @@ interface VideoPopupProps {
 }
 
 const VideoPopup: React.FC<VideoPopupProps> = ({ isOpen, onClose, videoId }) => {
-  if (!videoId) return null;
-
-  // URL mi yoksa YouTube ID mi kontrol et
-  const videoUrl = videoId.startsWith('http')
-    ? videoId
-    : `https://www.youtube.com/watch?v=${videoId}`;
+  const isUrl = videoId?.startsWith('http');
+  const videoUrl = videoId
+    ? (isUrl ? videoId : `https://www.youtube.com/watch?v=${videoId}`)
+    : "";
 
   return (
     <Modal open={isOpen} onClose={onClose} center classNames={{ modal: "video-modal" }}>
-      <div style={{ width: "100%", minWidth: "300px", aspectRatio: "16/9", background: "#000" }}>
-        <ReactPlayer
-          {...({
-            url: videoUrl,
-            playing: true,
-            controls: true,
-            width: "100%",
-            height: "100%",
-            onError: (e: any) => console.error("Error playing video:", e)
-          } as any)}
-        />
+      <div style={{ width: "100%", minWidth: "300px", aspectRatio: "16/9", background: "#000", overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {isOpen && videoId && (
+          isUrl ? (
+            <video
+              key={videoUrl}
+              src={videoUrl}
+              controls
+              autoPlay
+              playsInline
+              style={{ width: '100%', height: '100%', display: 'block' }}
+            />
+          ) : (
+            <ReactPlayer
+              key={videoUrl}
+              {...({
+                url: videoUrl,
+                playing: true,
+                controls: true,
+                width: "100%",
+                height: "100%",
+                config: {
+                  youtube: {
+                    playerVars: { autoplay: 1, rel: 0 }
+                  }
+                }
+              } as any)}
+            />
+          )
+        )}
       </div>
     </Modal>
   );

@@ -98,6 +98,14 @@ const Sidebar = ({ single_course }: any) => {
                   </div>
                </div>
             </div>
+            <style jsx global>{`
+               .courses__details-video .popup-video {
+                  background-color: #2f57ef !important;
+               }
+               .courses__details-video .popup-video i {
+                  color: #fff !important;
+               }
+            `}</style>
          </div>
          <VideoPopup
             isOpen={isVideoOpen}
