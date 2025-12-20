@@ -774,7 +774,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   // Update editor content when content prop changes
   useEffect(() => {
-    if (editor && content) {
+    if (editor && content && editor.getHTML() !== content) {
       editor.commands.setContent(content);
     }
   }, [content, editor]);
