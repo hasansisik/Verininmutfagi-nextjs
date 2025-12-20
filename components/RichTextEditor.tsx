@@ -611,6 +611,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   placeholder = 'Write your content here...',
 }) => {
   const [isLinkMenuOpen, setIsLinkMenuOpen] = useState(false);
+  const [, forceUpdate] = useState({});
   const [linkUrl, setLinkUrl] = useState('');
   const [linkText, setLinkText] = useState('');
   const [isImageMenuOpen, setIsImageMenuOpen] = useState(false);
@@ -714,6 +715,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       onChange(html);
       setHtmlContent(html);
     },
+    onTransaction: () => {
+      forceUpdate({});
+    },
     onSelectionUpdate: ({ editor }) => {
       // Check if the selection contains an image
       const imageNode = editor.isActive('image') ? editor.getAttributes('image') : null;
@@ -775,7 +779,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   // Update editor content when content prop changes
   useEffect(() => {
     if (editor && content && editor.getHTML() !== content) {
-      editor.commands.setContent(content);
+      if (!editor.isFocused) {
+        editor.commands.setContent(content);
+      }
     }
   }, [content, editor]);
 
@@ -1430,6 +1436,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor.isActive('bold') ? 'default' : 'outline'}
               onClick={() => editor.chain().focus().toggleBold().run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Bold"
             >
@@ -1439,6 +1446,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor.isActive('italic') ? 'default' : 'outline'}
               onClick={() => editor.chain().focus().toggleItalic().run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Italic"
             >
@@ -1448,6 +1456,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor.isActive('underline') ? 'default' : 'outline'}
               onClick={() => editor.chain().focus().toggleUnderline().run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Underline"
             >
@@ -1457,6 +1466,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor.isActive('code') ? 'default' : 'outline'}
               onClick={() => editor.chain().focus().toggleCode().run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Code"
             >
@@ -1469,6 +1479,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor.isActive({ textAlign: 'left' }) ? 'default' : 'outline'}
               onClick={() => editor.chain().focus().setTextAlign('left').run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Align Left"
             >
@@ -1478,6 +1489,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor.isActive({ textAlign: 'center' }) ? 'default' : 'outline'}
               onClick={() => editor.chain().focus().setTextAlign('center').run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Align Center"
             >
@@ -1487,6 +1499,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor.isActive({ textAlign: 'right' }) ? 'default' : 'outline'}
               onClick={() => editor.chain().focus().setTextAlign('right').run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Align Right"
             >
@@ -1496,6 +1509,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor.isActive({ textAlign: 'justify' }) ? 'default' : 'outline'}
               onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Align Justify"
             >
@@ -1542,6 +1556,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor?.isActive('heading', { level: 1 }) ? 'default' : 'outline'}
               onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Heading 1"
             >
@@ -1551,6 +1566,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor?.isActive('heading', { level: 2 }) ? 'default' : 'outline'}
               onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Heading 2"
             >
@@ -1560,6 +1576,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor?.isActive('heading', { level: 3 }) ? 'default' : 'outline'}
               onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Heading 3"
             >
@@ -1572,6 +1589,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor?.isActive('bulletList') ? 'default' : 'outline'}
               onClick={() => editor?.chain().focus().toggleBulletList().run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Bullet List"
             >
@@ -1581,6 +1599,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               size="icon"
               variant={editor?.isActive('orderedList') ? 'default' : 'outline'}
               onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+              onMouseDown={(e) => e.preventDefault()}
               type="button"
               title="Ordered List"
             >
