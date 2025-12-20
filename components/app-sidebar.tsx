@@ -50,6 +50,11 @@ const data = {
       icon: Users,
     },
     {
+      title: "Blog",
+      url: "/dashboard/blog",
+      icon: BookOpen,
+    },
+    {
       title: "Ödemeler",
       url: "/dashboard/odemeler",
       icon: CreditCard,

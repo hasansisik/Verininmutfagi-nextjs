@@ -24,7 +24,7 @@ const BreadcrumbOne = ({ title, sub_title, sub_title_2, style }: StyleType) => {
                                  </span>
                                  <span className="breadcrumb-separator"><i className="fas fa-angle-right"></i></span>
                                  <span>
-                                    <Link href="/events">{sub_title}</Link>
+                                    <Link href="/blog">{sub_title}</Link>
                                  </span>
                                  <span className="breadcrumb-separator"><i className="fas fa-angle-right"></i></span>
                                  <span>{sub_title_2}</span>
