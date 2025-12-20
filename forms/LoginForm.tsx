@@ -79,16 +79,7 @@ const LoginForm = () => {
             />
          </div>
          <div className="account__check">
-            <div className="account__check-remember">
-               <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="terms-check"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-               />
-               <label htmlFor="terms-check" className="form-check-label">Beni Hatırla</label>
-            </div>
+           <div></div>
             <div className="account__check-forgot">
                <Link href="/sifremi-unuttum">Şifremi Unuttum?</Link>
             </div>

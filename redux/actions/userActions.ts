@@ -2,6 +2,23 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { server } from "@/config";
 
+// Helper function to set cookies on the client side
+const setAuthCookies = (token?: string, role?: string) => {
+  if (typeof window !== "undefined") {
+    if (token) {
+      document.cookie = `token=${token}; path=/; max-age=${30 * 24 * 60 * 60}; SameSite=Lax`;
+    } else {
+      document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+
+    if (role) {
+      document.cookie = `userRole=${role}; path=/; max-age=${30 * 24 * 60 * 60}; SameSite=Lax`;
+    } else {
+      document.cookie = "userRole=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+  }
+};
+
 // Add axios interceptor to suppress 404 errors in console
 axios.interceptors.response.use(
   (response: AxiosResponse) => response,
@@ -95,6 +112,7 @@ export const googleRegister = createAsyncThunk(
     try {
       const { data } = await axios.post(`${server}/auth/google-register`, payload);
       localStorage.setItem("accessToken", data.user.token);
+      setAuthCookies(data.user.token, data.user.role);
       return data.user;
     } catch (error: any) {
       // Handle inactive user case
@@ -116,6 +134,7 @@ export const login = createAsyncThunk(
       const { data } = await axios.post(`${server}/auth/login`, payload);
       localStorage.setItem("accessToken", data.user.token);
       localStorage.setItem("userEmail", data.user.email);
+      setAuthCookies(data.user.token, data.user.role);
       return data.user;
     } catch (error: any) {
       // Handle email verification required case
@@ -146,6 +165,7 @@ export const googleAuth = createAsyncThunk(
       const { data } = await axios.post(`${server}/auth/google-auth`, payload);
       localStorage.setItem("accessToken", data.user.token);
       localStorage.setItem("userEmail", data.user.email);
+      setAuthCookies(data.user.token, data.user.role);
       return data.user;
     } catch (error: any) {
       // Handle inactive user case
@@ -167,6 +187,7 @@ export const googleLogin = createAsyncThunk(
       const { data } = await axios.post(`${server}/auth/google-login`, payload);
       localStorage.setItem("accessToken", data.user.token);
       localStorage.setItem("userEmail", data.user.email);
+      setAuthCookies(data.user.token, data.user.role);
       return data.user;
     } catch (error: any) {
       // Handle inactive user case
@@ -186,11 +207,11 @@ export const loadUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = localStorage.getItem("accessToken");
-      
+
       if (!token) {
-        throw new Error("No token found");
+        return thunkAPI.rejectWithValue("NO_TOKEN");
       }
-      
+
       const { data } = await axios.get(`${server}/auth/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -200,6 +221,7 @@ export const loadUser = createAsyncThunk(
       if (data.user.email) {
         localStorage.setItem("userEmail", data.user.email);
       }
+      setAuthCookies(token || undefined, data.user.role);
       return data.user;
     } catch (error: any) {
       // Handle 404 errors silently (user not found or invalid token)
@@ -207,14 +229,16 @@ export const loadUser = createAsyncThunk(
         // Clear invalid token and return silent error
         localStorage.removeItem("accessToken");
         localStorage.removeItem("userEmail");
+        setAuthCookies();
         return thunkAPI.rejectWithValue("User not found");
       }
-      
+
       // Handle inactive user case - user gets kicked out
       if (error.response?.status === 401 && error.response?.data?.requiresLogout) {
         // Clear local storage and return special error
         localStorage.removeItem("accessToken");
         localStorage.removeItem("userEmail");
+        setAuthCookies();
         return thunkAPI.rejectWithValue({
           message: error.response.data.message,
           requiresLogout: true
@@ -237,11 +261,13 @@ export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
         });
         localStorage.removeItem("accessToken");
         localStorage.removeItem("userEmail");
+        setAuthCookies();
         return data.message;
       } catch (apiError: any) {
         // Even if API call fails, clear local storage
         localStorage.removeItem("accessToken");
         localStorage.removeItem("userEmail");
+        setAuthCookies();
         // Return success message to allow logout to proceed
         return "Çıkış yapıldı";
       }
@@ -249,12 +275,14 @@ export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
       // No token, just clear local storage
       localStorage.removeItem("accessToken");
       localStorage.removeItem("userEmail");
+      setAuthCookies();
       return "Çıkış yapıldı";
     }
   } catch (error: any) {
     // Clear local storage even on error
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userEmail");
+    setAuthCookies();
     return thunkAPI.rejectWithValue(error.response?.data?.message || "Çıkış yapılırken bir hata oluştu");
   }
 });
@@ -264,7 +292,7 @@ export const verifyEmail = createAsyncThunk(
   async (payload: VerifyEmailPayload, thunkAPI) => {
     try {
       const { data } = await axios.post(`${server}/auth/verify-email`, payload);
-      
+
       return {
         message: data.message
       };
@@ -438,7 +466,7 @@ export const updateTheme = createAsyncThunk(
     if (!token) {
       return { theme }; // Return theme even if no token
     }
-    
+
     // Fire and forget - don't wait for response
     axios.post(
       `${server}/auth/edit-profile`,
@@ -453,7 +481,7 @@ export const updateTheme = createAsyncThunk(
     ).catch((error: AxiosError) => {
       // Silent fail for theme updates
     });
-    
+
     // Return immediately
     return { theme };
   }

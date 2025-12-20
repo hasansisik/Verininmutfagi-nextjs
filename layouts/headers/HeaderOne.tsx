@@ -18,9 +18,9 @@ import logo from "@/public/logo.png"
 
 const HeaderOne = () => {
 
-   const [selectedOption, setSelectedOption] = React.useState(null);
+
    const dispatch = useAppDispatch();
-   const { user, isAuthenticated } = useAppSelector((state) => state.user);
+   const { user, isAuthenticated, loading } = useAppSelector((state) => state.user);
    const [showDropdown, setShowDropdown] = useState(false);
    const dropdownRef = useRef<HTMLLIElement>(null);
 
@@ -39,12 +39,31 @@ const HeaderOne = () => {
       return () => document.removeEventListener('mousedown', handleClickOutside);
    }, []);
 
-   const handleSelectChange = (option: React.SetStateAction<null>) => {
-      setSelectedOption(option);
-   };
 
    const { sticky } = UseSticky();
    const [isActive, setIsActive] = useState<boolean>(false);
+
+   // Skeleton loader for user area
+   const renderUserSkeleton = () => (
+      <div className="skeleton-loader" style={{
+         width: '100px',
+         height: '40px',
+         background: '#f0f0f0',
+         borderRadius: '30px',
+         position: 'relative',
+         overflow: 'hidden'
+      }}>
+         <div className="skeleton-shimmer" style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)',
+            animation: 'shimmer 1.5s infinite'
+         }}></div>
+      </div>
+   );
 
    return (
       <>
@@ -63,7 +82,7 @@ const HeaderOne = () => {
                                  <NavMenu />
                               </div>
                               <div className="tgmenu__search d-none d-md-block">
-                                 <CustomSelect value={selectedOption} onChange={handleSelectChange} />
+                                 <CustomSelect />
                               </div>
                               <div className="tgmenu__action">
                                  <ul className="list-wrap">
@@ -74,7 +93,11 @@ const HeaderOne = () => {
                                           <TotalCart />
                                        </Link>
                                     </li>
-                                    {isAuthenticated && user ? (
+                                    {loading ? (
+                                       <li className="header-btn login-btn">
+                                          {renderUserSkeleton()}
+                                       </li>
+                                    ) : isAuthenticated && user ? (
                                        <li className="header-btn login-btn" style={{ position: 'relative' }} ref={dropdownRef}>
                                           <button
                                              onClick={() => setShowDropdown(!showDropdown)}
@@ -112,7 +135,9 @@ const HeaderOne = () => {
                                        <TotalCart />
                                     </Link>
                                  </div>
-                                 {isAuthenticated && user ? (
+                                 {loading ? (
+                                    <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#f0f0f0' }}></div>
+                                 ) : isAuthenticated && user ? (
                                     <Link href="/panelim" className="user-btn">
                                        <InjectableSvg src="/assets/img/icons/user.svg" alt="" className="injectable" />
                                     </Link>
@@ -131,6 +156,12 @@ const HeaderOne = () => {
             </div>
          </header>
          <MobileSidebar isActive={isActive} setIsActive={setIsActive} />
+         <style jsx>{`
+            @keyframes shimmer {
+               0% { transform: translateX(-100%); }
+               100% { transform: translateX(100%); }
+            }
+         `}</style>
       </>
    )
 }

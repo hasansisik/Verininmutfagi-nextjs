@@ -168,6 +168,10 @@ export const userReducer = createReducer(initialState, (builder) => {
         state.isVerified = false;
         state.user = null;
         state.error = (action.payload as any).message;
+      } else if (action.payload === "NO_TOKEN" || action.payload === "User not found") {
+        // Silently fail if user is just not logged in or invalid token cleared
+        state.isAuthenticated = false;
+        state.user = null;
       } else {
         state.error = action.payload as string;
       }
