@@ -66,10 +66,10 @@ export interface ResetPasswordPayload {
 }
 
 export interface EditProfilePayload {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
+  name?: string;
+  surname?: string;
+  email?: string;
+  password?: string;
   birthDate?: string;
   address?: {
     street?: string;
@@ -306,6 +306,33 @@ export const verifyEmail = createAsyncThunk(
   }
 );
 
+export const verifyEmailChange = createAsyncThunk(
+  "user/verifyEmailChange",
+  async (payload: { verificationCode: number }, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.post(`${server}/auth/verify-email-change`, payload, config);
+
+      return {
+        message: data.message
+      };
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+    }
+  }
+);
+
 export const againEmail = createAsyncThunk(
   "user/againEmail",
   async (email: string, thunkAPI) => {
@@ -344,6 +371,33 @@ export const resetPassword = createAsyncThunk(
     try {
       const { data } = await axios.post(`${server}/auth/reset-password`, payload);
       return data.message;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+    }
+  }
+);
+
+export const verifyPassword = createAsyncThunk(
+  "user/verifyPassword",
+  async (password: string, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.post(
+        `${server}/auth/verify-password`,
+        { password },
+        config
+      );
+      return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response && error.response.data.message

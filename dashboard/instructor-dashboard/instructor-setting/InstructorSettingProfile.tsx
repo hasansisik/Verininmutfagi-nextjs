@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { loadUser, editProfile } from "@/redux/actions/userActions";
+import { loadUser, editProfile, verifyEmailChange } from "@/redux/actions/userActions";
 import { toast } from "react-toastify";
 
 interface StyleType {
@@ -26,13 +26,17 @@ const InstructorSettingProfile = ({ style }: StyleType) => {
    const [coverPhoto, setCoverPhoto] = useState("");
    const [profilePhoto, setProfilePhoto] = useState("");
    const [isSubmitting, setIsSubmitting] = useState(false);
+   const [showVerificationModal, setShowVerificationModal] = useState(false);
+   const [verificationCode, setVerificationCode] = useState("");
+   const [isInitialized, setIsInitialized] = useState(false);
 
    useEffect(() => {
       dispatch(loadUser());
    }, [dispatch]);
 
    useEffect(() => {
-      if (user) {
+      // Only set form data if not initialized AND user has loaded with valid data (email check)
+      if (user && user.email && !isInitialized) {
          setFormData({
             name: user.name || "",
             surname: user.surname || "",
@@ -42,9 +46,10 @@ const InstructorSettingProfile = ({ style }: StyleType) => {
             skills: user.profile?.skills || [],
             picture: user.profile?.picture || "",
          });
-         setProfilePhoto(user.profile?.picture || "https://res.cloudinary.com/da2qwsrbv/image/upload/v1757687384/sj3lcvvd7mjuuwpzann8.png");
+         setProfilePhoto(user.profile?.picture || "");
+         setIsInitialized(true);
       }
-   }, [user]);
+   }, [user, isInitialized]);
 
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
@@ -59,15 +64,41 @@ const InstructorSettingProfile = ({ style }: StyleType) => {
       setIsSubmitting(true);
 
       try {
-         await dispatch(editProfile({
+         const result = await dispatch(editProfile({
             ...formData,
             password: "" // Password is required in the payload but we're not changing it
          })).unwrap();
 
-         toast.success("Profil başarıyla güncellendi!");
-         dispatch(loadUser()); // Reload user data
+         if (result.requiresVerification) {
+            setShowVerificationModal(true);
+            toast.info(result.message);
+         } else {
+            toast.success(result.message || "Profil başarıyla güncellendi!");
+
+            // Force re-fetch user, and allow re-syncing form data
+            await dispatch(loadUser()).unwrap();
+            setIsInitialized(false);
+         }
       } catch (error: any) {
          toast.error(error || "Profil güncellenirken bir hata oluştu");
+      } finally {
+         setIsSubmitting(false);
+      }
+   };
+
+   const handleVerificationSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsSubmitting(true);
+      try {
+         await dispatch(verifyEmailChange({ verificationCode: Number(verificationCode) })).unwrap();
+         toast.success("E-posta adresi başarıyla güncellendi!");
+         setShowVerificationModal(false);
+         setVerificationCode("");
+         // Force re-fetch user, and allow re-syncing form data
+         await dispatch(loadUser()).unwrap();
+         setIsInitialized(false);
+      } catch (error: any) {
+         toast.error(error || "Doğrulama hatası");
       } finally {
          setIsSubmitting(false);
       }
@@ -122,10 +153,7 @@ const InstructorSettingProfile = ({ style }: StyleType) => {
                            value={formData.email}
                            onChange={handleInputChange}
                            required
-                           disabled
-                           style={{ backgroundColor: '#f5f5f5', cursor: 'not-allowed' }}
                         />
-                        <small className="text-muted">E-posta adresi değiştirilemez</small>
                      </div>
                   </div>
                   <div className="col-md-6">
@@ -139,23 +167,6 @@ const InstructorSettingProfile = ({ style }: StyleType) => {
                            onChange={handleInputChange}
                            placeholder="+90 5XX XXX XX XX"
                         />
-                     </div>
-                  </div>
-                  <div className="col-md-12">
-                     <div className="form-grp">
-                        <label htmlFor="picture">Profil Fotoğrafı URL</label>
-                        <input
-                           id="picture"
-                           name="picture"
-                           type="url"
-                           value={formData.picture}
-                           onChange={(e) => {
-                              handleInputChange(e);
-                              setProfilePhoto(e.target.value);
-                           }}
-                           placeholder="https://example.com/photo.jpg"
-                        />
-                        <small className="text-muted">Cloudinary veya başka bir resim hosting servisi URL'si girebilirsiniz</small>
                      </div>
                   </div>
                </div>
@@ -179,6 +190,65 @@ const InstructorSettingProfile = ({ style }: StyleType) => {
                </div>
             </form>
          </div>
+
+         {/* Simple Modal for Verification */}
+         {showVerificationModal && (
+            <div style={{
+               position: 'fixed',
+               top: 0,
+               left: 0,
+               right: 0,
+               bottom: 0,
+               backgroundColor: 'rgba(0,0,0,0.5)',
+               display: 'flex',
+               alignItems: 'center',
+               justifyContent: 'center',
+               zIndex: 9999
+            }}>
+               <div style={{
+                  backgroundColor: 'white',
+                  padding: '30px',
+                  borderRadius: '10px',
+                  width: '90%',
+                  maxWidth: '400px',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+               }}>
+                  <h4 className="mb-4 text-xl font-bold">E-posta Doğrulama</h4>
+                  <p className="mb-4 text-gray-600">Lütfen yeni e-posta adresinize gönderilen doğrulama kodunu girin.</p>
+                  <form onSubmit={handleVerificationSubmit}>
+                     <div className="form-grp mb-4">
+                        <label className="block mb-2 text-sm font-medium">Doğrulama Kodu</label>
+                        <input
+                           type="text"
+                           value={verificationCode}
+                           onChange={(e) => setVerificationCode(e.target.value)}
+                           className="w-full p-2 border rounded"
+                           placeholder="Kod Giriniz"
+                           required
+                        />
+                     </div>
+                     <div className="flex justify-end gap-2" style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                        <button
+                           type="button"
+                           onClick={() => setShowVerificationModal(false)}
+                           className="btn btn-secondary"
+                           style={{ backgroundColor: '#6c757d', color: 'white', padding: '10px 20px', borderRadius: '5px' }}
+                        >
+                           İptal
+                        </button>
+                        <button
+                           type="submit"
+                           className="btn btn-primary"
+                           disabled={isSubmitting}
+                           style={{ padding: '10px 20px', borderRadius: '5px' }}
+                        >
+                           {isSubmitting ? "Doğrulanıyor..." : "Doğrula"}
+                        </button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         )}
       </>
    );
 };

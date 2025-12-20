@@ -1,7 +1,9 @@
 "use client"
 import Link from "next/link";
 import React from "react";
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { useAppDispatch } from "@/redux/hook";
+import { logout } from "@/redux/actions/userActions";
 
 interface DataType {
    id: number;
@@ -58,6 +60,14 @@ const sidebar_data: DataType[] = [
 const DashboardSidebarTwo = () => {
 
    const pathname = usePathname();
+   const dispatch = useAppDispatch();
+   const router = useRouter();
+
+   const handleLogout = async (e: React.MouseEvent) => {
+      e.preventDefault();
+      await dispatch(logout());
+      router.push("/");
+   };
 
    return (
       <div className="col-lg-3">
@@ -71,7 +81,10 @@ const DashboardSidebarTwo = () => {
                      <ul className="list-wrap">
                         {item.sidebar_details.map((list) => (
                            <li key={list.id} className={pathname === list.link ? 'active' : ''}>
-                              <Link href={list.link}>
+                              <Link
+                                 href={list.link}
+                                 onClick={list.title === "Çıkış" ? handleLogout : undefined}
+                              >
                                  <i className={list.icon}></i>
                                  {list.title}
                               </Link>

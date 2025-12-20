@@ -241,14 +241,12 @@ async function getCategories() {
 }
 
 async function createCourses(categoryMap) {
-    console.log('\n📚 Kurslar oluşturuluyor...\n');
 
     for (const course of courses) {
         try {
             const categoryId = categoryMap[course.categoryName];
             if (!categoryId) {
-                console.log(`❌ ${course.title} - Kategori bulunamadı: ${course.categoryName}`);
-                console.log(`   Mevcut kategoriler: ${Object.keys(categoryMap).join(', ')}`);
+
                 continue;
             }
 
@@ -262,7 +260,6 @@ async function createCourses(categoryMap) {
                 headers: { Authorization: `Bearer ${TOKEN}` }
             });
 
-            console.log(`✅ ${course.title} oluşturuldu`);
         } catch (error) {
             console.log(`❌ ${course.title} oluşturulamadı:`, error.response?.data?.message || error.message);
         }

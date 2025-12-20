@@ -67,7 +67,6 @@ export default function BlogCategoryManager({ open, onOpenChange, onSelect }: Bl
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        console.log('📝 Form submitted:', formData)
 
         if (!formData.name || !formData.slug) {
             toast.error("Kategori adı ve slug gereklidir")
@@ -75,14 +74,11 @@ export default function BlogCategoryManager({ open, onOpenChange, onSelect }: Bl
         }
 
         try {
-            console.log('🚀 Dispatching create/update...', { editingId, formData })
             if (editingId) {
                 const result = await dispatch(updateBlogCategory({ id: editingId, ...formData })).unwrap()
-                console.log('✅ Update result:', result)
                 toast.success("Kategori güncellendi")
             } else {
                 const result = await dispatch(createBlogCategory(formData)).unwrap()
-                console.log('✅ Create result:', result)
                 toast.success("Kategori oluşturuldu")
             }
             resetForm()
