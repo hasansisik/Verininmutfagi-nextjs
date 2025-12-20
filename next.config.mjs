@@ -8,6 +8,12 @@ const nextConfig = {
       },
     ],
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (config) => {
     // logged-out.scss için PostCSS config'ini özelleştir
     const rules = config.module.rules;

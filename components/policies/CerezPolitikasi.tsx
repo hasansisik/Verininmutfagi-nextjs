@@ -25,7 +25,7 @@ const CerezPolitikasi = () => {
                                         <h3>2. Çerezleri Neden Kullanıyoruz?</h3>
                                         <p>Verinin Mutfağı olarak, çerezleri aşağıdaki amaçlarla kullanıyoruz:</p>
                                         <ul>
-                                            <li>Platform'un düzgün çalışmasını sağlamak</li>
+                                            <li>Platform&apos;un düzgün çalışmasını sağlamak</li>
                                             <li>Kullanıcı deneyimini iyileştirmek</li>
                                             <li>Kullanıcı tercihlerini hatırlamak</li>
                                             <li>Oturum bilgilerini yönetmek</li>
@@ -39,7 +39,7 @@ const CerezPolitikasi = () => {
                                         <h3>3. Kullandığımız Çerez Türleri</h3>
 
                                         <h4>3.1. Zorunlu Çerezler</h4>
-                                        <p>Bu çerezler, Platform'un temel işlevlerini yerine getirmesi için gereklidir ve devre dışı bırakılamazlar. Zorunlu çerezler şunları içerir:</p>
+                                        <p>Bu çerezler, Platform&apos;un temel işlevlerini yerine getirmesi için gereklidir ve devre dışı bırakılamazlar. Zorunlu çerezler şunları içerir:</p>
                                         <ul>
                                             <li><strong>Oturum Çerezleri:</strong> Oturum açma durumunuzu ve kimlik doğrulama bilgilerinizi saklar</li>
                                             <li><strong>Güvenlik Çerezleri:</strong> Güvenlik özelliklerini etkinleştirir ve kötüye kullanımı önler</li>
@@ -47,7 +47,7 @@ const CerezPolitikasi = () => {
                                         </ul>
 
                                         <h4>3.2. Performans Çerezleri</h4>
-                                        <p>Bu çerezler, Platform'un nasıl kullanıldığı hakkında bilgi toplar ve performansı iyileştirmemize yardımcı olur:</p>
+                                        <p>Bu çerezler, Platform&apos;un nasıl kullanıldığı hakkında bilgi toplar ve performansı iyileştirmemize yardımcı olur:</p>
                                         <ul>
                                             <li><strong>Analitik Çerezleri:</strong> Ziyaretçi sayısı, sayfa görüntülemeleri ve kullanıcı davranışları hakkında anonim veriler toplar</li>
                                             <li><strong>Hata Raporlama Çerezleri:</strong> Teknik sorunları tespit eder ve düzeltir</li>
@@ -71,7 +71,7 @@ const CerezPolitikasi = () => {
 
                                     <div className="cookie-section mb-40">
                                         <h3>4. Üçüncü Taraf Çerezleri</h3>
-                                        <p>Platform'umuzda aşağıdaki üçüncü taraf hizmetlerinin çerezlerini kullanabiliriz:</p>
+                                        <p>Platform&apos;umuzda aşağıdaki üçüncü taraf hizmetlerinin çerezlerini kullanabiliriz:</p>
                                         <ul>
                                             <li><strong>Google Analytics:</strong> Web sitesi trafiği ve kullanıcı davranışlarını analiz etmek için</li>
                                             <li><strong>YouTube:</strong> Video içeriklerini gömmek için</li>
@@ -122,7 +122,7 @@ const CerezPolitikasi = () => {
                                         <h3>7. Çerezleri Reddetmenin Sonuçları</h3>
                                         <p>Çerezleri engellemeniz veya silmeniz durumunda:</p>
                                         <ul>
-                                            <li>Platform'un bazı özellikleri düzgün çalışmayabilir</li>
+                                            <li>Platform&apos;un bazı özellikleri düzgün çalışmayabilir</li>
                                             <li>Oturum açma durumunuz hatırlanmayabilir</li>
                                             <li>Tercihleriniz kaydedilmeyebilir</li>
                                             <li>Kişiselleştirilmiş içerik alamayabilirsiniz</li>
@@ -132,17 +132,17 @@ const CerezPolitikasi = () => {
 
                                     <div className="cookie-section mb-40">
                                         <h3>8. Do Not Track (DNT)</h3>
-                                        <p>Bazı tarayıcılar "Do Not Track" (İzleme) özelliği sunar. Şu anda bu sinyaller için evrensel bir standart olmadığından, Platform'umuz DNT sinyallerine otomatik olarak yanıt vermemektedir.</p>
+                                        <p>Bazı tarayıcılar &quot;Do Not Track&quot; (İzleme) özelliği sunar. Şu anda bu sinyaller için evrensel bir standart olmadığından, Platform&apos;umuz DNT sinyallerine otomatik olarak yanıt vermemektedir.</p>
                                     </div>
 
                                     <div className="cookie-section mb-40">
                                         <h3>9. Çocukların Gizliliği</h3>
-                                        <p>Platform'umuz 18 yaş altındaki kullanıcılar için tasarlanmamıştır. Çocuklardan bilerek çerez yoluyla veri toplamıyoruz.</p>
+                                        <p>Platform&apos;umuz 18 yaş altındaki kullanıcılar için tasarlanmamıştır. Çocuklardan bilerek çerez yoluyla veri toplamıyoruz.</p>
                                     </div>
 
                                     <div className="cookie-section mb-40">
                                         <h3>10. Politika Güncellemeleri</h3>
-                                        <p>Bu Çerez Politikası'nı zaman zaman güncelleyebiliriz. Önemli değişiklikler olduğunda, Platform üzerinden veya e-posta yoluyla bildirim yapacağız. Son güncelleme tarihi bu sayfanın başında belirtilmiştir.</p>
+                                        <p>Bu Çerez Politikası&apos;nı zaman zaman güncelleyebiliriz. Önemli değişiklikler olduğunda, Platform üzerinden veya e-posta yoluyla bildirim yapacağız. Son güncelleme tarihi bu sayfanın başında belirtilmiştir.</p>
                                     </div>
 
                                     <div className="cookie-section">

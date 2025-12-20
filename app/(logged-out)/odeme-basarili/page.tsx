@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import HeaderOne from "@/layouts/headers/HeaderOne";
 import FooterOne from "@/layouts/footers/FooterOne";
@@ -10,7 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { verifyOrder } from "@/redux/actions/paymentActions";
 import { loadUser } from "@/redux/actions/userActions";
 
-const SuccessPage = () => {
+const SuccessPageContent = () => {
     const dispatch = useAppDispatch();
     const searchParams = useSearchParams();
     const merchant_oid = searchParams.get('merchant_oid');
@@ -75,6 +75,14 @@ const SuccessPage = () => {
             </main>
             <FooterOne />
         </>
+    );
+};
+
+const SuccessPage = () => {
+    return (
+        <Suspense fallback={<div>Yükleniyor...</div>}>
+            <SuccessPageContent />
+        </Suspense>
     );
 };
 

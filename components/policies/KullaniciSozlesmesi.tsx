@@ -18,12 +18,12 @@ const KullaniciSozlesmesi = () => {
 
                                     <div className="agreement-section mb-40">
                                         <h3>1. Taraflar ve Konu</h3>
-                                        <p>İşbu Kullanıcı Sözleşmesi ("Sözleşme"), Verinin Mutfağı online eğitim platformu ("Platform") ile Platform'u kullanan gerçek veya tüzel kişiler ("Kullanıcı") arasında akdedilmiştir. Bu Sözleşme, Platform'un kullanım şartlarını ve tarafların hak ve yükümlülüklerini düzenler.</p>
+                                        <p>İşbu Kullanıcı Sözleşmesi (&quot;Sözleşme&quot;), Verinin Mutfağı online eğitim platformu (&quot;Platform&quot;) ile Platform&apos;u kullanan gerçek veya tüzel kişiler (&quot;Kullanıcı&quot;) arasında akdedilmiştir. Bu Sözleşme, Platform&apos;un kullanım şartlarını ve tarafların hak ve yükümlülüklerini düzenler.</p>
                                     </div>
 
                                     <div className="agreement-section mb-40">
                                         <h3>2. Sözleşmenin Kabul Edilmesi</h3>
-                                        <p>Platform'a üye olarak veya Platform'u kullanarak, işbu Sözleşme'nin tüm hükümlerini okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan ve taahhüt edersiniz. Sözleşme hükümlerini kabul etmiyorsanız, Platform'u kullanmamalısınız.</p>
+                                        <p>Platform&apos;a üye olarak veya Platform&apos;u kullanarak, işbu Sözleşme&apos;nin tüm hükümlerini okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan ve taahhüt edersiniz. Sözleşme hükümlerini kabul etmiyorsanız, Platform&apos;u kullanmamalısınız.</p>
                                     </div>
 
                                     <div className="agreement-section mb-40">
@@ -42,7 +42,7 @@ const KullaniciSozlesmesi = () => {
                                     <div className="agreement-section mb-40">
                                         <h3>4. Kullanıcı Hesabı</h3>
                                         <h4>4.1. Hesap Oluşturma</h4>
-                                        <p>Platform'u kullanabilmek için bir hesap oluşturmanız gerekmektedir. Hesap oluştururken:</p>
+                                        <p>Platform&apos;u kullanabilmek için bir hesap oluşturmanız gerekmektedir. Hesap oluştururken:</p>
                                         <ul>
                                             <li>Doğru, güncel ve eksiksiz bilgiler sağlamalısınız</li>
                                             <li>18 yaşından büyük olmalısınız</li>
@@ -56,13 +56,13 @@ const KullaniciSozlesmesi = () => {
 
                                     <div className="agreement-section mb-40">
                                         <h3>5. Kullanıcı Yükümlülükleri</h3>
-                                        <p>Platform'u kullanırken aşağıdaki kurallara uymayı kabul edersiniz:</p>
+                                        <p>Platform&apos;u kullanırken aşağıdaki kurallara uymayı kabul edersiniz:</p>
                                         <ul>
-                                            <li>Platform'u yalnızca yasal amaçlarla kullanmak</li>
+                                            <li>Platform&apos;u yalnızca yasal amaçlarla kullanmak</li>
                                             <li>Diğer kullanıcıların haklarına saygı göstermek</li>
                                             <li>Telif hakkı ve fikri mülkiyet haklarını ihlal etmemek</li>
                                             <li>Zararlı yazılım, virüs veya kötü amaçlı kod yüklememek</li>
-                                            <li>Platform'un güvenliğini tehlikeye atacak faaliyetlerde bulunmamak</li>
+                                            <li>Platform&apos;un güvenliğini tehlikeye atacak faaliyetlerde bulunmamak</li>
                                             <li>Spam veya istenmeyen içerik göndermemek</li>
                                             <li>Başkalarının hesaplarına yetkisiz erişim sağlamamak</li>
                                         </ul>
@@ -70,7 +70,7 @@ const KullaniciSozlesmesi = () => {
 
                                     <div className="agreement-section mb-40">
                                         <h3>6. Fikri Mülkiyet Hakları</h3>
-                                        <p>Platform'da yer alan tüm içerikler (videolar, metinler, görseller, logolar, yazılımlar vb.) Verinin Mutfağı'nın veya lisans verenlerin mülkiyetindedir ve telif hakkı yasalarıyla korunmaktadır. Kullanıcılar:</p>
+                                        <p>Platform&apos;da yer alan tüm içerikler (videolar, metinler, görseller, logolar, yazılımlar vb.) Verinin Mutfağı&apos;nın veya lisans verenlerin mülkiyetindedir ve telif hakkı yasalarıyla korunmaktadır. Kullanıcılar:</p>
                                         <ul>
                                             <li>İçerikleri yalnızca kişisel ve ticari olmayan amaçlarla kullanabilir</li>
                                             <li>İçerikleri kopyalayamaz, çoğaltamaz veya dağıtamaz</li>
@@ -85,7 +85,7 @@ const KullaniciSozlesmesi = () => {
                                         <p>Ücretli kurslar için ödeme, kurs satın alma sırasında belirtilen fiyat üzerinden yapılır. Tüm ödemeler Türk Lirası (TL) cinsindendir ve KDV dahildir.</p>
 
                                         <h4>7.2. İade</h4>
-                                        <p>Satın aldığınız kurstan memnun kalmazsanız, satın alma tarihinden itibaren 14 gün içinde ve kursun %20'sinden azını tamamlamış olmanız koşuluyla tam iade talep edebilirsiniz.</p>
+                                        <p>Satın aldığınız kurstan memnun kalmazsanız, satın alma tarihinden itibaren 14 gün içinde ve kursun %20&apos;sinden azını tamamlamış olmanız koşuluyla tam iade talep edebilirsiniz.</p>
                                     </div>
 
                                     <div className="agreement-section mb-40">
@@ -106,9 +106,9 @@ const KullaniciSozlesmesi = () => {
 
                                     <div className="agreement-section mb-40">
                                         <h3>10. Sorumluluk Sınırlaması</h3>
-                                        <p>Verinin Mutfağı, Platform'un kesintisiz ve hatasız çalışacağını garanti etmez. Platform "olduğu gibi" sunulur. Verinin Mutfağı, aşağıdaki durumlardan sorumlu tutulamaz:</p>
+                                        <p>Verinin Mutfağı, Platform&apos;un kesintisiz ve hatasız çalışacağını garanti etmez. Platform &quot;olduğu gibi&quot; sunulur. Verinin Mutfağı, aşağıdaki durumlardan sorumlu tutulamaz:</p>
                                         <ul>
-                                            <li>Platform'un kullanımından kaynaklanan dolaylı zararlar</li>
+                                            <li>Platform&apos;un kullanımından kaynaklanan dolaylı zararlar</li>
                                             <li>Üçüncü taraf hizmetlerindeki aksaklıklar</li>
                                             <li>İnternet bağlantısı sorunları</li>
                                             <li>Kullanıcı hatalarından kaynaklanan sorunlar</li>
@@ -117,17 +117,17 @@ const KullaniciSozlesmesi = () => {
 
                                     <div className="agreement-section mb-40">
                                         <h3>11. Gizlilik</h3>
-                                        <p>Kişisel verilerinizin işlenmesi <Link href="/gizlilik-politikasi">Gizlilik Politikamız</Link> kapsamında düzenlenir. Platform'u kullanarak Gizlilik Politikamızı kabul etmiş olursunuz.</p>
+                                        <p>Kişisel verilerinizin işlenmesi <Link href="/gizlilik-politikasi">Gizlilik Politikamız</Link> kapsamında düzenlenir. Platform&apos;u kullanarak Gizlilik Politikamızı kabul etmiş olursunuz.</p>
                                     </div>
 
                                     <div className="agreement-section mb-40">
                                         <h3>12. Sözleşme Değişiklikleri</h3>
-                                        <p>Verinin Mutfağı, bu Sözleşme'yi herhangi bir zamanda değiştirme hakkını saklı tutar. Önemli değişiklikler e-posta yoluyla bildirilecektir. Değişiklikler yayınlandıktan sonra Platform'u kullanmaya devam etmeniz, değişiklikleri kabul ettiğiniz anlamına gelir.</p>
+                                        <p>Verinin Mutfağı, bu Sözleşme&apos;yi herhangi bir zamanda değiştirme hakkını saklı tutar. Önemli değişiklikler e-posta yoluyla bildirilecektir. Değişiklikler yayınlandıktan sonra Platform&apos;u kullanmaya devam etmeniz, değişiklikleri kabul ettiğiniz anlamına gelir.</p>
                                     </div>
 
                                     <div className="agreement-section">
                                         <h3>13. Uygulanacak Hukuk ve Yetki</h3>
-                                        <p>Bu Sözleşme Türkiye Cumhuriyeti yasalarına tabidir. Sözleşme'den doğan uyuşmazlıkların çözümünde İstanbul Mahkemeleri ve İcra Daireleri yetkilidir.</p>
+                                        <p>Bu Sözleşme Türkiye Cumhuriyeti yasalarına tabidir. Sözleşme&apos;den doğan uyuşmazlıkların çözümünde İstanbul Mahkemeleri ve İcra Daireleri yetkilidir.</p>
                                     </div>
                                 </div>
                             </div>

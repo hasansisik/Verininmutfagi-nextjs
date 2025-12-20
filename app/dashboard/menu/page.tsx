@@ -174,7 +174,7 @@ export default function MenuPage() {
 
     useEffect(() => {
         dispatch(getAllMenuItems())
-    }, [])
+    }, [dispatch])
 
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event

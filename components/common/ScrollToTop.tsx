@@ -20,17 +20,17 @@ const ScrollToTop = () => {
    };
 
    useEffect(() => {
-      const checkScrollTop = () => {
-         if (!showScroll && window.pageYOffset > 400) {
+      const handleScroll = () => {
+         if (window.pageYOffset > 400) {
             setShowScroll(true);
-         } else if (showScroll && window.pageYOffset <= 400) {
+         } else {
             setShowScroll(false);
          }
       };
 
-      window.addEventListener("scroll", checkScrollTop);
-      return () => window.removeEventListener("scroll", checkScrollTop);
-   }, [checkScrollTop]);
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+   }, []);
 
    return (
       <>

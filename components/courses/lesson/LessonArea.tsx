@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import LessonFaq from "./LessonFaq";
 import LessonNavTav from "./LessonNavTav";
@@ -14,9 +14,11 @@ const LessonArea = ({ course }: LessonAreaProps) => {
    const [activeLesson, setActiveLesson] = useState<any>(null);
 
    // Düzleştirilmiş ders listesi (Navigation için)
-   const allLessons = course?.curriculum?.reduce((acc: any[], section: any) => {
-      return [...acc, ...section.lessons];
-   }, []) || [];
+   const allLessons = useMemo(() => {
+      return course?.curriculum?.reduce((acc: any[], section: any) => {
+         return [...acc, ...section.lessons];
+      }, []) || [];
+   }, [course?.curriculum]);
 
    useEffect(() => {
       if (allLessons.length > 0 && !activeLesson) {

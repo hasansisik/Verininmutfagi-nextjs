@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, Suspense } from "react"
 import { useAppDispatch } from "@/redux/hook"
 import { createCourse, updateCourse, getCourse, uploadImage, uploadVideo } from "@/redux/actions/courseActions"
 import { toast } from "react-toastify"
@@ -35,7 +35,7 @@ interface CurriculumSection {
     lessons: Lesson[]
 }
 
-export default function KursFormPage() {
+function KursFormContent() {
     const dispatch = useAppDispatch()
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -872,5 +872,13 @@ export default function KursFormPage() {
                 </div>
             </form>
         </div>
+    )
+}
+
+export default function KursFormPage() {
+    return (
+        <Suspense fallback={<div>Yükleniyor...</div>}>
+            <KursFormContent />
+        </Suspense>
     )
 }
