@@ -7,6 +7,7 @@ import Features from "./Features"
 import FooterOne from "@/layouts/footers/FooterOne"
 import HeaderOne from "@/layouts/headers/HeaderOne"
 import Categories from "./Categories"
+import BlogArea from "./Blog"
 
 const HomeOne = () => {
    return (
@@ -20,6 +21,7 @@ const HomeOne = () => {
             <Counter />
             <FaqArea />
             <Features />
+            <BlogArea />
          </main>
          <FooterOne />
       </>
