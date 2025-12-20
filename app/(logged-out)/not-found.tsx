@@ -1,5 +1,8 @@
-import NotFound from "@/components/inner-pages/error";
+import HeaderOne from "@/layouts/headers/HeaderOne";
+import FooterOne from "@/layouts/footers/FooterOne";
+import ErrorArea from "@/components/inner-pages/error/ErrorArea";
 import Wrapper from "@/layouts/Wrapper";
+import "./logged-out.scss";
 
 export const metadata = {
    title: "Sayfa Bulunamadı - Verinin Mutfağı",
@@ -8,7 +11,11 @@ export const metadata = {
 const page = () => {
    return (
       <Wrapper>
-         <NotFound />
+         <HeaderOne />
+         <main className="main-area fix">
+            <ErrorArea />
+         </main>
+         <FooterOne />
       </Wrapper>
    )
 }
