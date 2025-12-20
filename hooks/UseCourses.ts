@@ -12,7 +12,7 @@ const UseCourses = () => {
 
    const fetchCourses = async () => {
       try {
-         const response = await axios.get(`${server}/courses`);
+         const response = await axios.get(`${server}/courses?isActive=true`);
          if (response.data.success) {
             setCourses(response.data.courses);
          }

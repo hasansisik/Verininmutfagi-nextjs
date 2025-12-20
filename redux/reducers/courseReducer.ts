@@ -22,6 +22,7 @@ interface Course {
     ratingCount?: number;
     instructors?: string;
     skill_level?: string;
+    isActive?: boolean;
     // ... other fields
 }
 
