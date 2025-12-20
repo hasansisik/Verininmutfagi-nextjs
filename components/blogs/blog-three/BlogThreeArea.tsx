@@ -60,7 +60,6 @@ const BlogThreeArea = () => {
                   <div className="blog__post-meta">
                     <ul className="list-wrap">
                       <li><i className="flaticon-calendar"></i>{new Date(item.publishedAt || item.createdAt).toLocaleDateString('tr-TR')}</li>
-                      <li><i className="flaticon-user-1"></i>tarafından <Link href={`/blog/${item.slug}`}>{item.author?.name || 'Admin'}</Link></li>
                     </ul>
                   </div>
                   <h4 className="title" style={{ flex: 1 }}><Link href={`/blog/${item.slug}`}>{item.title}</Link></h4>
