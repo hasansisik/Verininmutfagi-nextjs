@@ -4,25 +4,8 @@ import { Navigation } from 'swiper/modules';
 import Link from "next/link";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Code2, Palette, Briefcase, Database, TrendingUp, Users } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import { getAllCategories } from '@/redux/actions/categoryActions';
-
-// Lucide icon mapping
-const iconMap: { [key: string]: any } = {
-   'Code2': Code2,
-   'Palette': Palette,
-   'Briefcase': Briefcase,
-   'Database': Database,
-   'TrendingUp': TrendingUp,
-   'Users': Users,
-   // Fallback for old flaticon names
-   'flaticon-coding': Code2,
-   'flaticon-graphic-design': Palette,
-   'flaticon-email': Briefcase,
-   'flaticon-data-science': Database,
-   'flaticon-investment': TrendingUp,
-   'flaticon-interaction': Users,
-};
 
 interface CategoryType {
    _id: string;
@@ -71,7 +54,9 @@ const setting = {
 
 const Categories = () => {
    const dispatch = useDispatch<any>();
-   const { categories, loading } = useSelector((state: any) => state.categoryManagement);
+   const categoryState = useSelector((state: any) => state.categoryManagement);
+   const categories = categoryState?.categories || [];
+   const loading = categoryState?.loading;
 
    useEffect(() => {
       dispatch(getAllCategories({ isActive: true }));
@@ -111,8 +96,10 @@ const Categories = () => {
                <div className="col-12">
                   <div className="categories__wrap" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
                      <Swiper {...setting} modules={[Navigation]} className="swiper categories-active">
-                        {categories.map((item: CategoryType) => {
-                           const IconComponent = iconMap[item.icon] || Code2;
+                        {categories?.map((item: CategoryType) => {
+                           // Dynamically get icon from Lucide
+                           // Fallback to Code2 if not found
+                           const IconComponent = (LucideIcons as any)[item.icon] || LucideIcons.Code2;
 
                            return (
                               <SwiperSlide key={item._id} className="swiper-slide">

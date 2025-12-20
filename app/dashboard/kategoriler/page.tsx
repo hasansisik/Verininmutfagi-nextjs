@@ -18,15 +18,6 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import {
     AlertDialog,
     AlertDialogAction,
     AlertDialogCancel,
@@ -39,11 +30,11 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Plus, Pencil, Trash2, Tag, Search, X, Filter } from "lucide-react"
+import * as LucideIcons from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { SimplePagination } from "@/components/common/SimplePagination"
+import { CategoryDialog } from "@/components/dashboard/CategoryDialog"
 
 const ITEMS_PER_PAGE = 8
 
@@ -68,7 +59,9 @@ interface Category {
 
 export default function KategorilerPage() {
     const dispatch = useAppDispatch()
-    const { categories, loading } = useAppSelector((state) => state.categoryManagement)
+    const categoryState = useAppSelector((state) => state.categoryManagement)
+    const categories = categoryState?.categories || []
+    const loading = categoryState?.loading
 
     const [dialogOpen, setDialogOpen] = useState(false)
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
@@ -76,12 +69,9 @@ export default function KategorilerPage() {
     const [searchTerm, setSearchTerm] = useState("")
     const [statusFilter, setStatusFilter] = useState<string>("all")
     const [currentPage, setCurrentPage] = useState(1)
-    const [formData, setFormData] = useState({
-        slug: "",
-        name: "",
-        icon: "",
-        description: "",
-    })
+
+    // Derived state for dialog mode
+    const dialogMode = selectedCategory ? "edit" : "create"
 
     const filteredCategories = categories?.filter((category) => {
         const matchesSearch =
@@ -111,9 +101,7 @@ export default function KategorilerPage() {
         dispatch(getAllCategories({}))
     }, [dispatch])
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-
+    const handleSubmit = async (formData: any) => {
         if (!formData.name || !formData.slug || !formData.icon) {
             toast.error("Lütfen tüm zorunlu alanları doldurun")
             return
@@ -134,7 +122,7 @@ export default function KategorilerPage() {
             }
 
             setDialogOpen(false)
-            resetForm()
+            setSelectedCategory(null)
             dispatch(getAllCategories({}))
         } catch (error: any) {
             toast.error(error || "İşlem başarısız")
@@ -157,29 +145,12 @@ export default function KategorilerPage() {
 
     const openEditDialog = (category: Category) => {
         setSelectedCategory(category)
-        setFormData({
-            slug: category.slug,
-            name: category.name,
-            icon: category.icon,
-            description: category.description,
-        })
         setDialogOpen(true)
     }
 
     const openCreateDialog = () => {
         setSelectedCategory(null)
-        resetForm()
         setDialogOpen(true)
-    }
-
-    const resetForm = () => {
-        setFormData({
-            slug: "",
-            name: "",
-            icon: "",
-            description: "",
-        })
-        setSelectedCategory(null)
     }
 
     return (
@@ -277,57 +248,62 @@ export default function KategorilerPage() {
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                    paginatedCategories.map((category) => (
-                                        <TableRow key={category._id} className="hover:bg-gray-50/50 transition-colors border-b border-gray-100 last:border-0">
-                                            <TableCell>
-                                                <Tag className="h-5 w-5" />
-                                            </TableCell>
-                                            <TableCell className="font-medium">{category.name}</TableCell>
-                                            <TableCell>
-                                                <code className="text-sm bg-muted px-2 py-1 rounded">
-                                                    {category.slug}
-                                                </code>
-                                            </TableCell>
-                                            <TableCell className="max-w-xs truncate">
-                                                {category.description}
-                                            </TableCell>
-                                            <TableCell>
-                                                <Badge variant="secondary">{category.courseCount}</Badge>
-                                            </TableCell>
-                                            <TableCell>
-                                                {category.isActive ? (
-                                                    <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                                                        Aktif
-                                                    </Badge>
-                                                ) : (
-                                                    <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
-                                                        Pasif
-                                                    </Badge>
-                                                )}
-                                            </TableCell>
-                                            <TableCell className="text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        onClick={() => openEditDialog(category)}
-                                                    >
-                                                        <Pencil className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        onClick={() => {
-                                                            setSelectedCategory(category)
-                                                            setDeleteDialogOpen(true)
-                                                        }}
-                                                    >
-                                                        <Trash2 className="h-4 w-4 text-red-600" />
-                                                    </Button>
-                                                </div>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))
+                                    paginatedCategories.map((category) => {
+                                        // Safely access icon from Lucide
+                                        // Use 'any' cast to avoid TS indexing errors
+                                        const IconComponent = (LucideIcons as any)[category.icon] || Tag;
+                                        return (
+                                            <TableRow key={category._id} className="hover:bg-gray-50/50 transition-colors border-b border-gray-100 last:border-0">
+                                                <TableCell>
+                                                    <IconComponent className="h-5 w-5 text-muted-foreground" />
+                                                </TableCell>
+                                                <TableCell className="font-medium">{category.name}</TableCell>
+                                                <TableCell>
+                                                    <code className="text-sm bg-muted px-2 py-1 rounded">
+                                                        {category.slug}
+                                                    </code>
+                                                </TableCell>
+                                                <TableCell className="max-w-xs truncate">
+                                                    {category.description}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Badge variant="secondary">{category.courseCount}</Badge>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {category.isActive ? (
+                                                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                                                            Aktif
+                                                        </Badge>
+                                                    ) : (
+                                                        <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
+                                                            Pasif
+                                                        </Badge>
+                                                    )}
+                                                </TableCell>
+                                                <TableCell className="text-right">
+                                                    <div className="flex justify-end gap-2">
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() => openEditDialog(category)}
+                                                        >
+                                                            <Pencil className="h-4 w-4" />
+                                                        </Button>
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() => {
+                                                                setSelectedCategory(category)
+                                                                setDeleteDialogOpen(true)
+                                                            }}
+                                                        >
+                                                            <Trash2 className="h-4 w-4 text-red-600" />
+                                                        </Button>
+                                                    </div>
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    })
                                 )}
                             </TableBody>
                         </Table>
@@ -343,71 +319,13 @@ export default function KategorilerPage() {
                 </CardContent>
             </Card>
 
-            {/* Create/Edit Dialog */}
-            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                <DialogContent className="sm:max-w-[525px]">
-                    <DialogHeader>
-                        <DialogTitle>
-                            {selectedCategory ? "Kategori Düzenle" : "Yeni Kategori Oluştur"}
-                        </DialogTitle>
-                        <DialogDescription>
-                            Kategori bilgilerini girin. Lucide-react ikon isimlerini kullanın.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <form onSubmit={handleSubmit}>
-                        <div className="grid gap-4 py-4">
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Kategori Adı *</Label>
-                                <Input
-                                    id="name"
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    placeholder="Örn: Geliştirme"
-                                    required
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="slug">Slug *</Label>
-                                <Input
-                                    id="slug"
-                                    value={formData.slug}
-                                    onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                                    placeholder="Örn: gelistirme"
-                                    required
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="icon">İkon (Lucide-react) *</Label>
-                                <Input
-                                    id="icon"
-                                    value={formData.icon}
-                                    onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                                    placeholder="Örn: Code2, Palette, Database"
-                                    required
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="description">Açıklama</Label>
-                                <Textarea
-                                    id="description"
-                                    value={formData.description}
-                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    placeholder="Kategori açıklaması"
-                                    rows={3}
-                                />
-                            </div>
-                        </div>
-                        <DialogFooter>
-                            <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
-                                İptal
-                            </Button>
-                            <Button type="submit">
-                                {selectedCategory ? "Güncelle" : "Oluştur"}
-                            </Button>
-                        </DialogFooter>
-                    </form>
-                </DialogContent>
-            </Dialog>
+            <CategoryDialog
+                open={dialogOpen}
+                onOpenChange={setDialogOpen}
+                onSubmit={handleSubmit}
+                initialData={selectedCategory}
+                mode={dialogMode}
+            />
 
             {/* Delete Dialog */}
             <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
