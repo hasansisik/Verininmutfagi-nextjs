@@ -2,8 +2,10 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import Link from "next/link";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Code2, Palette, Briefcase, Database, TrendingUp, Users } from 'lucide-react';
+import { getAllCategories } from '@/redux/actions/categoryActions';
 
 // Lucide icon mapping
 const iconMap: { [key: string]: any } = {
@@ -68,28 +70,12 @@ const setting = {
 };
 
 const Categories = () => {
-   const [categories, setCategories] = useState<CategoryType[]>([]);
-   const [loading, setLoading] = useState(true);
+   const dispatch = useDispatch<any>();
+   const { categories, loading } = useSelector((state: any) => state.categoryManagement);
 
    useEffect(() => {
-      // Fetch categories from API
-      const fetchCategories = async () => {
-         try {
-            const response = await fetch('http://localhost:3040/v1/categories');
-            const data = await response.json();
-
-            if (data.success) {
-               setCategories(data.categories.filter((cat: CategoryType) => cat.isActive));
-            }
-         } catch (error) {
-            console.error('Kategoriler yüklenirken hata:', error);
-         } finally {
-            setLoading(false);
-         }
-      };
-
-      fetchCategories();
-   }, []);
+      dispatch(getAllCategories({ isActive: true }));
+   }, [dispatch]);
 
    if (loading) {
       return (
@@ -125,7 +111,7 @@ const Categories = () => {
                <div className="col-12">
                   <div className="categories__wrap" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
                      <Swiper {...setting} modules={[Navigation]} className="swiper categories-active">
-                        {categories.map((item) => {
+                        {categories.map((item: CategoryType) => {
                            const IconComponent = iconMap[item.icon] || Code2;
 
                            return (
