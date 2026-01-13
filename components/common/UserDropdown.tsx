@@ -65,7 +65,7 @@ const UserDropdown = ({ onClose }: UserDropdownProps) => {
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
                 <i className="fas fa-home" style={{ width: '16px', color: '#666' }}></i>
-                <span>Panelim</span>
+                <span>Eğitim Paneli</span>
             </Link>
 
             <Link

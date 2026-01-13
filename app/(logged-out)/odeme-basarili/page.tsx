@@ -64,7 +64,7 @@ const SuccessPageContent = () => {
                                         Harika bir adım attınız! Kurslarınıza hemen başlayabilir veya kontrol panelinizden eğitimlerinizi yönetebilirsiniz.
                                     </p>
                                     <div className="success__btn-wrap d-flex align-items-center justify-content-center gap-3">
-                                        <Link href="/panelim" className="btn" style={{ padding: '15px 35px' }}>Panelime Git</Link>
+                                        <Link href="/panelim" className="btn" style={{ padding: '15px 35px' }}>Eğitim Panelim</Link>
                                         <Link href="/" className="btn btn-two" style={{ padding: '15px 35px', background: '#F3F4F6', color: '#1F2937', border: 'none' }}>Anasayfaya Dön</Link>
                                     </div>
                                 </div>

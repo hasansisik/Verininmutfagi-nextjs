@@ -138,7 +138,7 @@ const HeaderOne = () => {
                                  {loading ? (
                                     <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#f0f0f0' }}></div>
                                  ) : isAuthenticated && user ? (
-                                    <Link href="/panelim" className="user-btn">
+                                    <Link href="/kayitli-kurslar" className="user-btn">
                                        <InjectableSvg src="/assets/img/icons/user.svg" alt="" className="injectable" />
                                     </Link>
                                  ) : (

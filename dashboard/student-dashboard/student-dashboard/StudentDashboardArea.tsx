@@ -22,16 +22,9 @@ const StudentDashboardArea = () => {
          count: user?.enrolledCourses?.length || 0,
          title: "Kayıtlı Kurslar"
       },
+
       {
          id: 2,
-         icon: "skillgro-video-tutorial",
-         count: user?.credits || 0,
-         title: "Kredi bakiyenizi eğitim olarak değiştirin",
-         link: "/krediyi-kullan",
-         linkText: "Krediyi Kullan"
-      },
-      {
-         id: 3,
          icon: "skillgro-graduated",
          count: user?.orders?.filter((order: any) => order.status === 'completed')?.length || 0,
          title: "Tamamlanan Siparişler"

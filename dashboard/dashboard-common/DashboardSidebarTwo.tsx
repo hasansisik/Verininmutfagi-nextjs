@@ -26,7 +26,7 @@ const sidebar_data: DataType[] = [
             id: 1,
             link: "/panelim",
             icon: "fas fa-home",
-            title: "Panelim",
+            title: "Eğitim Paneli",
          },
          {
             id: 2,
