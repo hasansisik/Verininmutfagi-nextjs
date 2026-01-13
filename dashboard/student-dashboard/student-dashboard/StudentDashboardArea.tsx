@@ -20,14 +20,13 @@ const StudentDashboardArea = () => {
          id: 1,
          icon: "skillgro-book",
          count: user?.enrolledCourses?.length || 0,
-         title: "Kayıtlı Kurslar"
+         title: "Kayıtlı Eğitimler"
       },
-
       {
          id: 2,
          icon: "skillgro-graduated",
          count: user?.orders?.filter((order: any) => order.status === 'completed')?.length || 0,
-         title: "Tamamlanan Siparişler"
+         title: "Tamamlanan Eğitimler"
       }
    ];
 
