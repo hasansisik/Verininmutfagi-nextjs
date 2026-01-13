@@ -36,10 +36,10 @@ const FooterCommon = () => {
                <div className="footer__link">
                   <ul className="list-wrap">
                      <li><Link href="/contact">İletişim</Link></li>
-                     <li><Link href="/kurslar">Kurslar Eğitimler</Link></li>
-                     <li><Link href="/kurslar">İnstagram</Link></li>
-                     <li><Link href="/kurslar">Linkedin</Link></li>
-                     <li><Link href="/kurslar">Youtube</Link></li>
+                     <li><Link href="/kurslar">Eğitimler</Link></li>
+                     <li><Link href="https://www.instagram.com/verininmutfagi">İnstagram</Link></li>
+                     <li><Link href="https://www.linkedin.com/in/ferhatisyapan">Linkedin</Link></li>
+                     <li><Link href="https://www.youtube.com/@verininmutfagi?si=lmt-j4ZvO1OwVC0S">Youtube</Link></li>
                   </ul>
                </div>
             </div>
