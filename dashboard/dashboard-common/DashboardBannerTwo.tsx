@@ -44,7 +44,7 @@ const DashboardBannerTwo = () => {
       );
    }
 
-   const profilePicture = user?.profile?.picture || "https://res.cloudinary.com/da2qwsrbv/image/upload/v1757687384/sj3lcvvd7mjuuwpzann8.png";
+   const profilePicture = user?.profile?.picture || "https://res.cloudinary.com/da2qwsrbv/image/upload/v1768314363/Ads%C4%B1z_tasar%C4%B1m_24_s6sudk.png";
    const fullName = user ? `${user.name} ${user.surname || ''}`.trim() : 'Kullanıcı';
 
    return (

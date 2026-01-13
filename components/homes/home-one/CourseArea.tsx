@@ -97,7 +97,7 @@ const CourseArea = ({ style }: StyleType) => {
               <div className="col-lg-6">
                 <div className="section__title text-center mb-40">
                   <span className="sub-title">Eğitimler</span>
-                  <h2 className="title">Dünyanın En İyi Kurslarını Keşfedin</h2>
+                  <h2 className="title">Dünyanın En İyi Eğitimlerini Keşfedin</h2>
                   <p className="desc">Kariyerinizde yeni bir sayfa açın</p>
                 </div>
                 <div className="courses__nav">
