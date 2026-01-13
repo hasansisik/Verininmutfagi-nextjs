@@ -22,6 +22,7 @@ const setting = {
    slidesPerView: 6,
    spaceBetween: 44,
    loop: true,
+   centerInsufficientSlides: true,
    // Navigation arrows
    navigation: {
       nextEl: '.categories-button-next',
@@ -85,9 +86,9 @@ const Categories = () => {
             <div className="row justify-content-center">
                <div className="col-xl-5 col-lg-7">
                   <div className="section__title text-center mb-40">
-                     <span className="sub-title">Öğrenmeye Nereden Başlamak İstersiniz?</span>
-                     <h2 className="title">İlginizi Çeken Kategorileri Keşfedin</h2>
-                     <p className="desc">Hayalinizdeki kariyer için en uygun kategoriyi keşfedin</p>
+                     <span className="sub-title">Kategoriler</span>
+                     <h2 className="title">Öğrenmeye Nereden Başlamak İstersiniz?</h2>
+                     <p className="desc">Hedeflerinize Uygun Eğitimlerini Keşfedin!</p>
                   </div>
                </div>
             </div>

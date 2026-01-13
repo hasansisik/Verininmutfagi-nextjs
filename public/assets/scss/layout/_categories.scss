@@ -52,7 +52,7 @@
             color: #7F7E97;
             @include transition(.3s);
             position: relative;
-            margin: 0 0 12px;
+            margin: 0 auto 12px;
             @media #{$xs} {
                 width: 130px;
                 height: 130px;
