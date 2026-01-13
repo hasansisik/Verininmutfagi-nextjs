@@ -19,7 +19,6 @@ const HomeOne = () => {
             <BrandOne />
             <CourseArea />
             <Counter />
-            <FaqArea />
             <Features />
             <BlogArea />
          </main>

@@ -1,41 +1,70 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
-import Link from "next/link";
+import Image from "next/image";
 import Marquee from "react-fast-marquee";
 import { useState } from "react";
-
-import brand_1 from "@/assets/img/brand/brand01.png";
-import brand_2 from "@/assets/img/brand/brand02.png";
-import brand_3 from "@/assets/img/brand/brand03.png";
-import brand_4 from "@/assets/img/brand/brand04.png";
-import brand_5 from "@/assets/img/brand/brand05.png";
-import brand_6 from "@/assets/img/brand/brand06.png";
-import brand_7 from "@/assets/img/brand/brand07.png";
 import star from "@/assets/img/icons/brand_star.svg";
 
-const brand_data: StaticImageData[] = [brand_1, brand_2, brand_3, brand_4, brand_5, brand_6, brand_7, brand_4, brand_3, brand_5];
+const brands = [
+   { name: "Google", slug: "google" },
+   {
+      name: "Microsoft",
+      url: "https://www.vectorlogo.zone/logos/microsoft/microsoft-icon.svg"
+   },
+   {
+      name: "AWS",
+      url: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+   },
+   { name: "NVIDIA", slug: "nvidia" },
+   {
+      name: "OpenAI",
+      url: "https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg"
+   },
+   { name: "Python", slug: "python" },
+   { name: "TensorFlow", slug: "tensorflow" },
+   { name: "Kaggle", slug: "kaggle" }
+];
 
-interface StyleType{
-   style?:boolean;
+interface StyleType {
+   style?: boolean;
 }
 
 const BrandOne = ({ style }: StyleType) => {
    const [isPaused, setIsPaused] = useState(false);
 
    return (
-      <div className={`brand-area ${style ? "brand-area-two" : ""}`} style={{ backgroundColor: 'blue' }}>
+      <div className={`brand-area ${style ? "brand-area-two" : ""}`} style={{ backgroundColor: '#0000ff', padding: '35px 0' }}>
          <div className="container-fluid">
-            <Marquee className="marquee_mode" pauseOnHover={false} play={!isPaused}>
-               {brand_data.map((item, i) => (
+            <Marquee className="marquee_mode" pauseOnHover={false} play={!isPaused} gradient={false} speed={50}>
+               {brands.map((item, i) => (
                   <div
                      key={i}
                      className="brand__item"
                      onMouseEnter={() => setIsPaused(true)}
                      onMouseLeave={() => setIsPaused(false)}
+                     style={{ display: 'flex', alignItems: 'center', gap: '20px', margin: '0 40px' }}
                   >
-                     <Link href="#"><Image src={item} alt="brand" /></Link>
-                     <Image src={star} alt="star" />
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <img
+                           src={item.url ? item.url : `https://cdn.simpleicons.org/${item.slug}/white`}
+                           alt={item.name}
+                           style={{
+                              height: '32px',
+                              width: 'auto',
+                              filter: item.url ? 'brightness(0) invert(1)' : 'none'
+                           }}
+                        />
+                        <span style={{
+                           color: '#fff',
+                           fontSize: '20px',
+                           fontWeight: '600',
+                           whiteSpace: 'nowrap',
+                           letterSpacing: '0.5px'
+                        }}>
+                           {item.name}
+                        </span>
+                     </div>
+                     <Image src={star} alt="star" width={16} height={16} style={{ opacity: 0.6 }} />
                   </div>
                ))}
             </Marquee>

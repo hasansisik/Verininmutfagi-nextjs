@@ -96,9 +96,9 @@ const CourseArea = ({ style }: StyleType) => {
             <div className="row justify-content-center">
               <div className="col-lg-6">
                 <div className="section__title text-center mb-40">
-                  <span className="sub-title">En İyi Kurslar</span>
+                  <span className="sub-title">Eğitimler</span>
                   <h2 className="title">Dünyanın En İyi Kurslarını Keşfedin</h2>
-                  <p className="desc">Size uygun kursları bulun ve kariyerinizde yeni bir sayfa açın</p>
+                  <p className="desc">Kariyerinizde yeni bir sayfa açın</p>
                 </div>
                 <div className="courses__nav">
                   <ul className="nav nav-tabs" id="courseTab" role="tablist">
@@ -135,7 +135,6 @@ const CourseArea = ({ style }: StyleType) => {
                               <li className="courses__item-tag">
                                 <Link href="/kurslar">{item.category?.name || 'Kategori'}</Link>
                               </li>
-                              <li className="avg-rating"><i className="fas fa-star"></i> {item.rating || '0.0'} ({item.ratingCount || 0} Değerlendirme)</li>
                             </ul>
                             <h5 className="title"><Link href={`/kurs-detaylari/${item.slug}`}>{item.title}</Link></h5>
                             <p className="author">Eğitmen: <Link href="#">{item.instructors || 'Eğitmen'}</Link></p>

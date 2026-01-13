@@ -31,7 +31,7 @@ const CustomSelect = () => {
          <div className="input-grp">
             <input
                type="text"
-               placeholder="Kurs Ara..."
+               placeholder="Eğitim Ara..."
                value={search}
                onChange={(e) => setSearch(e.target.value)}
             />

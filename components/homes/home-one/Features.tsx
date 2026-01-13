@@ -4,8 +4,8 @@ const features = [
    {
       id: 1,
       icon: BookOpen,
-      title: "Geniş Kurs Kataloğu",
-      desc: "Binlerce farklı kategoride kurs seçeneği ile istediğiniz alanda kendinizi geliştirin",
+      title: "Uygulamaya dönük içerikler",
+      desc: "Mentorluk ve uygulamalı projeler ile hızlı ilerleyin",
    },
    {
       id: 2,
@@ -19,12 +19,6 @@ const features = [
       title: "7/24 Erişim",
       desc: "Kurslarınıza istediğiniz zaman, istediğiniz cihazdan kolayca erişebilirsiniz",
    },
-   {
-      id: 4,
-      icon: DollarSign,
-      title: "Uygun Fiyatlar",
-      desc: "Kaliteli eğitimi herkes için erişilebilir fiyatlarla sunuyoruz",
-   },
 ];
 
 const Features = () => {
@@ -34,9 +28,9 @@ const Features = () => {
             <div className="row justify-content-center">
                <div className="col-xl-6">
                   <div className="section__title white-title text-center mb-50">
-                     <span className="sub-title" >Platform Özellikleri</span>
+                     <span className="sub-title">"Veri ve Yapay Zeka ile fark yarat!"</span>
                      <h2 className="title" style={{ color: '#000000' }}>Modern Online Eğitim Platformu</h2>
-                     <p style={{ color: '#000000' }}>En son teknoloji ile donatılmış platformumuzda, <br /> öğrenme deneyiminizi en üst seviyeye çıkarın.</p>
+                     <p style={{ color: '#000000' }}>En son teknoloji ile donatılmış platformumuzda, <br /> eğitim deneyiminizi en üst seviyeye çıkarın.</p>
                   </div>
                </div>
             </div>
@@ -46,8 +40,8 @@ const Features = () => {
                   return (
                      <div key={item.id} className="col-xl-3 col-lg-4 col-md-6">
                         <div className="features__item">
-                           <div className="features__icon" style={{ 
-                              backgroundColor: 'rgba(101, 122, 255, 0.1)', 
+                           <div className="features__icon" style={{
+                              backgroundColor: 'rgba(101, 122, 255, 0.1)',
                               borderRadius: '46px',
                               padding: '30px',
                               display: 'inline-flex',

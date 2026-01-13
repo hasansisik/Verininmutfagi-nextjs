@@ -85,9 +85,9 @@ const Categories = () => {
             <div className="row justify-content-center">
                <div className="col-xl-5 col-lg-7">
                   <div className="section__title text-center mb-40">
-                     <span className="sub-title">Kurs Kategorileri</span>
+                     <span className="sub-title">Öğrenmeye Nereden Başlamak İstersiniz?</span>
                      <h2 className="title">İlginizi Çeken Kategorileri Keşfedin</h2>
-                     <p className="desc">Size uygun kursu bulmak için kategorilerimizi inceleyin</p>
+                     <p className="desc">Hayalinizdeki kariyer için en uygun kategoriyi keşfedin</p>
                   </div>
                </div>
             </div>

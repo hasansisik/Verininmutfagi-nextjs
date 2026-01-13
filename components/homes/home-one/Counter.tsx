@@ -11,26 +11,26 @@ const count_data: DataType[] = [
    {
       id: 1,
       count: 45,
-      count_text: "K+",
-      text: "Aktif Öğrenci",
+      count_text: "k+",
+      text: "Takipçi",
    },
    {
       id: 2,
-      count: 89,
+      count: 19,
       count_text: "+",
-      text: "Eğitmen Kursları",
+      text: "Yıl Tecrübe",
    },
    {
       id: 3,
-      count: 156,
-      count_text: "K",
-      text: "En İyi Eğitmenler",
+      count: 44,
+      count_text: "k+",
+      text: "Öğrenci",
    },
    {
       id: 4,
-      count: 42,
-      count_text: "K",
-      text: "Kazanılan Ödül",
+      count: 370,
+      count_text: "+",
+      text: "Konferans",
    },
 ];
 
