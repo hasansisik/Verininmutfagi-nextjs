@@ -4,8 +4,8 @@ const features = [
    {
       id: 1,
       icon: BookOpen,
-      title: "Uygulamaya dönük içerikler",
-      desc: "Mentorluk ve uygulamalı projeler ile hızlı ilerleyin",
+      title: "Geniş Eğitim Kataloğu",
+      desc: "Yüzlerce farklı kategoride eğitim seçeneği ile istediğiniz alanda kendinizi geliştirin",
    },
    {
       id: 2,
@@ -17,42 +17,44 @@ const features = [
       id: 3,
       icon: Clock,
       title: "7/24 Erişim",
-      desc: "Kurslarınıza istediğiniz zaman, istediğiniz cihazdan kolayca erişebilirsiniz",
+      desc: "Eğitimlerde istediğiniz zaman, istediğiniz cihazdan kolayca erişebilirsiniz",
    },
 ];
 
 const Features = () => {
    return (
-      <section className="features__area" style={{ background: 'transparent', backgroundColor: 'transparent' }}>
+      <section className="features__area" style={{ position: 'relative', zIndex: 1 }}>
          <div className="container">
             <div className="row justify-content-center">
                <div className="col-xl-6">
-                  <div className="section__title white-title text-center mb-50">
-                     <span className="sub-title">"Veri ve Yapay Zeka ile fark yarat!"</span>
-                     <h2 className="title" style={{ color: '#000000' }}>Modern Online Eğitim Platformu</h2>
-                     <p style={{ color: '#000000' }}>En son teknoloji ile donatılmış platformumuzda, <br /> eğitim deneyiminizi en üst seviyeye çıkarın.</p>
+                  <div className="section__title text-center mb-50">
+                     <span className="sub-title">Platform Özellikleri</span>
+                     <h2 className="title" style={{ color: '#000000', fontWeight: 'bold' }}>Veri ve Yapay Zeka ile fark yarat</h2>
+                     <p style={{ color: '#000000' }}>Uygulamaya dönük içerikler ve <br /> mentorluk ile hızlı ilerleyin.</p>
                   </div>
                </div>
             </div>
-            <div className="row justify-content-center">
+            <div className="row justify-content-center" style={{ display: 'flex', flexWrap: 'wrap', gap: '30px 0' }}>
                {features.map((item) => {
                   const IconComponent = item.icon;
                   return (
-                     <div key={item.id} className="col-xl-3 col-lg-4 col-md-6">
-                        <div className="features__item">
+                     <div key={item.id} className="col-xl-4 col-lg-4 col-md-6">
+                        <div className="features__item text-center">
                            <div className="features__icon" style={{
                               backgroundColor: 'rgba(101, 122, 255, 0.1)',
-                              borderRadius: '46px',
-                              padding: '30px',
+                              borderRadius: '50%',
+                              width: '100px',
+                              height: '100px',
                               display: 'inline-flex',
                               alignItems: 'center',
-                              justifyContent: 'center'
+                              justifyContent: 'center',
+                              marginBottom: '20px'
                            }}>
                               <IconComponent size={35} strokeWidth={1.5} style={{ color: '#00f' }} />
                            </div>
                            <div className="features__content">
-                              <h4 className="title">{item.title}</h4>
-                              <p>{item.desc}</p>
+                              <h4 className="title" style={{ marginBottom: '15px' }}>{item.title}</h4>
+                              <p style={{ marginBottom: 0 }}>{item.desc}</p>
                            </div>
                         </div>
                      </div>

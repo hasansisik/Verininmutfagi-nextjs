@@ -13,14 +13,14 @@ const HomeOne = () => {
    return (
       <>
          <HeaderOne />
-         <main className="main-area fix">
+         <main className="main-area ">
             <Banner />
             <Categories />
             <BrandOne />
             <CourseArea />
             <Counter />
             <Features />
-            <BlogArea />
+            <BlogArea style={true} />
          </main>
          <FooterOne />
       </>
