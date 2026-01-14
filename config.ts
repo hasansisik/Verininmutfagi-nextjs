@@ -1,1 +1,1 @@
-export const server: string ="https://verininmutfagi-server.vercel.app/v1";
+export const server: string = "https://verininmutfagi-75c9abbacbf0.herokuapp.com/v1";
