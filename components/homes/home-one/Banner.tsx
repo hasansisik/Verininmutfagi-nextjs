@@ -1,20 +1,23 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Banner: React.FC = () => {
    return (
       <>
+
+
          <style jsx>{`
             .banner-area {
-               background-image: url(/assets/img/banner/banner.png);
-               background-size: cover;
-               background-position: center;
+               /* background-image removed - using next/image */
                padding: 120px 0;
                position: relative;
                min-height: 600px;
                display: flex;
                align-items: center;
+               z-index: 1;
+               overflow: hidden;
             }
 
             .banner__content .title {
@@ -33,10 +36,8 @@ const Banner: React.FC = () => {
 
             @media (max-width: 768px) {
                .banner-area {
-                  background-image: url(/assets/img/banner/banner-mobile.png);
                   padding: 60px 0 40px 0;
                   min-height: auto;
-                  background-position: top center;
                }
 
                .banner__content {
@@ -69,6 +70,30 @@ const Banner: React.FC = () => {
          `}</style>
 
          <section className="banner-area banner-bg tg-motion-effects">
+            {/* Desktop Background */}
+            <div className="d-none d-md-block" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
+               <Image
+                  src="/assets/img/banner/banner.png"
+                  alt="Banner"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  priority
+                  quality={90}
+               />
+            </div>
+
+            {/* Mobile Background */}
+            <div className="d-block d-md-none" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
+               <Image
+                  src="/assets/img/banner/banner-mobile.png"
+                  alt="Banner"
+                  fill
+                  style={{ objectFit: 'cover', objectPosition: 'top center' }}
+                  priority
+                  quality={100}
+               />
+            </div>
+
             <div className="container">
                <div className="row align-items-center">
                   <div className="col-lg-6">
