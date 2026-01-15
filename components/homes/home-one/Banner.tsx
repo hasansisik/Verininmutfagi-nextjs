@@ -78,7 +78,8 @@ const Banner: React.FC = () => {
                   fill
                   style={{ objectFit: 'cover' }}
                   priority
-                  quality={90}
+                  quality={100}
+                  unoptimized={true}
                />
             </div>
 
@@ -91,6 +92,7 @@ const Banner: React.FC = () => {
                   style={{ objectFit: 'cover', objectPosition: 'top center' }}
                   priority
                   quality={100}
+                  unoptimized={true}
                />
             </div>
 
